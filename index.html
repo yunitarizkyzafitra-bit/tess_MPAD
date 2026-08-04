@@ -46,6 +46,13 @@
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f3f8fc; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #1a5ba3; border-radius: 4px; }
+
+        @media print {
+            body * { visibility: hidden; }
+            #area-cetak-dokumen, #area-cetak-dokumen * { visibility: visible; }
+            #area-cetak-dokumen { position: absolute; left: 0; top: 0; width: 100%; padding: 0; margin: 0; }
+            @page { size: A4 portrait; margin: 1.5cm; }
+        }
     </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen">
@@ -88,6 +95,7 @@
 
     <main class="flex-1 w-full max-w-7xl mx-auto p-4 lg:p-6 space-y-6">
 
+        <!-- KARTU UTAMA PAD -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="glass-panel rounded-2xl p-6 relative overflow-hidden border-l-4 border-cikasda-yellow bg-cikasda-cardbg">
                 <div class="absolute -right-4 -bottom-4 text-cikasda-bg text-7xl font-black opacity-40"><i class="fa-solid fa-wallet text-cikasda-lightblue"></i></div>
@@ -118,6 +126,34 @@
             </div>
         </div>
 
+        <!-- MODUL MANAJEMEN DAN TINDAK LANJUT (EKSKLUSIF) -->
+        <section class="glass-panel rounded-2xl p-5 bg-gradient-to-r from-cikasda-blue to-cikasda-lightblue text-white shadow-xl relative overflow-hidden border-2 border-cikasda-yellow/50">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div class="space-y-1">
+                    <div class="inline-flex items-center gap-2 bg-cikasda-yellow text-cikasda-blue px-3 py-1 rounded-md text-[10px] font-black uppercase tracking-widest">
+                        <i class="fa-solid fa-sliders"></i> Panel Kontrol Eksekutif
+                    </div>
+                    <h3 class="text-lg font-black tracking-tight text-white flex items-center gap-2">
+                        Modul Manajemen & Tindak Lanjut PAD
+                    </h3>
+                    <p class="text-xs text-cikasda-lightyellow/90">Penerbitan surat teguran piutang sewa dan otorisasi cetak dokumen resmi berstandar Dinas CIKASDA.</p>
+                </div>
+                
+                <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
+                    <button onclick="cetakLaporanResmiPDF()" class="flex-1 md:flex-none bg-cikasda-yellow hover:bg-cikasda-lightyellow text-cikasda-blue font-black text-xs px-4 py-3 rounded-xl transition-all flex items-center justify-center gap-2 border-b-4 border-cikasda-amber shadow-md active:scale-95">
+                        <i class="fa-solid fa-file-pdf text-red-600 text-sm"></i> Cetak Dokumen Laporan (PDF)
+                    </button>
+                    <button onclick="eksporKeCSV()" class="flex-1 md:flex-none bg-white/10 hover:bg-white/20 text-white font-bold text-xs px-4 py-3 rounded-xl transition-all flex items-center justify-center gap-2 border border-white/20 backdrop-blur-sm">
+                        <i class="fa-solid fa-file-csv text-emerald-400 text-sm"></i> Ekspor CSV/Excel
+                    </button>
+                    <button onclick="bukaModalTeguran()" class="flex-1 md:flex-none bg-red-600 hover:bg-red-700 text-white font-black text-xs px-4 py-3 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md border-b-4 border-red-800 active:scale-95">
+                        <i class="fa-solid fa-triangle-exclamation text-cikasda-yellow"></i> Buat Surat Teguran
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- KATEGORI SEWA -->
         <section class="space-y-3">
             <h3 class="text-xs font-black uppercase tracking-widest text-cikasda-blue flex items-center gap-2 pl-1">
                 <i class="fa-solid fa-chart-pie text-cikasda-yellow"></i> Akumulasi Saldo Per Kategori Uraian Sewa
@@ -161,6 +197,7 @@
             </div>
         </section>
 
+        <!-- GRAFIK & IKHTISAR -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="glass-panel rounded-2xl p-4 flex flex-col h-[340px] bg-cikasda-cardbg">
                 <p class="text-[10px] font-black text-cikasda-blue uppercase tracking-widest border-b border-cikasda-bg pb-3 flex items-center gap-2">
@@ -183,6 +220,7 @@
             </div>
         </div>
 
+        <!-- TABEL JURNAL KAS -->
         <div class="glass-panel rounded-2xl overflow-hidden bg-cikasda-cardbg">
             <div class="bg-cikasda-lightyellow px-5 py-4 border-b-2 border-cikasda-yellow flex items-center justify-between">
                 <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-widest flex items-center gap-2">
@@ -211,6 +249,7 @@
         </div>
     </main>
 
+    <!-- MODAL FORM TRANSAKSI -->
     <div id="modalFormTransaksi" class="fixed inset-0 bg-cikasda-blue/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
         <div class="w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 flex flex-col max-h-[90vh] bg-cikasda-cardbg border-2 border-cikasda-blue/10">
             <div class="bg-cikasda-blue text-white p-4 flex items-center justify-between border-b-4 border-cikasda-yellow">
@@ -295,6 +334,91 @@
         </div>
     </div>
 
+    <!-- MODAL FORM TEGURAN / PIUTANG -->
+    <div id="modalTeguran" class="fixed inset-0 bg-cikasda-blue/50 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
+        <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden border-2 border-red-500 transform scale-95 transition-all">
+            <div class="bg-red-600 text-white p-4 flex items-center justify-between">
+                <h3 class="font-black text-xs uppercase tracking-widest flex items-center gap-2">
+                    <i class="fa-solid fa-paper-plane"></i> Generat Surat Teguran Sewa
+                </h3>
+                <button onclick="tutupModalTeguran()" class="text-white hover:text-gray-200"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="kirimNotifikasiTeguran(event)" class="p-5 space-y-4 text-xs font-bold text-cikasda-blue">
+                <div>
+                    <label class="block mb-1 text-cikasda-lightblue">Nama Penyewa / Penunggak</label>
+                    <input type="text" id="t-nama" placeholder="Masukkan nama pihak penunggak..." class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 text-cikasda-blue focus:outline-none focus:border-red-500" required>
+                </div>
+                <div>
+                    <label class="block mb-1 text-cikasda-lightblue">Objek Sewa</label>
+                    <select id="t-objek" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 text-cikasda-blue focus:outline-none focus:border-red-500">
+                        <option value="Rumah Dinas">Rumah Dinas</option>
+                        <option value="Kantin Dinas">Kantin Dinas</option>
+                        <option value="Lapangan Tenis">Lapangan Tenis</option>
+                        <option value="Aula Masjid Raya">Aula Masjid Raya</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block mb-1 text-cikasda-lightblue">Nominal Tunggakan (Rp)</label>
+                    <input type="number" id="t-nominal" placeholder="Contoh: 2500000" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 font-mono text-cikasda-blue focus:outline-none focus:border-red-500" required>
+                </div>
+                <div>
+                    <label class="block mb-1 text-cikasda-lightblue">Nomor WhatsApp Pihak Terkait (Opsional)</label>
+                    <input type="tel" id="t-wa" placeholder="08xxxxxxxxxx" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 font-mono text-cikasda-blue focus:outline-none focus:border-red-500">
+                </div>
+                <div class="pt-2 flex justify-end gap-2">
+                    <button type="button" onclick="tutupModalTeguran()" class="px-4 py-2 rounded-xl border border-gray-300 font-bold">Batal</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-black flex items-center gap-2">
+                        <i class="fa-brands fa-whatsapp"></i> Kirim Notifikasi Surat
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- AREA CETAK FORMAL DOKUMEN LAPORAN (KOP RESMI DINAS CIKASDA) -->
+    <div id="area-cetak-dokumen" class="hidden">
+        <div style="font-family: Arial, sans-serif; color: #000; padding: 10px;">
+            <!-- KOP SURAT DINAS -->
+            <div style="display: flex; items-center; justify-content: space-between; border-b: 4px double #000; padding-bottom: 12px; margin-bottom: 20px;">
+                <div style="text-align: center; width: 100%;">
+                    <h3 style="margin: 0; font-size: 14pt; font-weight: bold; uppercase;">PEMERINTAH PROVINSI SULAWESI TENGAH</h3>
+                    <h2 style="margin: 2px 0; font-size: 16pt; font-weight: font-black; uppercase;">DINAS CIPTA KARYA DAN SUMBER DAYA AIR</h2>
+                    <p style="margin: 0; font-size: 9pt; font-style: italic;">Jl. Sausu No. 3 Palu, Sulawesi Tengah • Website: cikasda.sultengprov.go.id</p>
+                </div>
+            </div>
+
+            <h4 style="text-align: center; margin: 15px 0 5px 0; font-size: 12pt; text-decoration: underline; font-weight: bold;">LAPORAN REKAPITULASI PENERIMAAN PAD MEKANISME SEWA</h4>
+            <p style="text-align: center; margin: 0 0 20px 0; font-size: 10pt;" id="cetak-periode-ta">Tahun Anggaran 2026</p>
+
+            <table style="width: 100%; border-collapse: collapse; font-size: 9pt; margin-bottom: 20px;">
+                <thead>
+                    <tr style="background-color: #f2f2f2; text-align: center;">
+                        <th style="border: 1px solid #000; padding: 6px;">ID</th>
+                        <th style="border: 1px solid #000; padding: 6px;">Bulan</th>
+                        <th style="border: 1px solid #000; padding: 6px;">Tanggal</th>
+                        <th style="border: 1px solid #000; padding: 6px;">Uraian Sewa</th>
+                        <th style="border: 1px solid #000; padding: 6px;">Penyetor / Instansi</th>
+                        <th style="border: 1px solid #000; padding: 6px;">Jumlah (Rp)</th>
+                        <th style="border: 1px solid #000; padding: 6px;">Mekanisme</th>
+                    </tr>
+                </thead>
+                <tbody id="cetak-tabel-body">
+                </tbody>
+            </table>
+
+            <div style="display: flex; justify-content: space-between; font-size: 10pt; margin-top: 30px; page-break-inside: avoid;">
+                <div style="width: 40%; text-align: center;">
+                    <p style="margin-bottom: 60px;">Mengetahui,<br><b>Pejabat Pengadaan Barang / Jasa</b></p>
+                    <p style="margin: 0; font-weight: bold; text-decoration: underline;">NIP. ....................................</p>
+                </div>
+                <div style="width: 40%; text-align: center;">
+                    <p style="margin-bottom: 60px;">Palu, <span id="cetak-tgl-sekarang"></span><br><b>Kepala Dinas CIKASDA Sulteng</b></p>
+                    <p style="margin: 0; font-weight: bold; text-decoration: underline;">NIP. ....................................</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzUSSHHSNhB9No-_uCXSeY33hwk69Yc2hYGTFhm9Yplz6p0U1fo7-ilXjGIfy3eX0g/exec";
         
@@ -355,6 +479,20 @@
             if (m.firstElementChild) m.firstElementChild.classList.add("scale-95");
             const formObj = document.getElementById("elemenFormInput");
             if (formObj) formObj.reset();
+        }
+
+        function bukaModalTeguran() {
+            const m = document.getElementById("modalTeguran");
+            if (!m) return;
+            m.classList.remove("opacity-0", "pointer-events-none");
+            if (m.firstElementChild) m.firstElementChild.classList.remove("scale-95");
+        }
+
+        function tutupModalTeguran() {
+            const m = document.getElementById("modalTeguran");
+            if (!m) return;
+            m.classList.add("opacity-0", "pointer-events-none");
+            if (m.firstElementChild) m.firstElementChild.classList.add("scale-95");
         }
 
         function gambarUlangGrafikPAD(petaBulanan) {
@@ -481,12 +619,15 @@
                         <td class="p-4 text-center font-mono text-cikasda-lightblue">#${item.id_transaksi || '-'}</td>
                         <td class="p-4 text-center font-black uppercase text-[10px]">${item.bulan || '-'}</td>
                         <td class="p-4 text-center text-cikasda-lightblue font-mono">${item.tanggal || '-'}</td>
-                        <td class="p-4 text-left font-extrabold text-xs text-cikasda-blue">${item.uraian || '-'}</td>
-                        <td class="p-4 text-left font-semibold">${item.penyetor || '-'}</td>
-                        <td class="p-4 text-left text-[11px] text-cikasda-lightblue font-medium max-w-xs truncate">${item.penjelasan || '-'}</td>
+                        <td class="p-4 font-black">${item.uraian || '-'}</td>
+                        <td class="p-4 text-cikasda-lightblue">${item.penyetor || '-'}</td>
+                        <td class="p-4 font-normal text-slate-500">${item.penjelasan || '-'}</td>
                         <td class="p-4 text-right font-mono font-black text-cikasda-blue">${konversiKeRupiah(nominal)}</td>
-                        <td class="p-4 text-center"><span class="px-2.5 py-1 rounded text-[10px] font-black uppercase ${warnaBadge}">${mekanisme}</span></td>
-                    </tr>`;
+                        <td class="p-4 text-center">
+                            <span class="px-2.5 py-1 rounded-full text-[9px] font-black uppercase ${warnaBadge}">${mekanisme}</span>
+                        </td>
+                    </tr>
+                `;
             });
 
             gambarUlangGrafikPAD(akumulasiBulan);
@@ -494,109 +635,175 @@
             renderDaftarBulananKiri(akumulasiBulan);
         }
 
-        function perbaruiTampilanAngka(totalKas, nominalTunai, nominalNonTunai, breakdownSewa) {
-            const targetPADUtama = 21360000;
-            let capaianTotalPersen = targetPADUtama > 0 ? ((totalKas / targetPADUtama) * 100).toFixed(2) : 0;
+        function perbaruiTampilanAngka(total, tunai, nonTunai, breakdown) {
+            const gTotal = document.getElementById("grand-total");
+            const tTunai = document.getElementById("total-tunai");
+            const tNonTunai = document.getElementById("total-nontunai");
+            const cTarget = document.getElementById("persen-capaian-pad");
 
-            document.getElementById("grand-total").innerText = konversiKeRupiah(totalKas);
-            document.getElementById("target-pad-tahun").innerText = "Target PAD: " + konversiKeRupiah(targetPADUtama);
-            document.getElementById("persen-capaian-pad").innerText = "Capaian Target: " + capaianTotalPersen + "%";
-            document.getElementById("total-tunai").innerText = konversiKeRupiah(nominalTunai);
-            document.getElementById("total-nontunai").innerText = konversiKeRupiah(nominalNonTunai);
+            if (gTotal) gTotal.innerText = konversiKeRupiah(total);
+            if (tTunai) tTunai.innerText = konversiKeRupiah(tunai);
+            if (tNonTunai) tNonTunai.innerText = konversiKeRupiah(nonTunai);
+            
+            const targetTahun = 21360000;
+            const persentase = (total / targetTahun) * 100;
+            if (cTarget) cTarget.innerText = `Capaian Target: ${persentase.toFixed(2)}%`;
 
-            const targetSewa = {
-                rumah: 21360000,
-                kantin: 5000000,
-                tenis: 9000000,
-                badminton: 7500000,
-                masjid: 0,
-                pelataran: 0,
-                lain: 2448000
-            };
-
-            function hitungPersentase(nominalAktual, nilaiTarget) {
-                if (nilaiTarget === 0) return "0.00%";
-                return ((nominalAktual / nilaiTarget) * 100).toFixed(2) + "%";
-            }
-
-            const nominalLainLainTerbaca = 2880000;
-
-            document.getElementById("pos-rumah").innerText = konversiKeRupiah(breakdownSewa.rumah) + " (" + hitungPersentase(breakdownSewa.rumah, targetSewa.rumah) + ")";
-            document.getElementById("pos-kantin").innerText = konversiKeRupiah(breakdownSewa.kantin) + " (" + hitungPersentase(breakdownSewa.kantin, targetSewa.kantin) + ")";
-            document.getElementById("pos-tenis").innerText = konversiKeRupiah(breakdownSewa.tenis) + " (" + hitungPersentase(breakdownSewa.tenis, targetSewa.tenis) + ")";
-            document.getElementById("pos-badminton").innerText = konversiKeRupiah(breakdownSewa.badminton) + " (" + hitungPersentase(breakdownSewa.badminton, targetSewa.badminton) + ")";
-            document.getElementById("pos-masjid").innerText = konversiKeRupiah(breakdownSewa.masjid) + " (" + hitungPersentase(breakdownSewa.masjid, targetSewa.masjid) + ")";
-            document.getElementById("pos-pelataran").innerText = konversiKeRupiah(breakdownSewa.pelataran) + " (" + hitungPersentase(breakdownSewa.pelataran, targetSewa.pelataran) + ")";
-            document.getElementById("pos-lain").innerText = konversiKeRupiah(nominalLainLainTerbaca) + " (" + hitungPersentase(nominalLainLainTerbaca, targetSewa.lain) + ")";
+            document.getElementById("pos-rumah").innerText = konversiKeRupiah(breakdown.rumah);
+            document.getElementById("pos-kantin").innerText = konversiKeRupiah(breakdown.kantin);
+            document.getElementById("pos-tenis").innerText = konversiKeRupiah(breakdown.tenis);
+            document.getElementById("pos-badminton").innerText = konversiKeRupiah(breakdown.badminton);
+            document.getElementById("pos-masjid").innerText = konversiKeRupiah(breakdown.masjid);
+            document.getElementById("pos-pelataran").innerText = konversiKeRupiah(breakdown.pelataran);
+            document.getElementById("pos-lain").innerText = konversiKeRupiah(breakdown.lain);
         }
 
         function renderDaftarBulananKiri(petaBulanan) {
             const containerBulan = document.getElementById("container-bulanan");
             if (!containerBulan) return;
             containerBulan.innerHTML = "";
-            
-            listNamaBulan.forEach(b => {
-                const nilai = petaBulanan[b.toLowerCase()] || 0;
+
+            listNamaBulan.forEach(bln => {
+                const totalBulan = petaBulanan[bln.toLowerCase()] || 0;
                 containerBulan.innerHTML += `
-                    <div class="py-2.5 flex items-center justify-between border-b border-cikasda-bg/50">
-                        <span class="text-cikasda-blue font-bold uppercase tracking-wide text-[11px]">${b}</span>
-                        <span class="font-mono font-black text-cikasda-lightblue">${konversiKeRupiah(nilai)}</span>
-                    </div>`;
+                    <div class="flex items-center justify-between py-2.5 px-2 hover:bg-cikasda-bg/50 rounded-lg transition-all">
+                        <span class="font-bold text-cikasda-blue">${bln}</span>
+                        <span class="font-mono font-extrabold text-cikasda-lightblue">${konversiKeRupiah(totalBulan)}</span>
+                    </div>
+                `;
             });
         }
 
         function jalankanPencarianTabel() {
-            const kataKunci = document.getElementById("input-cari").value.toLowerCase();
-            const barisTabel = document.querySelectorAll("#tabel-jurnal-body tr");
-            barisTabel.forEach(tr => {
-                if(tr.cells.length < 2) return;
-                const teksBaris = tr.innerText.toLowerCase();
-                if(teksBaris.includes(kataKunci)) tr.style.display = ""; else tr.style.display = "none";
+            const kataKunci = (document.getElementById("input-cari").value || "").toLowerCase();
+            const dataTersaring = gudangDataLokal.filter(item => {
+                return (item.penyetor || "").toLowerCase().includes(kataKunci) ||
+                       (item.uraian || "").toLowerCase().includes(kataKunci) ||
+                       (item.penjelasan || "").toLowerCase().includes(kataKunci) ||
+                       (item.bulan || "").toLowerCase().includes(kataKunci);
             });
+            prosesDanTampilkanSemuaData(dataTersaring);
         }
 
         async function prosesKirimDataKeCloud(e) {
             e.preventDefault();
-            const pinSandi = document.getElementById("f-pin-keamanan").value;
-            const tombol = document.getElementById("tombolSubmitForm");
-
-            if (pinSandi !== PIN_OTORISASI_INPUT) {
-                alert("❌ KATA SANDI OTORISASI (PIN) SALAH! Akses ditolak.");
+            const pinVal = document.getElementById("f-pin-keamanan").value;
+            if (pinVal !== PIN_OTORISASI_INPUT) {
+                alert("PIN Otorisasi Keamanan Salah!");
                 return;
             }
 
-            if (tombol) { tombol.disabled = true; tombol.innerText = "Memproses Data..."; }
+            const btnSubmit = document.getElementById("tombolSubmitForm");
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan...`;
 
-            const paketData = {
+            const payload = {
+                action: "simpan",
                 bulan: document.getElementById("f-bulan").value,
                 tanggal: document.getElementById("f-tanggal").value,
                 uraian: document.getElementById("f-uraian").value,
                 penyetor: document.getElementById("f-penyetor").value,
                 penjelasan: document.getElementById("f-penjelasan").value,
-                jumlah: Number(document.getElementById("f-jumlah").value) || 0,
+                jumlah: document.getElementById("f-jumlah").value,
                 keterangan: document.getElementById("f-keterangan").value
             };
 
             try {
-                const responCloud = await fetch(APPS_SCRIPT_URL, {
+                const res = await fetch(APPS_SCRIPT_URL, {
                     method: "POST",
-                    mode: "no-cors",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(paketData)
+                    body: JSON.stringify(payload)
                 });
-                
-                alert("🚀 Data Kas Berhasil Disimpan ke Cloud Google Sheets!");
-                tutupModalForm();
-                muatDataSinkronisasiCloud();
+                if (res.ok) {
+                    tutupModalForm();
+                    muatDataSinkronisasiCloud();
+                } else {
+                    alert("Gagal menyimpan data ke cloud!");
+                }
             } catch (err) {
                 console.error(err);
-                alert("⚠️ Gagal terhubung ke server cloud.");
+                alert("Terjadi kesalahan jaringan.");
             } finally {
-                if (tombol) { tombol.disabled = false; tombol.innerHTML = `<i class="fa-solid fa-paper-plane text-cikasda-yellow"></i> Simpan Data Cloud`; }
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = `<i class="fa-solid fa-paper-plane text-cikasda-yellow"></i> Simpan Data Cloud`;
             }
         }
 
-        window.addEventListener("DOMContentLoaded", () => {
+        /* FITUR MENUS MANAJEMEN DAN TINDAK LANJUT */
+        function cetakLaporanResmiPDF() {
+            const tabelBodyCetak = document.getElementById("cetak-tabel-body");
+            const tglSekarang = document.getElementById("cetak-tgl-sekarang");
+            if (!tabelBodyCetak) return;
+
+            const d = new Date();
+            if (tglSekarang) tglSekarang.innerText = `${d.getDate()} ${listNamaBulan[d.getMonth()]} ${d.getFullYear()}`;
+
+            tabelBodyCetak.innerHTML = "";
+            gudangDataLokal.forEach(item => {
+                tabelBodyCetak.innerHTML += `
+                    <tr>
+                        <td style="border: 1px solid #000; padding: 5px; text-align: center;">${item.id_transaksi || '-'}</td>
+                        <td style="border: 1px solid #000; padding: 5px; text-align: center;">${item.bulan || '-'}</td>
+                        <td style="border: 1px solid #000; padding: 5px; text-align: center;">${item.tanggal || '-'}</td>
+                        <td style="border: 1px solid #000; padding: 5px;">${item.uraian || '-'}</td>
+                        <td style="border: 1px solid #000; padding: 5px;">${item.penyetor || '-'}</td>
+                        <td style="border: 1px solid #000; padding: 5px; text-align: right; font-family: monospace;">${konversiKeRupiah(item.jumlah || 0)}</td>
+                        <td style="border: 1px solid #000; padding: 5px; text-align: center;">${item.keterangan || '-'}</td>
+                    </tr>
+                `;
+            });
+
+            window.print();
+        }
+
+        function eksporKeCSV() {
+            if (!gudangDataLokal || gudangDataLokal.length === 0) {
+                alert("Data kosong, tidak ada data yang dapat diekspor.");
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,ID,Bulan,Tanggal,Uraian,Penyetor,Penjelasan,Jumlah,Mekanisme\n";
+            gudangDataLokal.forEach(row => {
+                const baris = [
+                    `"${row.id_transaksi || ''}"`,
+                    `"${row.bulan || ''}"`,
+                    `"${row.tanggal || ''}"`,
+                    `"${row.uraian || ''}"`,
+                    `"${row.penyetor || ''}"`,
+                    `"${row.penjelasan || ''}"`,
+                    `"${row.jumlah || 0}"`,
+                    `"${row.keterangan || ''}"`
+                ].join(",");
+                csvContent += baris + "\n";
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `Laporan_PAD_CIKASDA_${Date.now()}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function kirimNotifikasiTeguran(e) {
+            e.preventDefault();
+            const nama = document.getElementById("t-nama").value;
+            const objek = document.getElementById("t-objek").value;
+            const nominal = document.getElementById("t-nominal").value;
+            const wa = document.getElementById("t-wa").value;
+
+            const pesan = `PEMBERITAHUAN DINAS CIKASDA SULTENG\n\nYth. Bapak/Ibu ${nama},\nDiberitahukan bahwa tagihan kewajiban retribusi/sewa atas objek: ${objek} sebesar ${konversiKeRupiah(nominal)} telah memasuki jatuh tempo.\n\nMohon segera melakukan penyelesaian pembayaran via rekening resmi/kasir dinas. Terima Kasih.`;
+
+            if (wa) {
+                const noFormatted = wa.replace(/^0/, '62');
+                window.open(`https://wa.me/${noFormatted}?text=${encodeURIComponent(pesan)}`, '_blank');
+            } else {
+                alert("Pesan Notifikasi Berhasil Dibuat:\n\n" + pesan);
+            }
+            tutupModalTeguran();
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
             muatDataSinkronisasiCloud();
         });
     </script>
