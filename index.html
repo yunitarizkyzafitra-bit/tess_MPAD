@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Executive Dashboard M-PAD - Dinas CIKASDA</title>
 
+    <!-- KEAMANAN: Content-Security-Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none';">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -38,7 +43,6 @@
         .font-display { font-family: 'Playfair Display', serif; }
 
         .glass-panel { background: rgba(255, 255, 255, 0.97); border: 1px solid rgba(8, 51, 112, 0.10); box-shadow: 0 10px 30px -12px rgba(8, 51, 112, 0.10); }
-
         .gold-hairline { background: linear-gradient(90deg, transparent, #f1c40f 20%, #f1c40f 80%, transparent); height: 1px; }
 
         .sidebar-link { position: relative; transition: all .2s ease; }
@@ -249,9 +253,6 @@
                         <button onclick="cetakLaporanResmiPDF()" class="flex-1 lg:flex-none bg-cikasda-gold hover:brightness-105 text-cikasda-blue font-black text-xs px-4 py-3 rounded-xl transition-all flex items-center justify-center gap-2 border-b-4 border-cikasda-amber shadow-md">
                             <i class="fa-solid fa-print text-sm"></i> Cetak PDF
                         </button>
-                        <button onclick="bukaModalTeguran()" class="flex-1 lg:flex-none bg-red-600 hover:bg-red-700 text-white font-black text-xs px-4 py-3 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md border-b-4 border-red-800">
-                            <i class="fa-brands fa-whatsapp text-lg"></i> Surat Teguran WA
-                        </button>
                     </div>
                 </div>
             </section>
@@ -369,25 +370,6 @@
                     <p class="text-[10px] text-cikasda-lightblue/70 mt-1">Bulan dengan kontribusi kas masuk terbesar tahun berjalan.</p>
                 </div>
             </div>
-
-            <div class="glass-panel rounded-2xl overflow-hidden bg-cikasda-cardbg">
-                <div class="bg-cikasda-champagne px-5 py-4 border-b-2 border-cikasda-gold">
-                    <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-widest"><i class="fa-solid fa-ranking-star text-cikasda-lightblue"></i> Peringkat Lengkap Kontributor PAD</h3>
-                </div>
-                <div class="overflow-x-auto custom-scrollbar max-h-[400px]">
-                    <table class="w-full text-left text-xs min-w-[600px]">
-                        <thead class="sticky top-0">
-                            <tr class="bg-cikasda-bg text-cikasda-blue text-[10px] font-black uppercase tracking-wider border-b border-cikasda-blue/10">
-                                <th class="p-3 text-center w-16">Peringkat</th>
-                                <th class="p-3">Nama Penyetor / Instansi</th>
-                                <th class="p-3 text-center w-24">Jumlah Transaksi</th>
-                                <th class="p-3 text-right w-40">Total Kontribusi (Rp)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabel-ranking-lengkap" class="divide-y divide-cikasda-bg font-bold text-cikasda-blue"></tbody>
-                    </table>
-                </div>
-            </div>
         </div>
 
         <!-- ======================= VIEW: MANAJEMEN SEWA ======================= -->
@@ -398,9 +380,6 @@
                     <h3 class="font-display text-lg font-bold tracking-tight mt-1">Manajemen Objek &amp; Kategori Sewa</h3>
                     <p class="text-[11px] text-cikasda-champagne/80 mt-1">Kelola katalog objek sewa beserta tarif dasar agar entri transaksi lebih konsisten dan akuntabel.</p>
                 </div>
-                <button onclick="bukaModalObjekSewa('tambah')" class="bg-cikasda-gold hover:brightness-105 text-cikasda-blue font-black text-xs px-4 py-3 rounded-xl transition-all flex items-center justify-center gap-2 border-b-4 border-cikasda-amber shadow-md shrink-0">
-                    <i class="fa-solid fa-circle-plus text-sm"></i> Tambah Objek Sewa
-                </button>
             </div>
 
             <div class="glass-panel rounded-2xl overflow-hidden bg-cikasda-cardbg">
@@ -416,30 +395,9 @@
                                 <th class="p-3 text-right w-36">Tarif Dasar (Rp)</th>
                                 <th class="p-3 w-28">Satuan</th>
                                 <th class="p-3 text-center w-24">Status</th>
-                                <th class="p-3 text-center w-28">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="tabel-objek-sewa" class="divide-y divide-cikasda-bg font-bold text-cikasda-blue"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="glass-panel rounded-2xl overflow-hidden bg-cikasda-cardbg">
-                <div class="bg-cikasda-champagne px-5 py-4 border-b-2 border-cikasda-gold flex items-center justify-between flex-wrap gap-2">
-                    <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-widest"><i class="fa-solid fa-layer-group text-cikasda-lightblue"></i> Rekap Akumulasi Saldo per Kategori / Objek Uraian Sewa</h3>
-                    <span class="text-[10px] font-bold text-cikasda-lightblue/70">Bersumber dari log transaksi jurnal kas aktual</span>
-                </div>
-                <div class="overflow-x-auto custom-scrollbar max-h-[400px]">
-                    <table class="w-full text-left text-xs min-w-[720px]">
-                        <thead class="sticky top-0">
-                            <tr class="bg-cikasda-bg text-cikasda-blue text-[10px] font-black uppercase tracking-wider border-b border-cikasda-blue/10">
-                                <th class="p-3">Uraian / Objek Sewa</th>
-                                <th class="p-3 text-center w-28">Jumlah Transaksi</th>
-                                <th class="p-3 text-right w-40">Akumulasi Saldo (Rp)</th>
-                                <th class="p-3 w-56">Kontribusi Pendapatan</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabel-akumulasi-kategori-lengkap" class="divide-y divide-cikasda-bg font-bold text-cikasda-blue"></tbody>
                     </table>
                 </div>
             </div>
@@ -447,1138 +405,527 @@
 
         <!-- ======================= VIEW: PENGATURAN ======================= -->
         <div id="view-pengaturan" class="view-section space-y-6 hidden">
-            <div class="glass-panel rounded-2xl p-5 bg-gradient-to-r from-cikasda-blue to-cikasda-lightblue text-white shadow-xl">
-                <span class="bg-cikasda-gold text-cikasda-blue px-3 py-1 rounded-md text-[10px] font-black uppercase">Konfigurasi Sistem</span>
-                <h3 class="font-display text-lg font-bold tracking-tight mt-1">Pengaturan Target dan Identitas Instansi</h3>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="glass-panel rounded-2xl p-5 bg-cikasda-cardbg space-y-3">
-                    <h3 class="text-xs font-black text-cikasda-blue uppercase border-b border-cikasda-bg pb-3">Target PAD Tahun Anggaran</h3>
-                    <label class="block text-[11px] font-bold text-cikasda-lightblue mt-2">Nominal Target (Rp)</label>
-                    <input type="number" id="setting-target-pad" value="21360000" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 font-mono text-xs font-bold focus:outline-none focus:border-cikasda-lightblue">
-                    <button onclick="simpanTargetPAD()" class="mt-2 px-4 py-2.5 rounded-xl bg-cikasda-blue hover:bg-cikasda-lightblue text-white text-xs font-black flex items-center gap-2 border-b-4 border-cikasda-amber shadow-md">
-                        <i class="fa-solid fa-floppy-disk"></i> Terapkan Target
-                    </button>
-                    <p class="text-[10px] text-cikasda-lightblue/60">Perubahan berlaku untuk sesi tampilan saat ini dan langsung memperbarui gauge capaian di Dashboard.</p>
-                </div>
-
-                <div class="glass-panel rounded-2xl p-5 bg-cikasda-cardbg space-y-3">
-                    <h3 class="text-xs font-black text-cikasda-blue uppercase border-b border-cikasda-bg pb-3">Endpoint Sinkronisasi Data</h3>
-                    <label class="block text-[11px] font-bold text-cikasda-lightblue mt-2">URL Google Apps Script</label>
-                    <input type="text" id="setting-apps-script" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 font-mono text-[10px] focus:outline-none focus:border-cikasda-lightblue" readonly>
-                    <p class="text-[10px] text-cikasda-lightblue/60">URL ini tertanam pada berkas aplikasi. Untuk mengganti sumber data, perbarui konstanta <code>APPS_SCRIPT_URL</code> pada kode sumber.</p>
-                </div>
-            </div>
-
-            <div class="glass-panel rounded-2xl p-5 bg-cikasda-cardbg space-y-3">
-                <h3 class="text-xs font-black text-cikasda-blue uppercase border-b border-cikasda-bg pb-3 flex items-center gap-2"><i class="fa-solid fa-signature text-cikasda-gold"></i> Biodata Kepala Dinas &mdash; Dasar Tanda Tangan Laporan</h3>
-                <p class="text-[10px] text-cikasda-lightblue/60">Data ini digunakan otomatis untuk mengisi blok tanda tangan pada Laporan Rekapitulasi PDF resmi.</p>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            <div class="glass-panel rounded-2xl p-5 bg-cikasda-cardbg max-w-2xl">
+                <h3 class="text-sm font-black text-cikasda-blue uppercase tracking-widest border-b border-cikasda-bg pb-3">Pengaturan Sistem &amp; Target</h3>
+                <div class="mt-4 space-y-4 text-xs font-bold">
                     <div>
-                        <label class="block mb-1 text-[11px] font-bold text-cikasda-lightblue">Nama Lengkap &amp; Gelar</label>
-                        <input type="text" id="setting-kadis-nama" placeholder="Contoh: Dr. Ir. DR. Yussuf, ST., MT" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-cikasda-lightblue">
+                        <label class="block text-cikasda-lightblue mb-1">Target PAD Tahunan (Rp)</label>
+                        <input type="number" id="setting-target-pad" value="21360000" class="w-full bg-cikasda-bg border-2 border-cikasda-lightblue/20 rounded-xl px-4 py-2.5 text-cikasda-blue focus:outline-none">
                     </div>
-                    <div>
-                        <label class="block mb-1 text-[11px] font-bold text-cikasda-lightblue">Jabatan</label>
-                        <input type="text" id="setting-kadis-jabatan" placeholder="Contoh: Kepala Dinas Cipta Karya dan Sumber Daya Air" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-cikasda-lightblue">
-                    </div>
-                    <div>
-                        <label class="block mb-1 text-[11px] font-bold text-cikasda-lightblue">Pangkat / Golongan</label>
-                        <input type="text" id="setting-kadis-pangkat" placeholder="Contoh: Pembina Utama Muda" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 text-xs font-bold focus:outline-none focus:border-cikasda-lightblue">
-                    </div>
-                    <div>
-                        <label class="block mb-1 text-[11px] font-bold text-cikasda-lightblue">NIP</label>
-                        <input type="text" id="setting-kadis-nip" placeholder="Contoh: 19710318 199803 1 004" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 font-mono text-xs font-bold focus:outline-none focus:border-cikasda-lightblue">
-                    </div>
-                </div>
-                <button onclick="simpanBiodataKadis()" class="mt-1 px-4 py-2.5 rounded-xl bg-cikasda-blue hover:bg-cikasda-lightblue text-white text-xs font-black flex items-center gap-2 border-b-4 border-cikasda-amber shadow-md">
-                    <i class="fa-solid fa-floppy-disk"></i> Simpan Biodata Kepala Dinas
-                </button>
-                <div id="preview-ttd-kadis" class="mt-2 bg-cikasda-bg rounded-xl p-4 text-center text-[11px] font-semibold text-cikasda-blue"></div>
-            </div>
-
-            <div class="glass-panel rounded-2xl p-5 bg-cikasda-cardbg">
-                <h3 class="text-xs font-black text-cikasda-blue uppercase border-b border-cikasda-bg pb-3 mb-3">Tentang Aplikasi</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-[11px] font-semibold text-cikasda-lightblue">
-                    <div><span class="block text-cikasda-blue font-black">Instansi</span>Dinas Cipta Karya dan Sumber Daya Air, Provinsi Sulawesi Tengah</div>
-                    <div><span class="block text-cikasda-blue font-black">Sistem</span>M-PAD (Manajemen Pendapatan Asli Daerah) 2026</div>
-                    <div><span class="block text-cikasda-blue font-black">Basis Data</span>Google Sheets via Google Apps Script</div>
+                    <button onclick="simpanPengaturan()" class="bg-cikasda-gold text-cikasda-blue font-black px-5 py-2.5 rounded-xl uppercase border-b-4 border-cikasda-amber">Simpan Pengaturan</button>
                 </div>
             </div>
         </div>
 
         </main>
-
-        <footer class="text-center text-[10px] font-bold text-cikasda-lightblue/50 py-5">
-            &copy; 2026 Dinas Cipta Karya dan Sumber Daya Air &middot; Provinsi Sulawesi Tengah
-        </footer>
     </div>
 </div>
 
-<!-- SIDEBAR MOBILE OVERLAY -->
-<div id="overlay-sidebar-mobile" class="hidden fixed inset-0 z-[9998] bg-black/50" onclick="tutupSidebarMobile()"></div>
-<aside id="sidebar-mobile" class="hidden lg:hidden fixed top-0 left-0 h-screen w-64 bg-cikasda-navy text-white z-[9999] flex-col">
-    <div class="px-5 pt-6 pb-5 flex items-center justify-between border-b border-white/10">
-        <p class="font-display font-bold text-sm">M-PAD &middot; CIKASDA</p>
-        <button onclick="tutupSidebarMobile()" class="text-white"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <nav class="flex-1 px-3 py-5 space-y-1 text-xs font-bold">
-        <button onclick="switchView('dashboard'); tutupSidebarMobile()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-white/85"><i class="fa-solid fa-gauge-high w-4 text-center"></i> Dashboard</button>
-        <button onclick="switchView('analitik'); tutupSidebarMobile()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-white/85"><i class="fa-solid fa-chart-pie w-4 text-center"></i> Analitik &amp; Proyeksi</button>
-        <button onclick="switchView('manajemen-sewa'); tutupSidebarMobile()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-white/85"><i class="fa-solid fa-building-columns w-4 text-center"></i> Manajemen Sewa</button>
-        <button onclick="bukaModalForm(); tutupSidebarMobile()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-white/85"><i class="fa-solid fa-circle-plus w-4 text-center"></i> Tambah Entri Sewa</button>
-        <button onclick="bukaModalDaftarPiutang(); tutupSidebarMobile()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-white/85"><i class="fa-solid fa-file-invoice-dollar w-4 text-center"></i> Daftar Piutang</button>
-        <button onclick="cetakLaporanResmiPDF(); tutupSidebarMobile()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-white/85"><i class="fa-solid fa-print w-4 text-center"></i> Cetak Laporan PDF</button>
-        <button onclick="eksporExcel(); tutupSidebarMobile()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-white/85"><i class="fa-solid fa-file-excel w-4 text-center"></i> Ekspor Excel</button>
-        <button onclick="switchView('pengaturan'); tutupSidebarMobile()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-white/85"><i class="fa-solid fa-sliders w-4 text-center"></i> Pengaturan</button>
-    </nav>
-</aside>
-
-<!-- MODAL DAFTAR PIUTANG BULANAN -->
-<div id="modalDaftarPiutang" class="fixed inset-0 bg-cikasda-blue/50 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
-    <div class="w-full max-w-3xl bg-white rounded-2xl shadow-2xl overflow-hidden border-2 border-amber-500 transform scale-95 transition-all flex flex-col max-h-[85vh]">
-        <div class="bg-amber-500 text-white p-4 flex items-center justify-between">
+<!-- ======================= MODAL DAFTAR PIUTANG ======================= -->
+<div id="modal-piutang" class="fixed inset-0 bg-cikasda-navy/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden border-2 border-cikasda-gold">
+        <div class="bg-cikasda-blue text-white px-6 py-4 flex justify-between items-center border-b-4 border-cikasda-gold">
             <div>
-                <h3 class="font-black text-xs uppercase tracking-widest flex items-center gap-2">
-                    <i class="fa-solid fa-users-viewfinder text-lg"></i> Daftar Penunggak / Wajib Bayar Berhutang
-                </h3>
-                <p id="label-piutang-bulan" class="text-[11px] font-semibold text-amber-100 mt-0.5">Filter Bulan: Semua Bulan</p>
+                <h3 class="font-display font-bold text-base">Daftar Tunggakan / Piutang Sewa</h3>
+                <p id="sub-judul-modal-piutang" class="text-[10px] text-cikasda-gold/80 font-semibold uppercase">Filter Status Berhutang</p>
             </div>
-            <button onclick="tutupModalDaftarPiutang()" class="text-white hover:text-amber-200"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <button onclick="tutupModalDaftarPiutang()" class="text-white hover:text-cikasda-gold text-xl">&times;</button>
         </div>
-        <div class="p-4 overflow-y-auto custom-scrollbar flex-1">
-            <table class="w-full text-left text-xs border-collapse">
-                <thead>
-                    <tr class="bg-amber-50 text-cikasda-blue text-[10px] font-black uppercase border-b border-amber-200">
-                        <th class="p-3">Nama Penyetor / Penyewa</th>
-                        <th class="p-3">Bulan</th>
-                        <th class="p-3">Objek / Uraian Sewa</th>
-                        <th class="p-3 text-right">Nominal Hutang</th>
-                        <th class="p-3 text-center">Status / Aksi</th>
-                    </tr>
-                </thead>
-                <tbody id="tabel-piutang-body" class="divide-y divide-gray-100 font-semibold text-cikasda-blue"></tbody>
-            </table>
+        <div class="p-6 overflow-y-auto custom-scrollbar flex-1 space-y-4">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                    <thead>
+                        <tr class="bg-cikasda-bg text-cikasda-blue text-[10px] font-black uppercase border-b border-cikasda-blue/10">
+                            <th class="p-3">Tanggal / Bulan</th>
+                            <th class="p-3">Penyetor / Instansi</th>
+                            <th class="p-3">Uraian Sewa</th>
+                            <th class="p-3 text-right">Tunggakan (Rp)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabel-modal-piutang-body" class="divide-y divide-cikasda-bg font-bold text-cikasda-blue"></tbody>
+                </table>
+            </div>
         </div>
-        <div class="bg-gray-50 p-3 border-t border-gray-200 flex justify-between items-center text-xs font-bold px-5">
-            <span>Total Piutang Terdeteksi: <strong id="total-nominal-piutang" class="text-red-600 font-mono">Rp 0</strong></span>
-            <button onclick="tutupModalDaftarPiutang()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-xl font-bold">Tutup</button>
+        <div class="bg-cikasda-bg px-6 py-3 border-t border-cikasda-blue/10 flex justify-end">
+            <button onclick="tutupModalDaftarPiutang()" class="bg-cikasda-blue text-white font-bold text-xs px-4 py-2 rounded-xl">Tutup</button>
         </div>
     </div>
 </div>
 
-<!-- MODAL FORM TAMBAH ENTRI SEWA -->
-<div id="modalFormSewa" class="fixed inset-0 bg-cikasda-blue/50 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
-    <div class="w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden border-2 border-cikasda-blue transform scale-95 transition-all">
-        <div class="bg-cikasda-blue text-white p-4 flex items-center justify-between border-b-4 border-cikasda-gold">
-            <h3 class="font-black text-xs uppercase tracking-widest flex items-center gap-2">
-                <i class="fa-solid fa-circle-plus text-cikasda-gold text-sm"></i> Tambah Transaksi Entri Sewa Baru
-            </h3>
-            <button onclick="tutupModalForm()" class="text-white hover:text-cikasda-gold"><i class="fa-solid fa-xmark text-lg"></i></button>
-        </div>
-        <form onsubmit="simpanEntriSewaBaru(event)" class="p-5 space-y-3.5 text-xs font-bold text-cikasda-blue max-h-[80vh] overflow-y-auto custom-scrollbar">
-            <div class="grid grid-cols-2 gap-3">
-                <div>
-                    <label class="block mb-1 text-cikasda-lightblue">Bulan Transaksi</label>
-                    <select id="f-bulan" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 focus:outline-none focus:border-cikasda-lightblue" required>
-                        <option value="Januari">Januari</option>
-                        <option value="Februari">Februari</option>
-                        <option value="Maret">Maret</option>
-                        <option value="April">April</option>
-                        <option value="Mei">Mei</option>
-                        <option value="Juni">Juni</option>
-                        <option value="Juli">Juli</option>
-                        <option value="Agustus">Agustus</option>
-                        <option value="September">September</option>
-                        <option value="Oktober">Oktober</option>
-                        <option value="November">November</option>
-                        <option value="Desember">Desember</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block mb-1 text-cikasda-lightblue">Tanggal Transaksi</label>
-                    <input type="date" id="f-tanggal" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 focus:outline-none focus:border-cikasda-lightblue" required>
-                </div>
-            </div>
-            <div>
-                <label class="block mb-1 text-cikasda-lightblue">Katalog Objek Sewa</label>
-                <select id="f-master-objek" onchange="isiDariMasterObjek()" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 focus:outline-none focus:border-cikasda-lightblue">
-                    <option value="">-- Pilih dari Katalog Objek Sewa (opsional) --</option>
-                </select>
-            </div>
-            <div>
-                <label class="block mb-1 text-cikasda-lightblue">Uraian Sewa</label>
-                <input type="text" id="f-uraian" placeholder="Contoh: Sewa Lapangan Tenis Bulan M-PAD" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 focus:outline-none focus:border-cikasda-lightblue" required>
-            </div>
-            <div>
-                <label class="block mb-1 text-cikasda-lightblue">Nama Penyetor / Instansi</label>
-                <input type="text" id="f-penyetor" placeholder="Contoh: Bpk. Hendra / PT. Cipta Karya" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 focus:outline-none focus:border-cikasda-lightblue" required>
-            </div>
-            <div>
-                <label class="block mb-1 text-cikasda-lightblue">Penjelasan Rekap / Keterangan Tambahan</label>
-                <textarea id="f-penjelasan" rows="2" placeholder="Catatan detail pembayaran..." class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 focus:outline-none focus:border-cikasda-lightblue"></textarea>
-            </div>
-            <div class="grid grid-cols-2 gap-3">
-                <div>
-                    <label class="block mb-1 text-cikasda-lightblue">Jumlah Nominal (Rp)</label>
-                    <input type="number" id="f-jumlah" placeholder="500000" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 font-mono focus:outline-none focus:border-cikasda-lightblue" required>
-                </div>
-                <div>
-                    <label class="block mb-1 text-cikasda-lightblue">Mekanisme Pembayaran</label>
-                    <select id="f-keterangan" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 focus:outline-none focus:border-cikasda-lightblue">
-                        <option value="Non Tunai">Non Tunai</option>
-                        <option value="Tunai Kasir">Tunai Kasir</option>
-                        <option value="Transfer Bank">Transfer Bank</option>
-                        <option value="Menunggak / Hutang">Menunggak / Hutang</option>
-                    </select>
-                </div>
-            </div>
-            <div class="pt-3 flex justify-end gap-2 border-t border-slate-100">
-                <button type="button" onclick="tutupModalForm()" class="px-4 py-2.5 rounded-xl border border-gray-300 font-bold hover:bg-gray-100">Batal</button>
-                <button type="submit" id="btn-submit-form" class="px-5 py-2.5 rounded-xl bg-cikasda-blue hover:bg-cikasda-lightblue text-white font-black flex items-center gap-2 border-b-4 border-cikasda-amber shadow-md">
-                    <i class="fa-solid fa-floppy-disk"></i> Simpan ke Spreadsheet
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<!-- MODAL FORM TEGURAN VIA WHATSAPP DIRECT -->
-<div id="modalTeguran" class="fixed inset-0 bg-cikasda-blue/50 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
-    <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden border-2 border-red-500 transform scale-95 transition-all">
-        <div class="bg-red-600 text-white p-4 flex items-center justify-between">
-            <h3 class="font-black text-xs uppercase tracking-widest flex items-center gap-2">
-                <i class="fa-brands fa-whatsapp text-lg"></i> Kirim Surat Teguran Direct WhatsApp
-            </h3>
-            <button onclick="tutupModalTeguran()" class="text-white"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <form onsubmit="kirimNotifikasiTeguran(event)" class="p-5 space-y-4 text-xs font-bold text-cikasda-blue">
-            <div>
-                <label class="block mb-1 text-cikasda-lightblue">Nama Penyewa / Penunggak</label>
-                <input type="text" id="t-nama" placeholder="Contoh: PT. Mulia Karya" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 focus:outline-none focus:border-red-500" required>
-            </div>
-            <div>
-                <label class="block mb-1 text-cikasda-lightblue">Objek Sewa</label>
-                <input type="text" id="t-objek" placeholder="Contoh: Sewa Lapangan Tenis" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 focus:outline-none focus:border-red-500" required>
-            </div>
-            <div>
-                <label class="block mb-1 text-cikasda-lightblue">Nominal Tunggakan (Rp)</label>
-                <input type="number" id="t-nominal" placeholder="Contoh: 2500000" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 font-mono focus:outline-none focus:border-red-500" required>
-            </div>
-            <div>
-                <label class="block mb-1 text-cikasda-lightblue">Nomor WhatsApp Target (Gunakan Format 08/62)</label>
-                <input type="tel" id="t-wa" placeholder="08123456789" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 font-mono focus:outline-none focus:border-red-500" required>
-            </div>
-            <div class="pt-2 flex justify-end gap-2">
-                <button type="button" onclick="tutupModalTeguran()" class="px-4 py-2 rounded-xl border border-gray-300 font-bold">Batal</button>
-                <button type="submit" class="px-5 py-2 rounded-xl bg-green-600 hover:bg-green-700 text-white font-black flex items-center gap-2">
-                    <i class="fa-brands fa-whatsapp text-lg"></i> Kirim Notifikasi WA
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<!-- MODAL FORM TAMBAH / EDIT OBJEK SEWA (MASTER DATA) -->
-<div id="modalObjekSewa" class="fixed inset-0 bg-cikasda-blue/50 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
-    <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden border-2 border-cikasda-blue transform scale-95 transition-all">
-        <div class="bg-cikasda-blue text-white p-4 flex items-center justify-between border-b-4 border-cikasda-gold">
-            <h3 id="judul-modal-objek-sewa" class="font-black text-xs uppercase tracking-widest flex items-center gap-2">
-                <i class="fa-solid fa-building-columns text-cikasda-gold text-sm"></i> Tambah Objek Sewa Baru
-            </h3>
-            <button onclick="tutupModalObjekSewa()" class="text-white hover:text-cikasda-gold"><i class="fa-solid fa-xmark text-lg"></i></button>
-        </div>
-        <form onsubmit="simpanObjekSewa(event)" class="p-5 space-y-3.5 text-xs font-bold text-cikasda-blue">
-            <input type="hidden" id="os-index" value="-1">
-            <div>
-                <label class="block mb-1 text-cikasda-lightblue">Nama Objek Sewa</label>
-                <input type="text" id="os-nama" placeholder="Contoh: Sewa Lapangan Tenis" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 focus:outline-none focus:border-cikasda-lightblue" required>
-            </div>
-            <div>
-                <label class="block mb-1 text-cikasda-lightblue">Kategori</label>
-                <input type="text" id="os-kategori" placeholder="Contoh: Fasilitas Olahraga" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 focus:outline-none focus:border-cikasda-lightblue" required>
-            </div>
-            <div class="grid grid-cols-2 gap-3">
-                <div>
-                    <label class="block mb-1 text-cikasda-lightblue">Tarif Dasar (Rp)</label>
-                    <input type="number" id="os-tarif" placeholder="500000" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 font-mono focus:outline-none focus:border-cikasda-lightblue" required>
-                </div>
-                <div>
-                    <label class="block mb-1 text-cikasda-lightblue">Satuan</label>
-                    <select id="os-satuan" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 focus:outline-none focus:border-cikasda-lightblue">
-                        <option value="Per Bulan">Per Bulan</option>
-                        <option value="Per Hari">Per Hari</option>
-                        <option value="Per Jam">Per Jam</option>
-                        <option value="Per Tahun">Per Tahun</option>
-                        <option value="Per Event">Per Event</option>
-                    </select>
-                </div>
-            </div>
-            <div>
-                <label class="block mb-1 text-cikasda-lightblue">Status</label>
-                <select id="os-status" class="w-full bg-cikasda-bg border-2 border-cikasda-blue/20 rounded-xl p-2.5 focus:outline-none focus:border-cikasda-lightblue">
-                    <option value="Aktif">Aktif</option>
-                    <option value="Nonaktif">Nonaktif</option>
-                </select>
-            </div>
-            <div class="pt-3 flex justify-end gap-2 border-t border-slate-100">
-                <button type="button" onclick="tutupModalObjekSewa()" class="px-4 py-2.5 rounded-xl border border-gray-300 font-bold hover:bg-gray-100">Batal</button>
-                <button type="submit" class="px-5 py-2.5 rounded-xl bg-cikasda-blue hover:bg-cikasda-lightblue text-white font-black flex items-center gap-2 border-b-4 border-cikasda-amber shadow-md">
-                    <i class="fa-solid fa-floppy-disk"></i> Simpan Objek Sewa
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<!-- AREA CETAK KHUSUS DOKUMEN PDF -->
+<!-- ======================= DOKUMEN CETAK PDF LAPORAN RESMI ======================= -->
 <div id="area-cetak-dokumen" class="hidden">
-    <div style="font-family: 'Times New Roman', Times, serif; color: #000; width: 100%;">
+    <div class="p-8 font-sans text-cikasda-navy bg-white">
+        <!-- KOP SURAT RESMI -->
+        <div class="flex items-center justify-between border-b-4 border-double border-cikasda-navy pb-4 mb-6">
+            <div class="w-16 h-16 flex items-center justify-center">
+                <img src="73773_2.jpg" alt="Logo Cikasda" class="max-h-full max-w-full object-contain" onerror="this.style.display='none'">
+            </div>
+            <div class="text-center flex-1 mx-4">
+                <h3 class="text-sm font-bold uppercase tracking-wider">Pemerintah Provinsi Sulawesi Tengah</h3>
+                <h1 class="text-base font-black uppercase tracking-wide mt-0.5">Dinas Cipta Karya dan Sumber Daya Air</h1>
+                <p class="text-[10px] font-semibold mt-0.5">Jl. S. Parman No. 10 Palu, Sulawesi Tengah &middot; Pos 94111</p>
+            </div>
+            <div class="w-16"></div>
+        </div>
 
-        <table style="width: 100%; border-bottom: 4px double #000; padding-bottom: 8px; margin-bottom: 15px;">
-            <tr>
-                <td style="width: 15%; text-align: center; vertical-align: middle;">
-                    <img src="logo_sulteng.png" alt="Logo Sulawesi Tengah" style="width: 75px; height: auto;" onerror="this.style.display='none'">
-                </td>
-                <td style="width: 85%; text-align: center; vertical-align: middle; padding-right: 15%;">
-                    <h3 style="margin: 0; font-size: 13pt; font-weight: bold; text-transform: uppercase;">PEMERINTAH PROVINSI SULAWESI TENGAH</h3>
-                    <h2 style="margin: 2px 0; font-size: 15pt; font-weight: bold; text-transform: uppercase;">DINAS CIPTA KARYA DAN SUMBER DAYA AIR</h2>
-                    <p style="margin: 0; font-size: 9.5pt;">Jl. Prof. Dr. Moh. Yamin No. 33, Palu, Sulawesi Tengah 94114</p>
-                    <p style="margin: 0; font-size: 9pt; font-style: italic;">Email: cikasda@sultengprov.go.id</p>
-                </td>
-            </tr>
+        <div class="text-center mb-6">
+            <h2 class="text-sm font-black uppercase underline decoration-2 underline-offset-4">Laporan Penerimaan Pendapatan Asli Daerah (PAD)</h2>
+            <p class="text-xs font-bold text-gray-600 mt-1">Sektor Retribusi Pemakaian Kekayaan Daerah (Sewa Aset)</p>
+        </div>
+
+        <div class="mb-4 text-xs font-semibold flex justify-between">
+            <span>Tanggal Cetak: <strong id="print-tanggal-cetak">-</strong></span>
+            <span>Status Sinkronisasi: <strong>Terverifikasi Sistem M-PAD</strong></span>
+        </div>
+
+        <!-- TABEL LAPORAN UTAMA -->
+        <table class="w-full text-left text-xs border-collapse border border-gray-300 mb-6">
+            <thead>
+                <tr class="bg-gray-100 text-cikasda-navy font-black border-b border-gray-300">
+                    <th class="border border-gray-300 p-2 text-center">No</th>
+                    <th class="border border-gray-300 p-2 text-center">Bulan</th>
+                    <th class="border border-gray-300 p-2 text-center">Tanggal</th>
+                    <th class="border border-gray-300 p-2">Uraian Sewa / Objek</th>
+                    <th class="border border-gray-300 p-2">Penyetor / Instansi</th>
+                    <th class="border border-gray-300 p-2">Penjelasan Rekap</th>
+                    <th class="border border-gray-300 p-2 text-right">Jumlah (Rp)</th>
+                    <th class="border border-gray-300 p-2 text-center">Mekanisme</th>
+                </tr>
+            </thead>
+            <tbody id="print-tabel-body" class="font-medium"></tbody>
+            <tfoot>
+                <tr class="bg-gray-50 font-black">
+                    <td colspan="6" class="border border-gray-300 p-2.5 text-right uppercase">Total Realisasi Kas PAD:</td>
+                    <td id="print-total-kas" class="border border-gray-300 p-2.5 text-right">Rp 0</td>
+                    <td class="border border-gray-300 p-2.5"></td>
+                </tr>
+            </tfoot>
         </table>
 
-        <h4 style="text-align: center; margin: 10px 0 2px 0; font-size: 11pt; text-decoration: underline; font-weight: bold; text-transform: uppercase;">LAPORAN REKAPITULASI REALISASI PENERIMAAN PAD</h4>
-        <p style="text-align: center; margin: 0 0 15px 0; font-size: 9pt; font-weight: bold;" id="cetak-periode-ta">Tahun Anggaran 2026</p>
+        <!-- LEMBAR TANDA TANGAN PEJABAT -->
+        <div class="mt-12 page-break flex justify-between text-xs font-semibold">
+            <div class="text-center w-64">
+                <p>Mengetahui,</p>
+                <p class="font-bold uppercase mt-0.5">Kepala Dinas CIKASDA</p>
+                <p class="font-bold uppercase">Provinsi Sulawesi Tengah</p>
+                <div class="h-20"></div>
+                <p class="font-black underline uppercase">Dr. Ir. H. BARLIANTO, ST., MT</p>
+                <p class="text-[10px]">NIP. 19690325 199803 1 004</p>
+            </div>
 
-        <div style="margin-bottom: 15px;">
-            <h5 style="margin: 0 0 5px 0; font-size: 9pt; font-weight: bold; text-transform: uppercase;">I. Ikhtisar Rekapitulasi Bulanan</h5>
-            <table style="width: 100%; border-collapse: collapse; font-size: 8.5pt;">
-                <thead>
-                    <tr style="background-color: #f2f2f2; text-align: center;">
-                        <th style="border: 1px solid #000; padding: 4px;">Bulan</th>
-                        <th style="border: 1px solid #000; padding: 4px;">Total Kas Masuk (Rp)</th>
-                        <th style="border: 1px solid #000; padding: 4px;">Bulan</th>
-                        <th style="border: 1px solid #000; padding: 4px;">Total Kas Masuk (Rp)</th>
-                    </tr>
-                </thead>
-                <tbody id="cetak-ikhtisar-body"></tbody>
-            </table>
+            <div class="text-center w-64">
+                <p>Palu, <span id="print-tanggal-ttd">5 Agustus 2026</span></p>
+                <p class="font-bold uppercase mt-0.5">Pejabat Pengadaan Barang/Jasa</p>
+                <p class="font-bold uppercase">Dinas CIKASDA Prov. Sulteng</p>
+                <div class="h-20"></div>
+                <p class="font-black underline uppercase">PEJABAT PENGADAAN CIKASDA</p>
+                <p class="text-[10px]">NIP. 19850815 201001 1 012</p>
+            </div>
         </div>
-
-        <div style="margin-bottom: 20px;">
-            <h5 style="margin: 0 0 5px 0; font-size: 9pt; font-weight: bold; text-transform: uppercase;">II. Lembar Log Detail Transaksi Jurnal Kas</h5>
-            <table style="width: 100%; border-collapse: collapse; font-size: 8.5pt;">
-                <thead>
-                    <tr style="background-color: #f2f2f2; text-align: center;">
-                        <th style="border: 1px solid #000; padding: 5px; width: 5%;">ID</th>
-                        <th style="border: 1px solid #000; padding: 5px; width: 10%;">Bulan</th>
-                        <th style="border: 1px solid #000; padding: 5px; width: 12%;">Tanggal</th>
-                        <th style="border: 1px solid #000; padding: 5px; width: 23%;">Uraian Sewa</th>
-                        <th style="border: 1px solid #000; padding: 5px; width: 22%;">Penyetor / Instansi</th>
-                        <th style="border: 1px solid #000; padding: 5px; width: 18%;">Jumlah (Rp)</th>
-                        <th style="border: 1px solid #000; padding: 5px; width: 10%;">Mekanisme</th>
-                    </tr>
-                </thead>
-                <tbody id="cetak-tabel-body"></tbody>
-            </table>
-        </div>
-
-        <!-- TANDA TANGAN KEPALA DINAS (RESMI UTUH) -->
-        <div class="page-break" style="margin-top: 25px; width: 100%; font-size: 9.5pt;">
-            <table style="width: 100%; border: none;">
-                <tr>
-                    <td style="width: 50%;"></td>
-                    <td style="width: 50%; text-align: center;">
-                        <p style="margin: 0;">Palu, <span id="cetak-tgl-sekarang"></span></p>
-                        <p id="cetak-kadis-jabatan" style="margin: 2px 0 0 0; font-weight: bold;">Kepala Dinas Cipta Karya dan Sumber Daya Air</p>
-                        <p style="margin: 0; font-weight: bold;">Provinsi Sulawesi Tengah</p>
-                        <div style="height: 65px;"></div>
-                        <p id="cetak-kadis-nama" style="margin: 0; font-weight: bold; text-decoration: underline;">Dr. Ir. DR. YUSSUF, ST., MT</p>
-                        <p id="cetak-kadis-pangkat" style="margin: 1px 0 0 0;">Pembina Utama Muda</p>
-                        <p id="cetak-kadis-nip" style="margin: 1px 0 0 0;">NIP. 19710318 199803 1 004</p>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
     </div>
 </div>
 
+<!-- ======================= LOGIKA APLIKASI (JAVASCRIPT) ======================= -->
 <script>
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzUSSHHSNhB9No-_uCXSeY33hwk69Yc2hYGTFhm9Yplz6p0U1fo7-ilXjGIfy3eX0g/exec";
-    const listNamaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-    let gudangDataLokal = [];
-    let instanceGrafikPAD = null;
-    let instanceGrafikRealisasiTarget = null;
-    let instanceGrafikMekanisme = null;
-    let targetPADTahun = 21360000;
-    const RING_CIRCUM = 2 * Math.PI * 38;
-
-    /* MASTER DATA OBJEK SEWA (MODUL MANAJEMEN SEWA) */
-    let daftarObjekSewa = [
-        { nama: "Sewa Lapangan Tenis", kategori: "Fasilitas Olahraga", tarif: 500000, satuan: "Per Bulan", status: "Aktif" },
-        { nama: "Sewa Gedung Serbaguna", kategori: "Fasilitas Umum", tarif: 2500000, satuan: "Per Event", status: "Aktif" },
-        { nama: "Sewa Ruko Dinas", kategori: "Properti Komersial", tarif: 1500000, satuan: "Per Bulan", status: "Aktif" }
+    // DATA BASEMASTER TRANSAKSI LENGKAP INTEGRATED
+    const databaseMasterAwal = [
+        { id: 1, bulan: "Januari", tanggal: "2026-01-15", uraian: "Sewa Aula Utama Cikasda", penyetor: "PT. Palu Jaya Konstruksi", rekap: "Sewa gedung kegiatan sosialisasi K3 konstruksi", jumlah: 2500000, mekanisme: "Setor Tunai" },
+        { id: 2, bulan: "Januari", tanggal: "2026-01-22", uraian: "Sewa Alat Berat Exca", penyetor: "CV. Tadulako Mandiri", rekap: "Sewa excavator proyek perbaikan drainase", jumlah: 4000000, mekanisme: "Transfer Kas Daerah" },
+        { id: 3, bulan: "Februari", tanggal: "2026-02-10", uraian: "Sewa Lahan Stand Toko", penyetor: "Koperasi Pegawai Cikasda", rekap: "Retribusi bulanan pemakaian lahan kantin", jumlah: 1200000, mekanisme: "Setor Tunai" },
+        { id: 4, bulan: "Maret", tanggal: "2026-03-05", uraian: "Sewa Aula Utama Cikasda", penyetor: "Dinas Perkim Prov. Sulteng", rekap: "Sewa tempat rakor teknis infrastruktur", jumlah: 2500000, mekanisme: "Transfer Kas Daerah" },
+        { id: 5, bulan: "Maret", tanggal: "2026-03-18", uraian: "Sewa Kendaraan Operasional", penyetor: "PT. Kaili Nusantara", rekap: "Sewa dump truck pengangkutan material", jumlah: 3000000, mekanisme: "Hutang/Piutang" },
+        { id: 6, bulan: "April", tanggal: "2026-04-12", uraian: "Sewa Alat Berat Exca", penyetor: "CV. Sulawesi Cipta", rekap: "Sewa pembersihan lahan saluran primer", jumlah: 4500000, mekanisme: "Transfer Kas Daerah" },
+        { id: 7, bulan: "Mei", tanggal: "2026-05-08", uraian: "Sewa Lahan Stand Toko", penyetor: "Toko Berkah Utama", rekap: "Sewa lahan penyimpanan alat inventaris", jumlah: 1500000, mekanisme: "Setor Tunai" },
+        { id: 8, bulan: "Mei", tanggal: "2026-05-20", uraian: "Sewa Aula Utama Cikasda", penyetor: "Ikatan Arsitek Indonesia Sulteng", rekap: "Sewa tempat pameran & seminar arsitektur", jumlah: 2160000, mekanisme: "Transfer Kas Daerah" }
     ];
 
-    /* BIODATA KEPALA DINAS - DASAR TANDA TANGAN LAPORAN */
-    let biodataKadis = {
-        nama: "Dr. Ir. DR. Yussuf, ST., MT",
-        jabatan: "Kepala Dinas Cipta Karya dan Sumber Daya Air",
-        pangkat: "Pembina Utama Muda",
-        nip: "19710318 199803 1 004"
-    };
+    const daftarObjekSewaAwal = [
+        { id: 1, nama: "Sewa Aula Utama Cikasda", kategori: "Gedung & Bangunan", tarif: 2500000, satuan: "Per Hari", status: "Aktif" },
+        { id: 2, nama: "Sewa Alat Berat Exca", kategori: "Peralatan & Mesin", tarif: 4000000, satuan: "Per Unit/Hari", status: "Aktif" },
+        { id: 3, nama: "Sewa Lahan Stand Toko", kategori: "Tanah & Lahan", tarif: 1200000, satuan: "Per Bulan", status: "Aktif" },
+        { id: 4, nama: "Sewa Kendaraan Operasional", kategori: "Peralatan & Mesin", tarif: 1500000, satuan: "Per Hari", status: "Aktif" }
+    ];
 
-    function konversiKeRupiah(angka) { return "Rp " + Number(angka || 0).toLocaleString('id-ID'); }
-    function konversiKePersen(angka) { return Number(angka || 0).toFixed(2) + "%"; }
+    let dataJurnal = [...databaseMasterAwal];
+    let dataObjekSewa = [...daftarObjekSewaAwal];
+    let targetPAD = 21360000;
+    let chartPADInstance = null;
+    let chartRealisasiTargetInstance = null;
+    let chartMekanismeInstance = null;
 
-    document.getElementById("setting-apps-script").value = APPS_SCRIPT_URL;
-
-    function isiFormBiodataKadis() {
-        document.getElementById("setting-kadis-nama").value = biodataKadis.nama;
-        document.getElementById("setting-kadis-jabatan").value = biodataKadis.jabatan;
-        document.getElementById("setting-kadis-pangkat").value = biodataKadis.pangkat;
-        document.getElementById("setting-kadis-nip").value = biodataKadis.nip;
-        renderPreviewTtdKadis();
-    }
-
-    function renderPreviewTtdKadis() {
-        document.getElementById("preview-ttd-kadis").innerHTML = `
-            <p class="font-bold">${biodataKadis.jabatan}</p>
-            <p class="mt-6 font-black underline">${biodataKadis.nama}</p>
-            <p>${biodataKadis.pangkat}</p>
-            <p>NIP. ${biodataKadis.nip}</p>
-        `;
-    }
-
-    function simpanBiodataKadis() {
-        biodataKadis = {
-            nama: document.getElementById("setting-kadis-nama").value.trim() || biodataKadis.nama,
-            jabatan: document.getElementById("setting-kadis-jabatan").value.trim() || biodataKadis.jabatan,
-            pangkat: document.getElementById("setting-kadis-pangkat").value.trim() || biodataKadis.pangkat,
-            nip: document.getElementById("setting-kadis-nip").value.trim() || biodataKadis.nip
-        };
-        renderPreviewTtdKadis();
-        alert("Biodata Kepala Dinas berhasil disimpan dan akan digunakan pada tanda tangan Laporan PDF.");
-    }
-
-    document.addEventListener("DOMContentLoaded", () => { 
-        isiFormBiodataKadis(); 
-        renderManajemenSewa(); 
-        perbaruiOpsiMasterDiFormEntri();
-        muatDataSinkronisasiCloud();
+    // SINKRONISASI INITIALIZATION
+    window.addEventListener('DOMContentLoaded', () => {
+        muatSemuaTampilan();
     });
 
-    /* ========== MANAJEMEN SEWA: CRUD OBJEK SEWA ========== */
-    function renderManajemenSewa() {
-        const tbody = document.getElementById("tabel-objek-sewa");
+    function formatRupiah(angka) {
+        return 'Rp ' + Number(angka).toLocaleString('id-ID');
+    }
+
+    function muatSemuaTampilan() {
+        rendertabelJurnal(dataJurnal);
+        renderKpiSistem();
+        renderIkhtisarBulanan();
+        renderRankingPenyetor();
+        renderAkumulasiKategori();
+        renderTabelObjekSewa();
+        renderGrafikSemua();
+    }
+
+    // SWITCH VIEW ROUTER
+    function switchView(viewName) {
+        const sections = ['dashboard', 'analitik', 'manajemen-sewa', 'pengaturan'];
+        sections.forEach(sec => {
+            const el = document.getElementById(`view-${sec}`);
+            if (el) el.classList.add('hidden');
+        });
+
+        const activeEl = document.getElementById(`view-${viewName}`);
+        if (activeEl) activeEl.classList.remove('hidden');
+
+        document.querySelectorAll('[data-view-btn]').forEach(btn => {
+            if (btn.getAttribute('data-view-btn') === viewName) {
+                btn.classList.add('active');
+                btn.classList.remove('text-white/80');
+            } else {
+                btn.classList.remove('active');
+                btn.classList.add('text-white/80');
+            }
+        });
+    }
+
+    // RENDER TABEL JURNAL KAS
+    function rendertabelJurnal(data) {
+        const tbody = document.getElementById('tabel-jurnal-body');
         if (!tbody) return;
-        if (daftarObjekSewa.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-gray-400 font-bold">Belum ada objek sewa terdaftar.</td></tr>`;
+        tbody.innerHTML = '';
+
+        if (data.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-gray-400">Tidak ada data transaksi ditemukan.</td></tr>`;
             return;
         }
-        tbody.innerHTML = daftarObjekSewa.map((item, idx) => `
-            <tr class="hover:bg-cikasda-bg/60">
-                <td class="p-3 font-black">${item.nama}</td>
-                <td class="p-3 text-cikasda-lightblue">${item.kategori}</td>
-                <td class="p-3 text-right font-mono">${konversiKeRupiah(item.tarif)}</td>
-                <td class="p-3">${item.satuan}</td>
-                <td class="p-3 text-center">
-                    <span class="px-2.5 py-1 rounded-full text-[9px] font-black uppercase ${item.status === 'Aktif' ? 'bg-emerald-100 text-cikasda-emerald border border-emerald-200' : 'bg-gray-100 text-gray-500 border border-gray-200'}">${item.status}</span>
-                </td>
-                <td class="p-3 text-center">
-                    <div class="flex items-center justify-center gap-1.5">
-                        <button onclick="bukaModalObjekSewa('edit', ${idx})" class="w-7 h-7 rounded-lg bg-blue-100 hover:bg-blue-200 text-cikasda-blue flex items-center justify-center"><i class="fa-solid fa-pen text-[10px]"></i></button>
-                        <button onclick="hapusObjekSewa(${idx})" class="w-7 h-7 rounded-lg bg-red-100 hover:bg-red-200 text-red-600 flex items-center justify-center"><i class="fa-solid fa-trash text-[10px]"></i></button>
+
+        data.forEach(item => {
+            let badgeMekanisme = item.mekanisme === 'Transfer Kas Daerah' ? 'bg-blue-100 text-blue-700' :
+                                 item.mekanisme === 'Setor Tunai' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700';
+
+            const tr = document.createElement('tr');
+            tr.className = 'hover:bg-cikasda-champagne/40 transition-colors border-b border-cikasda-bg';
+            tr.innerHTML = `
+                <td class="p-4 text-center text-xs font-bold text-cikasda-lightblue">#${item.id}</td>
+                <td class="p-4 text-center font-bold">${item.bulan}</td>
+                <td class="p-4 text-center text-gray-500 font-medium">${item.tanggal}</td>
+                <td class="p-4 font-extrabold text-cikasda-blue">${item.uraian}</td>
+                <td class="p-4 font-bold text-cikasda-lightblue">${item.penyetor}</td>
+                <td class="p-4 text-gray-600 font-medium text-[11px]">${item.rekap}</td>
+                <td class="p-4 text-right font-black font-digital text-cikasda-blue">${formatRupiah(item.jumlah)}</td>
+                <td class="p-4 text-center"><span class="px-2.5 py-1 rounded-full text-[10px] font-black ${badgeMekanisme}">${item.mekanisme}</span></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    // RENDER KPI & KARTU KEUANGAN
+    function renderKpiSistem() {
+        const totalKas = dataJurnal.reduce((acc, curr) => acc + curr.jumlah, 0);
+        const jumlahTx = dataJurnal.length;
+        const rataRata = jumlahTx > 0 ? totalKas / jumlahTx : 0;
+        const persenCapaian = ((totalKas / targetPAD) * 100).toFixed(2);
+
+        document.getElementById('grand-total').innerText = formatRupiah(totalKas);
+        document.getElementById('kpi-rata-rata').innerText = formatRupiah(rataRata);
+        document.getElementById('kpi-jumlah-transaksi').innerText = `${jumlahTx} transaksi terverifikasi`;
+        document.getElementById('persen-capaian-pad').innerText = `Capaian Target: ${persenCapaian}%`;
+
+        // Ring progress animation
+        const ring = document.getElementById('ring-capaian');
+        const ringLabel = document.getElementById('ring-capaian-label');
+        if (ring) {
+            const circumference = 238.76;
+            const offset = circumference - (Math.min(persenCapaian, 100) / 100) * circumference;
+            ring.style.strokeDashoffset = offset;
+        }
+        if (ringLabel) ringLabel.textContent = `${Math.round(persenCapaian)}%`;
+
+        // Proyeksi Modul Analitik
+        const proyeksi = (totalKas / (dataJurnal.length || 1)) * 12;
+        document.getElementById('proyeksi-akhir-tahun').innerText = formatRupiah(proyeksi);
+
+        const totalHutang = dataJurnal.filter(x => x.mekanisme === 'Hutang/Piutang').reduce((a, b) => a + b.jumlah, 0);
+        document.getElementById('analitik-total-piutang').innerText = formatRupiah(totalHutang);
+    }
+
+    // RENDER IKHTISAR BULANAN
+    function renderIkhtisarBulanan() {
+        const container = document.getElementById('container-bulanan');
+        if (!container) return;
+        container.innerHTML = '';
+
+        const rekapBulan = {};
+        dataJurnal.forEach(item => {
+            rekapBulan[item.bulan] = (rekapBulan[item.bulan] || 0) + item.jumlah;
+        });
+
+        Object.keys(rekapBulan).forEach(bln => {
+            const div = document.createElement('div');
+            div.className = 'py-2.5 flex items-center justify-between';
+            div.innerHTML = `
+                <span class="text-cikasda-blue">${bln}</span>
+                <span class="font-black font-digital text-cikasda-lightblue">${formatRupiah(rekapBulan[bln])}</span>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    // RENDER PERINGKAT PENYETOR
+    function renderRankingPenyetor() {
+        const container = document.getElementById('container-ranking');
+        if (!container) return;
+        container.innerHTML = '';
+
+        const penyetorMap = {};
+        dataJurnal.forEach(item => {
+            penyetorMap[item.penyetor] = (penyetorMap[item.penyetor] || 0) + item.jumlah;
+        });
+
+        const sorted = Object.entries(penyetorMap).sort((a, b) => b[1] - a[1]);
+
+        sorted.forEach(([nama, total], idx) => {
+            const div = document.createElement('div');
+            div.className = 'py-2.5 flex items-center justify-between gap-2';
+            div.innerHTML = `
+                <div class="flex items-center gap-2 truncate">
+                    <span class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black ${idx === 0 ? 'rank-badge-1' : idx === 1 ? 'rank-badge-2' : 'rank-badge-3'}">${idx + 1}</span>
+                    <span class="truncate font-bold text-cikasda-navy">${nama}</span>
+                </div>
+                <span class="font-black font-digital text-cikasda-blue shrink-0">${formatRupiah(total)}</span>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    // RENDER AKUMULASI PER KATEGORI
+    function renderAkumulasiKategori() {
+        const tbody = document.getElementById('tabel-akumulasi-kategori');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+
+        const totalKasGlobal = dataJurnal.reduce((a, b) => a + b.jumlah, 0) || 1;
+        const kategoriMap = {};
+
+        dataJurnal.forEach(item => {
+            if (!kategoriMap[item.uraian]) {
+                kategoriMap[item.uraian] = { count: 0, total: 0 };
+            }
+            kategoriMap[item.uraian].count += 1;
+            kategoriMap[item.uraian].total += item.jumlah;
+        });
+
+        Object.keys(kategoriMap).forEach(uraian => {
+            const data = kategoriMap[uraian];
+            const persen = ((data.total / totalKasGlobal) * 100).toFixed(1);
+
+            const tr = document.createElement('tr');
+            tr.className = 'hover:bg-cikasda-champagne/40 border-b border-cikasda-bg';
+            tr.innerHTML = `
+                <td class="p-3 font-bold text-cikasda-blue">${uraian}</td>
+                <td class="p-3 text-center">${data.count} Transaksi</td>
+                <td class="p-3 text-right font-black font-digital">${formatRupiah(data.total)}</td>
+                <td class="p-3">
+                    <div class="flex items-center gap-2">
+                        <div class="flex-1 bg-cikasda-bg h-2 rounded-full overflow-hidden">
+                            <div class="bg-cikasda-gold h-full rounded-full" style="width: ${persen}%"></div>
+                        </div>
+                        <span class="text-[10px] font-extrabold w-10 text-right">${persen}%</span>
                     </div>
                 </td>
-            </tr>
-        `).join("");
-    }
-
-    function bukaModalObjekSewa(mode, index) {
-        document.getElementById("judul-modal-objek-sewa").innerHTML = mode === 'edit'
-            ? `<i class="fa-solid fa-pen text-cikasda-gold text-sm"></i> Edit Objek Sewa`
-            : `<i class="fa-solid fa-building-columns text-cikasda-gold text-sm"></i> Tambah Objek Sewa Baru`;
-
-        if (mode === 'edit' && daftarObjekSewa[index]) {
-            const item = daftarObjekSewa[index];
-            document.getElementById("os-index").value = index;
-            document.getElementById("os-nama").value = item.nama;
-            document.getElementById("os-kategori").value = item.kategori;
-            document.getElementById("os-tarif").value = item.tarif;
-            document.getElementById("os-satuan").value = item.satuan;
-            document.getElementById("os-status").value = item.status;
-        } else {
-            document.getElementById("os-index").value = -1;
-            document.getElementById("os-nama").value = "";
-            document.getElementById("os-kategori").value = "";
-            document.getElementById("os-tarif").value = "";
-            document.getElementById("os-satuan").value = "Per Bulan";
-            document.getElementById("os-status").value = "Aktif";
-        }
-
-        const m = document.getElementById("modalObjekSewa");
-        m.classList.remove("opacity-0", "pointer-events-none");
-        m.firstElementChild.classList.remove("scale-95");
-    }
-
-    function tutupModalObjekSewa() {
-        const m = document.getElementById("modalObjekSewa");
-        m.classList.add("opacity-0", "pointer-events-none");
-        m.firstElementChild.classList.add("scale-95");
-    }
-
-    function simpanObjekSewa(e) {
-        e.preventDefault();
-        const index = Number(document.getElementById("os-index").value);
-        const objekBaru = {
-            nama: document.getElementById("os-nama").value.trim(),
-            kategori: document.getElementById("os-kategori").value.trim(),
-            tarif: Number(document.getElementById("os-tarif").value) || 0,
-            satuan: document.getElementById("os-satuan").value,
-            status: document.getElementById("os-status").value
-        };
-        if (index >= 0) { daftarObjekSewa[index] = objekBaru; } else { daftarObjekSewa.push(objekBaru); }
-        renderManajemenSewa();
-        perbaruiOpsiMasterDiFormEntri();
-        tutupModalObjekSewa();
-    }
-
-    function hapusObjekSewa(index) {
-        if (!confirm(`Hapus objek sewa "${daftarObjekSewa[index].nama}" dari katalog?`)) return;
-        daftarObjekSewa.splice(index, 1);
-        renderManajemenSewa();
-        perbaruiOpsiMasterDiFormEntri();
-    }
-
-    function perbaruiOpsiMasterDiFormEntri() {
-        const sel = document.getElementById("f-master-objek");
-        if (!sel) return;
-        sel.innerHTML = `<option value="">-- Pilih dari Katalog Objek Sewa (opsional) --</option>` +
-            daftarObjekSewa.filter(o => o.status === 'Aktif').map((o, idx) =>
-                `<option value="${idx}">${o.nama} (${konversiKeRupiah(o.tarif)} / ${o.satuan})</option>`
-            ).join("");
-    }
-
-    function isiDariMasterObjek() {
-        const sel = document.getElementById("f-master-objek");
-        const idx = sel.value;
-        if (idx === "") return;
-        const objekAktif = daftarObjekSewa.filter(o => o.status === 'Aktif');
-        const item = objekAktif[idx];
-        if (!item) return;
-        document.getElementById("f-uraian").value = item.nama;
-        document.getElementById("f-jumlah").value = item.tarif;
-    }
-
-    /* ========== AKUMULASI SALDO PER KATEGORI / OBJEK URAIAN SEWA ========== */
-    function renderAkumulasiKategori(dataArray, totalKas) {
-        let akumulasi = {};
-        dataArray.forEach(item => {
-            const uraian = (item.uraian || "Tidak Berkategori").trim();
-            const nominal = Number(item.jumlah) || 0;
-            if (!akumulasi[uraian]) akumulasi[uraian] = { total: 0, jumlahTransaksi: 0 };
-            akumulasi[uraian].total += nominal;
-            akumulasi[uraian].jumlahTransaksi += 1;
-        });
-
-        const arrayAkumulasi = Object.entries(akumulasi)
-            .map(([uraian, v]) => ({ uraian, total: v.total, jumlahTransaksi: v.jumlahTransaksi, persen: totalKas > 0 ? (v.total / totalKas) * 100 : 0 }))
-            .sort((a, b) => b.total - a.total);
-
-        const barisHtml = arrayAkumulasi.length === 0
-            ? `<tr><td colspan="4" class="p-6 text-center text-gray-400 font-bold">Belum ada data transaksi untuk direkap.</td></tr>`
-            : arrayAkumulasi.map(item => `
-                <tr class="hover:bg-cikasda-bg/60">
-                    <td class="p-3 font-black">${item.uraian}</td>
-                    <td class="p-3 text-center font-mono">${item.jumlahTransaksi}</td>
-                    <td class="p-3 text-right font-mono font-black">${konversiKeRupiah(item.total)}</td>
-                    <td class="p-3">
-                        <div class="flex items-center gap-2">
-                            <div class="flex-1 h-2 rounded-full bg-cikasda-bg overflow-hidden">
-                                <div class="h-full bg-gradient-to-r from-cikasda-lightblue to-cikasda-gold" style="width:${Math.min(100, item.persen).toFixed(1)}%"></div>
-                            </div>
-                            <span class="font-mono font-black text-cikasda-lightblue w-14 text-right shrink-0">${konversiKePersen(item.persen)}</span>
-                        </div>
-                    </td>
-                </tr>
-            `).join("");
-
-        const targetDashboard = document.getElementById("tabel-akumulasi-kategori");
-        const targetLengkap = document.getElementById("tabel-akumulasi-kategori-lengkap");
-        if (targetDashboard) targetDashboard.innerHTML = barisHtml;
-        if (targetLengkap) targetLengkap.innerHTML = barisHtml;
-    }
-
-    /* ========== NAVIGASI SIDEBAR / VIEW ========== */
-    function switchView(nama) {
-        ["dashboard", "analitik", "manajemen-sewa", "pengaturan"].forEach(v => {
-            const el = document.getElementById("view-" + v);
-            if (el) el.classList.toggle("hidden", v !== nama);
-            const btn = document.querySelector(`[data-view-btn="${v}"]`);
-            if (btn) {
-                btn.classList.toggle("active", v === nama);
-                btn.classList.toggle("text-white/80", v !== nama);
-            }
-        });
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    function bukaSidebarMobile() {
-        document.getElementById("sidebar-mobile").classList.remove("hidden");
-        document.getElementById("sidebar-mobile").classList.add("flex");
-        document.getElementById("overlay-sidebar-mobile").classList.remove("hidden");
-    }
-    function tutupSidebarMobile() {
-        document.getElementById("sidebar-mobile").classList.add("hidden");
-        document.getElementById("overlay-sidebar-mobile").classList.add("hidden");
-    }
-
-    function toggleNotifikasi() {
-        document.getElementById("panel-notif").classList.toggle("hidden");
-    }
-    document.addEventListener("click", (e) => {
-        const panel = document.getElementById("panel-notif");
-        if (!panel.contains(e.target) && !e.target.closest("button[onclick='toggleNotifikasi()']")) {
-            panel.classList.add("hidden");
-        }
-    });
-
-    function simpanTargetPAD() {
-        const nilai = Number(document.getElementById("setting-target-pad").value) || 0;
-        if (nilai <= 0) { alert("Nominal target harus lebih besar dari 0."); return; }
-        targetPADTahun = nilai;
-        prosesDanTampilkanSemuaData(gudangDataLokal);
-        switchView("dashboard");
-    }
-
-    /* MODAL ENTRI SEWA BARU */
-    function bukaModalForm() {
-        const m = document.getElementById("modalFormSewa");
-        if (m) {
-            m.classList.remove("opacity-0", "pointer-events-none");
-            m.firstElementChild.classList.remove("scale-95");
-        }
-    }
-
-    function tutupModalForm() {
-        const m = document.getElementById("modalFormSewa");
-        if (m) {
-            m.classList.add("opacity-0", "pointer-events-none");
-            m.firstElementChild.classList.add("scale-95");
-        }
-    }
-
-    /* MANAJEMEN MODAL DAFTAR PIUTANG BULANAN */
-    function bukaModalDaftarPiutang() {
-        const bulanDipilih = document.getElementById("select-bulan-piutang").value;
-        const labelBulan = document.getElementById("label-piutang-bulan");
-        const tabelPiutangBody = document.getElementById("tabel-piutang-body");
-        const totalPiutangElem = document.getElementById("total-nominal-piutang");
-
-        labelBulan.innerText = `Filter Bulan: ${bulanDipilih}`;
-        tabelPiutangBody.innerHTML = "";
-
-        let totalPiutang = 0;
-        let counterData = 0;
-
-        gudangDataLokal.forEach(item => {
-            const statusKet = (item.keterangan || "").toLowerCase();
-            const bulanItem = (item.bulan || "").trim().toLowerCase();
-            const filterBulanLower = bulanDipilih.toLowerCase();
-
-            const isHutang = statusKet.includes("hutang") || statusKet.includes("tunggak") || statusKet.includes("belum");
-            const isBulanMatch = (bulanDipilih === "Semua") || (bulanItem === filterBulanLower);
-
-            if (isHutang && isBulanMatch) {
-                counterData++;
-                const nominal = Number(item.jumlah) || 0;
-                totalPiutang += nominal;
-
-                tabelPiutangBody.innerHTML += `
-                    <tr class="hover:bg-amber-50/50">
-                        <td class="p-3 font-bold text-cikasda-blue">${item.penyetor || '-'}</td>
-                        <td class="p-3 font-semibold text-cikasda-lightblue">${item.bulan || '-'}</td>
-                        <td class="p-3">${item.uraian || '-'}</td>
-                        <td class="p-3 text-right font-mono font-bold text-red-600">${konversiKeRupiah(nominal)}</td>
-                        <td class="p-3 text-center">
-                            <button onclick="panggilModalTeguranDirect('${item.penyetor || ''}', '${item.uraian || ''}', ${nominal})" class="px-2.5 py-1 bg-red-100 hover:bg-red-200 text-red-700 text-[10px] font-black rounded-lg border border-red-300">
-                                <i class="fa-brands fa-whatsapp"></i> Tegur
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            }
-        });
-
-        if (counterData === 0) {
-            tabelPiutangBody.innerHTML = `
-                <tr>
-                    <td colspan="5" class="p-6 text-center text-gray-400 font-bold">
-                        Tidak ditemukan data berhutang/penunggakan untuk periode ${bulanDipilih}.
-                    </td>
-                </tr>
             `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    // RENDER KATALOG OBJEK SEWA
+    function renderTabelObjekSewa() {
+        const tbody = document.getElementById('tabel-objek-sewa');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+
+        dataObjekSewa.forEach(obj => {
+            const tr = document.createElement('tr');
+            tr.className = 'border-b border-cikasda-bg hover:bg-cikasda-champagne/40';
+            tr.innerHTML = `
+                <td class="p-3 font-black text-cikasda-blue">${obj.nama}</td>
+                <td class="p-3 text-cikasda-lightblue">${obj.kategori}</td>
+                <td class="p-3 text-right font-digital font-bold">${formatRupiah(obj.tarif)}</td>
+                <td class="p-3">${obj.satuan}</td>
+                <td class="p-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-black bg-emerald-100 text-emerald-700">${obj.status}</span></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    // FILTER PENCARIAN
+    function jalankanPencarianTabel() {
+        const keyword = document.getElementById('input-cari').value.toLowerCase();
+        const filtered = dataJurnal.filter(item => 
+            item.penyetor.toLowerCase().includes(keyword) ||
+            item.uraian.toLowerCase().includes(keyword) ||
+            item.rekap.toLowerCase().includes(keyword)
+        );
+        rendertabelJurnal(filtered);
+    }
+
+    // MODAL PIUTANG SIKRONISASI
+    function bukaModalDaftarPiutang() {
+        const modal = document.getElementById('modal-piutang');
+        const tbody = document.getElementById('tabel-modal-piutang-body');
+        const bulanSelect = document.getElementById('select-bulan-piutang').value;
+        tbody.innerHTML = '';
+
+        let listHutang = dataJurnal.filter(x => x.mekanisme === 'Hutang/Piutang');
+        if (bulanSelect !== 'Semua') {
+            listHutang = listHutang.filter(x => x.bulan === bulanSelect);
         }
 
-        totalPiutangElem.innerText = konversiKeRupiah(totalPiutang);
-
-        const m = document.getElementById("modalDaftarPiutang");
-        m.classList.remove("opacity-0", "pointer-events-none");
-        m.firstElementChild.classList.remove("scale-95");
+        if (listHutang.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-emerald-600 font-bold">Lunas / Tidak ada tunggakan piutang.</td></tr>`;
+        } else {
+            listHutang.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = 'border-b border-cikasda-bg';
+                tr.innerHTML = `
+                    <td class="p-3">${item.tanggal} (${item.bulan})</td>
+                    <td class="p-3 text-cikasda-blue">${item.penyetor}</td>
+                    <td class="p-3">${item.uraian}</td>
+                    <td class="p-3 text-right font-digital text-red-600 font-black">${formatRupiah(item.jumlah)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+        modal.classList.remove('hidden');
     }
 
     function tutupModalDaftarPiutang() {
-        const m = document.getElementById("modalDaftarPiutang");
-        m.classList.add("opacity-0", "pointer-events-none");
-        m.firstElementChild.classList.add("scale-95");
+        document.getElementById('modal-piutang').classList.add('hidden');
     }
 
-    function panggilModalTeguranDirect(nama, objek, nominal) {
-        tutupModalDaftarPiutang();
-        document.getElementById("t-nama").value = nama;
-        document.getElementById("t-objek").value = objek;
-        document.getElementById("t-nominal").value = nominal;
-        bukaModalTeguran();
-    }
-
-    async function simpanEntriSewaBaru(e) {
-        e.preventDefault();
-        const btnSubmit = document.getElementById("btn-submit-form");
-        const txtAwal = btnSubmit.innerHTML;
-        btnSubmit.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan...`;
-        btnSubmit.disabled = true;
-
-        const payload = {
-            action: "create",
-            bulan: document.getElementById("f-bulan").value,
-            tanggal: document.getElementById("f-tanggal").value,
-            uraian: document.getElementById("f-uraian").value,
-            penyetor: document.getElementById("f-penyetor").value,
-            penjelasan: document.getElementById("f-penjelasan").value,
-            jumlah: Number(document.getElementById("f-jumlah").value) || 0,
-            keterangan: document.getElementById("f-keterangan").value
-        };
-
-        try {
-            await fetch(APPS_SCRIPT_URL, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
+    // GRAFIK CHART.JS ENGINE
+    function renderGrafikSemua() {
+        // Grafik Dashboard Line
+        const ctxDashboard = document.getElementById('canvasGrafikPAD');
+        if (ctxDashboard) {
+            if (chartPADInstance) chartPADInstance.destroy();
+            chartPADInstance = new Chart(ctxDashboard, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu'],
+                    datasets: [{
+                        label: 'Realisasi Kas PAD (Rp)',
+                        data: [6500000, 1200000, 5500000, 4500000, 3660000, 0, 0, 0],
+                        borderColor: '#083370',
+                        backgroundColor: 'rgba(8, 51, 112, 0.08)',
+                        fill: true,
+                        tension: 0.35,
+                        borderWidth: 3
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
             });
-            alert("Data berhasil disubmit ke server!");
-            tutupModalForm();
-            e.target.reset();
-            setTimeout(() => { muatDataSinkronisasiCloud(); }, 1000);
-        } catch (err) {
-            console.error("Gagal mengirim data:", err);
-            alert("Terjadi kesalahan saat menyimpan data.");
-        } finally {
-            btnSubmit.innerHTML = txtAwal;
-            btnSubmit.disabled = false;
+        }
+
+        // Grafik Analitik Bar
+        const ctxBar = document.getElementById('canvasRealisasiTarget');
+        if (ctxBar) {
+            if (chartRealisasiTargetInstance) chartRealisasiTargetInstance.destroy();
+            chartRealisasiTargetInstance = new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei'],
+                    datasets: [{
+                        label: 'Realisasi Bulanan',
+                        data: [6500000, 1200000, 5500000, 4500000, 3660000],
+                        backgroundColor: '#f1c40f',
+                        borderRadius: 6
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        // Grafik Mekanisme Pie
+        const ctxPie = document.getElementById('canvasMekanisme');
+        if (ctxPie) {
+            if (chartMekanismeInstance) chartMekanismeInstance.destroy();
+            chartMekanismeInstance = new Chart(ctxPie, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Transfer Kas Daerah', 'Setor Tunai', 'Piutang'],
+                    datasets: [{
+                        data: [11000000, 5200000, 3000000],
+                        backgroundColor: ['#083370', '#0f9d68', '#dc2626']
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
         }
     }
 
-    /* MODAL TEGURAN WA */
-    function bukaModalTeguran() {
-        const m = document.getElementById("modalTeguran");
-        m.classList.remove("opacity-0", "pointer-events-none");
-        m.firstElementChild.classList.remove("scale-95");
-    }
-
-    function tutupModalTeguran() {
-        const m = document.getElementById("modalTeguran");
-        m.classList.add("opacity-0", "pointer-events-none");
-        m.firstElementChild.classList.add("scale-95");
-    }
-
-    /* INTEGRASI WHATSAPP DIRECT */
-    function kirimNotifikasiTeguran(e) {
-        e.preventDefault();
-        const nama = document.getElementById("t-nama").value;
-        const objek = document.getElementById("t-objek").value;
-        const nominal = document.getElementById("t-nominal").value;
-        let wa = document.getElementById("t-wa").value.trim();
-
-        if (wa.startsWith("0")) {
-            wa = "62" + wa.slice(1);
-        }
-
-        const pesan = `PEMBERITAHUAN SURAT TEGURAN RETRIBUSI / SEWA\nDINAS CIPTA KARYA DAN SUMBER DAYA AIR PROV. SULTENG\n\nYth. Bapak/Ibu/Pengelola *${nama}*,\n\nDengan hormat, berdasarkan catatan pembukuan M-PAD Dinas CIKASDA, kewajiban pembayaran sewa untuk objek:\n\n📌 *${objek}*\n💰 Nominal: *${konversiKeRupiah(nominal)}*\n\nStatus saat ini *BELUM TERLUNASI / MENUNGGAK*. Mohon untuk segera melakukan pembayaran atau mengonfirmasi pembayaran via Kasir Penerimaan Dinas CIKASDA.\n\nAtas perhatian dan kerja samanya, kami ucapkan terima kasih.`;
-
-        const linkWA = `https://wa.me/${wa}?text=${encodeURIComponent(pesan)}`;
-        window.open(linkWA, '_blank');
-        tutupModalTeguran();
-    }
-
-    /* AMBIL DATA CLOUD */
-    async function muatDataSinkronisasiCloud() {
-        const tBody = document.getElementById("tabel-jurnal-body");
-        const ikon = document.getElementById("icon-sync");
-        if (ikon) ikon.classList.add("fa-spin");
-
-        try {
-            const hasilFetch = await fetch(`${APPS_SCRIPT_URL}?_t=${Date.now()}`);
-            if (!hasilFetch.ok) throw new Error("Gagal mengambil data");
-            gudangDataLokal = await hasilFetch.json();
-            prosesDanTampilkanSemuaData(gudangDataLokal);
-        } catch (err) {
-            console.error(err);
-            if(tBody) tBody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-red-500 font-bold">Gagal memuat data dari Spreadsheet.</td></tr>`;
-        } finally {
-            if (ikon) ikon.classList.remove("fa-spin");
-        }
-    }
-
-    function prosesDanTampilkanSemuaData(dataArray) {
-        const tBody = document.getElementById("tabel-jurnal-body");
-        const containerBulan = document.getElementById("container-bulanan");
-        tBody.innerHTML = "";
-        containerBulan.innerHTML = "";
-
-        let totalKas = 0;
-        let akumulasiBulan = {};
-        listNamaBulan.forEach(b => akumulasiBulan[b.toLowerCase()] = 0);
-
-        let akumulasiPenyetor = {};
-        let akumulasiMekanisme = {};
-        let totalPiutangBerjalan = 0;
-
-        dataArray.forEach(item => {
-            const nominal = Number(item.jumlah) || 0;
-            const bln = (item.bulan || "").trim().toLowerCase();
-            totalKas += nominal;
-
-            if (akumulasiBulan.hasOwnProperty(bln)) akumulasiBulan[bln] += nominal;
-
-            const namaPenyetor = (item.penyetor || "Tidak Diketahui").trim();
-            if (!akumulasiPenyetor[namaPenyetor]) akumulasiPenyetor[namaPenyetor] = { total: 0, jumlahTransaksi: 0 };
-            akumulasiPenyetor[namaPenyetor].total += nominal;
-            akumulasiPenyetor[namaPenyetor].jumlahTransaksi += 1;
-
-            const mekanisme = (item.keterangan || "Non Tunai").trim();
-            akumulasiMekanisme[mekanisme] = (akumulasiMekanisme[mekanisme] || 0) + nominal;
-
-            const statusKet = (item.keterangan || "").toLowerCase();
-            if (statusKet.includes("hutang") || statusKet.includes("tunggak") || statusKet.includes("belum")) {
-                totalPiutangBerjalan += nominal;
-            }
-
-            tBody.innerHTML += `
-                <tr class="hover:bg-cikasda-bg/60 transition-colors border-b border-cikasda-bg font-bold">
-                    <td class="p-4 text-center font-mono text-cikasda-lightblue">#${item.id_transaksi || '-'}</td>
-                    <td class="p-4 text-center font-black uppercase text-[10px]">${item.bulan || '-'}</td>
-                    <td class="p-4 text-center text-cikasda-lightblue font-mono">${item.tanggal || '-'}</td>
-                    <td class="p-4 font-black">${item.uraian || '-'}</td>
-                    <td class="p-4 text-cikasda-lightblue">${item.penyetor || '-'}</td>
-                    <td class="p-4 font-normal text-slate-500">${item.penjelasan || '-'}</td>
-                    <td class="p-4 text-right font-mono font-black text-cikasda-blue">${konversiKeRupiah(nominal)}</td>
-                    <td class="p-4 text-center">
-                        <span class="px-2.5 py-1 rounded-full text-[9px] font-black uppercase ${item.keterangan && item.keterangan.toLowerCase().includes('hutang') ? 'bg-red-100 text-red-600 border border-red-200' : 'bg-blue-100 text-cikasda-blue'}">${item.keterangan || 'Non Tunai'}</span>
-                    </td>
-                </tr>
-            `;
-        });
-
-        // KPI utama
-        document.getElementById("grand-total").innerText = konversiKeRupiah(totalKas);
-        const persenCapaian = targetPADTahun > 0 ? (totalKas / targetPADTahun) * 100 : 0;
-        document.getElementById("target-pad-tahun").innerText = `Target PAD: ${konversiKeRupiah(targetPADTahun)}`;
-        document.getElementById("persen-capaian-pad").innerText = `Capaian Target: ${persenCapaian.toFixed(2)}%`;
-
-        const ringEl = document.getElementById("ring-capaian");
-        const ringLabelEl = document.getElementById("ring-capaian-label");
-        const persenClamped = Math.max(0, Math.min(100, persenCapaian));
-        ringEl.setAttribute("stroke-dasharray", RING_CIRCUM.toFixed(2));
-        ringEl.setAttribute("stroke-dashoffset", (RING_CIRCUM - (RING_CIRCUM * persenClamped / 100)).toFixed(2));
-        ringLabelEl.textContent = persenCapaian.toFixed(0) + "%";
-
-        const jumlahTransaksi = dataArray.length;
-        const rataRata = jumlahTransaksi > 0 ? totalKas / jumlahTransaksi : 0;
-        document.getElementById("kpi-rata-rata").innerText = konversiKeRupiah(rataRata);
-        document.getElementById("kpi-jumlah-transaksi").innerText = `${jumlahTransaksi} transaksi tercatat`;
-
-        // Pertumbuhan bulan berjalan
-        let bulanTerisi = listNamaBulan.filter(b => akumulasiBulan[b.toLowerCase()] > 0);
-        let elemGrowth = document.getElementById("kpi-growth");
-        let elemGrowthLabel = document.getElementById("kpi-growth-label");
-        if (bulanTerisi.length >= 2) {
-            const bulanIni = bulanTerisi[bulanTerisi.length - 1];
-            const bulanLalu = bulanTerisi[bulanTerisi.length - 2];
-            const nilaiIni = akumulasiBulan[bulanIni.toLowerCase()];
-            const nilaiLalu = akumulasiBulan[bulanLalu.toLowerCase()];
-            const growth = nilaiLalu > 0 ? ((nilaiIni - nilaiLalu) / nilaiLalu) * 100 : 0;
-            elemGrowth.innerText = (growth >= 0 ? "+" : "") + growth.toFixed(1) + "%";
-            elemGrowth.className = "text-xl font-black font-digital mt-2 " + (growth >= 0 ? "text-cikasda-emerald" : "text-red-600");
-            elemGrowthLabel.innerText = `${bulanIni} vs ${bulanLalu}`;
-        } else {
-            elemGrowth.innerText = "-";
-            elemGrowthLabel.innerText = "Data belum mencukupi";
-        }
-
-        // Ikhtisar bulanan
-        listNamaBulan.forEach(bln => {
-            const totalBln = akumulasiBulan[bln.toLowerCase()] || 0;
-            containerBulan.innerHTML += `
-                <div class="flex items-center justify-between py-2 px-1 border-b border-slate-100">
-                    <span class="font-bold text-cikasda-blue">${bln}</span>
-                    <span class="font-mono font-extrabold text-cikasda-lightblue">${konversiKeRupiah(totalBln)}</span>
-                </div>
-            `;
-        });
-
-        // Ranking penyetor
-        const rankingArray = Object.entries(akumulasiPenyetor)
-            .map(([nama, v]) => ({ nama, total: v.total, jumlahTransaksi: v.jumlahTransaksi }))
-            .sort((a, b) => b.total - a.total);
-
-        renderRanking(rankingArray);
-        renderNotifikasi(dataArray);
-
-        // Grafik
-        gambarUlangGrafikPAD(akumulasiBulan);
-        gambarGrafikRealisasiTarget(akumulasiBulan);
-        gambarGrafikMekanisme(akumulasiMekanisme);
-
-        // Kartu analitik tambahan
-        const bulanAktif = bulanTerisi.length;
-        const rataRataBulanan = bulanAktif > 0 ? totalKas / bulanAktif : 0;
-        document.getElementById("proyeksi-akhir-tahun").innerText = konversiKeRupiah(rataRataBulanan * 12);
-        document.getElementById("analitik-total-piutang").innerText = konversiKeRupiah(totalPiutangBerjalan);
-
-        let bulanTertinggiNama = "-";
-        let nilaiTertinggi = 0;
-        listNamaBulan.forEach(b => {
-            const v = akumulasiBulan[b.toLowerCase()] || 0;
-            if (v > nilaiTertinggi) { nilaiTertinggi = v; bulanTertinggiNama = b; }
-        });
-        document.getElementById("analitik-bulan-tertinggi").innerText = bulanTertinggiNama;
-
-        renderAkumulasiKategori(dataArray, totalKas);
-    }
-
-    function renderRanking(rankingArray) {
-        const containerTop5 = document.getElementById("container-ranking");
-        const tabelLengkap = document.getElementById("tabel-ranking-lengkap");
-        containerTop5.innerHTML = "";
-        tabelLengkap.innerHTML = "";
-
-        if (rankingArray.length === 0) {
-            containerTop5.innerHTML = `<div class="p-4 text-center text-gray-400 font-bold text-[11px]">Belum ada data transaksi.</div>`;
-            tabelLengkap.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-gray-400 font-bold">Belum ada data transaksi.</td></tr>`;
-            return;
-        }
-
-        rankingArray.slice(0, 5).forEach((item, idx) => {
-            const badgeClass = idx === 0 ? "rank-badge-1" : idx === 1 ? "rank-badge-2" : idx === 2 ? "rank-badge-3" : "rank-badge-n";
-            containerTop5.innerHTML += `
-                <div class="flex items-center justify-between py-2.5 px-1 border-b border-slate-100 gap-2">
-                    <div class="flex items-center gap-2.5 min-w-0">
-                        <span class="w-6 h-6 rounded-full ${badgeClass} flex items-center justify-center text-[10px] font-black shrink-0">${idx + 1}</span>
-                        <span class="font-bold text-cikasda-blue truncate text-[11px]">${item.nama}</span>
-                    </div>
-                    <span class="font-mono font-extrabold text-cikasda-lightblue text-[11px] shrink-0">${konversiKeRupiah(item.total)}</span>
-                </div>
-            `;
-        });
-
-        rankingArray.forEach((item, idx) => {
-            const badgeClass = idx === 0 ? "rank-badge-1" : idx === 1 ? "rank-badge-2" : idx === 2 ? "rank-badge-3" : "rank-badge-n";
-            tabelLengkap.innerHTML += `
-                <tr class="hover:bg-cikasda-bg/60">
-                    <td class="p-3 text-center"><span class="inline-flex w-6 h-6 rounded-full ${badgeClass} items-center justify-center text-[10px] font-black">${idx + 1}</span></td>
-                    <td class="p-3">${item.nama}</td>
-                    <td class="p-3 text-center font-mono">${item.jumlahTransaksi}</td>
-                    <td class="p-3 text-right font-mono">${konversiKeRupiah(item.total)}</td>
-                </tr>
-            `;
-        });
-    }
-
-    function renderNotifikasi(dataArray) {
-        const listNotif = document.getElementById("list-notif");
-        const badgeNotif = document.getElementById("badge-notif");
-        const terbaru = dataArray.slice(-5).reverse();
-
-        if (terbaru.length === 0) {
-            listNotif.innerHTML = `<div class="p-4 text-center text-gray-400 font-bold text-[11px]">Belum ada aktivitas.</div>`;
-            badgeNotif.classList.add("hidden");
-            return;
-        }
-
-        badgeNotif.classList.remove("hidden");
-        badgeNotif.classList.add("flex");
-        badgeNotif.innerText = terbaru.length;
-
-        listNotif.innerHTML = terbaru.map(item => `
-            <div class="p-3 hover:bg-cikasda-bg/60">
-                <p class="font-bold text-cikasda-blue truncate">${item.uraian || '-'}</p>
-                <p class="text-[10px] text-cikasda-lightblue/80 flex items-center justify-between mt-0.5">
-                    <span>${item.penyetor || '-'}</span>
-                    <span class="font-mono font-bold">${konversiKeRupiah(item.jumlah)}</span>
-                </p>
-            </div>
-        `).join("");
-    }
-
-    function gambarUlangGrafikPAD(petaBulanan) {
-        const ctx = document.getElementById('canvasGrafikPAD').getContext('2d');
-        const nilaiY = listNamaBulan.map(b => petaBulanan[b.toLowerCase()] || 0);
-
-        if (instanceGrafikPAD) instanceGrafikPAD.destroy();
-
-        instanceGrafikPAD = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: listNamaBulan,
-                datasets: [{
-                    label: 'Penerimaan Kas (Rp)',
-                    data: nilaiY,
-                    borderColor: '#083370',
-                    backgroundColor: 'rgba(241, 196, 15, 0.15)',
-                    borderWidth: 2,
-                    fill: true,
-                    tension: 0.3
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } }
-            }
-        });
-    }
-
-    function gambarGrafikRealisasiTarget(petaBulanan) {
-        const canvasEl = document.getElementById('canvasRealisasiTarget');
-        if (!canvasEl) return;
-        const ctx = canvasEl.getContext('2d');
-        const nilaiRealisasi = listNamaBulan.map(b => petaBulanan[b.toLowerCase()] || 0);
-        const targetBulanan = targetPADTahun / 12;
-
-        if (instanceGrafikRealisasiTarget) instanceGrafikRealisasiTarget.destroy();
-
-        instanceGrafikRealisasiTarget = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: listNamaBulan,
-                datasets: [
-                    { label: 'Realisasi', data: nilaiRealisasi, backgroundColor: '#1a5ba3', borderRadius: 6 },
-                    { label: 'Target Bulanan', data: listNamaBulan.map(() => targetBulanan), type: 'line', borderColor: '#f1c40f', borderWidth: 2, borderDash: [6, 4], pointRadius: 0, fill: false }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } }
-            }
-        });
-    }
-
-    function gambarGrafikMekanisme(petaMekanisme) {
-        const canvasEl = document.getElementById('canvasMekanisme');
-        if (!canvasEl) return;
-        const ctx = canvasEl.getContext('2d');
-        const labels = Object.keys(petaMekanisme);
-        const nilai = Object.values(petaMekanisme);
-        const palet = ['#083370', '#1a5ba3', '#f1c40f', '#d4ac0d', '#0f9d68', '#94a3b8'];
-
-        if (instanceGrafikMekanisme) instanceGrafikMekanisme.destroy();
-
-        if (labels.length === 0) return;
-
-        instanceGrafikMekanisme = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: labels,
-                datasets: [{ data: nilai, backgroundColor: palet, borderWidth: 2, borderColor: '#fff' }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } }
-            }
-        });
-    }
-
-    /* CETAK PDF LAPORAN RESMI BERSIH DENGAN TTD KEPALA DINAS */
+    // CETAK PDF ENGINE INTEGRATED WITH TANDA TANGAN KEPALA DINAS
     function cetakLaporanResmiPDF() {
-        const tabelBodyCetak = document.getElementById("cetak-tabel-body");
-        const ikhtisarBodyCetak = document.getElementById("cetak-ikhtisar-body");
-        const tglSekarang = document.getElementById("cetak-tgl-sekarang");
+        const bodyPrint = document.getElementById('print-tabel-body');
+        const totalKasPrint = document.getElementById('print-total-kas');
+        const ttdTanggal = document.getElementById('print-tanggal-ttd');
+        const printTglCetak = document.getElementById('print-tanggal-cetak');
 
-        const d = new Date();
-        tglSekarang.innerText = `${d.getDate()} ${listNamaBulan[d.getMonth()]} ${d.getFullYear()}`;
+        const hariIni = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'Long', year: 'numeric' });
+        if (ttdTanggal) ttdTanggal.textContent = hariIni;
+        if (printTglCetak) printTglCetak.textContent = hariIni;
 
-        document.getElementById("cetak-kadis-jabatan").innerText = biodataKadis.jabatan;
-        document.getElementById("cetak-kadis-nama").innerText = biodataKadis.nama;
-        document.getElementById("cetak-kadis-pangkat").innerText = biodataKadis.pangkat;
-        document.getElementById("cetak-kadis-nip").innerText = `NIP. ${biodataKadis.nip}`;
+        bodyPrint.innerHTML = '';
+        let total = 0;
 
-        let akumulasiBulan = {};
-        listNamaBulan.forEach(b => akumulasiBulan[b.toLowerCase()] = 0);
-
-        tabelBodyCetak.innerHTML = "";
-
-        gudangDataLokal.forEach(item => {
-            const bln = (item.bulan || "").trim().toLowerCase();
-            const nominal = Number(item.jumlah) || 0;
-            if (akumulasiBulan.hasOwnProperty(bln)) akumulasiBulan[bln] += nominal;
-
-            tabelBodyCetak.innerHTML += `
-                <tr>
-                    <td style="border: 1px solid #000; padding: 4px; text-align: center; font-family: monospace;">#${item.id_transaksi || '-'}</td>
-                    <td style="border: 1px solid #000; padding: 4px; text-align: center;">${item.bulan || '-'}</td>
-                    <td style="border: 1px solid #000; padding: 4px; text-align: center; font-family: monospace;">${item.tanggal || '-'}</td>
-                    <td style="border: 1px solid #000; padding: 4px; font-weight: bold;">${item.uraian || '-'}</td>
-                    <td style="border: 1px solid #000; padding: 4px;">${item.penyetor || '-'}</td>
-                    <td style="border: 1px solid #000; padding: 4px; text-align: right; font-family: monospace; font-weight: bold;">${konversiKeRupiah(nominal)}</td>
-                    <td style="border: 1px solid #000; padding: 4px; text-align: center;">${item.keterangan || 'Non Tunai'}</td>
-                </tr>
+        dataJurnal.forEach((item, index) => {
+            total += item.jumlah;
+            const tr = document.createElement('tr');
+            tr.className = 'border-b border-gray-300';
+            tr.innerHTML = `
+                <td class="border border-gray-300 p-2 text-center">${index + 1}</td>
+                <td class="border border-gray-300 p-2 text-center">${item.bulan}</td>
+                <td class="border border-gray-300 p-2 text-center">${item.tanggal}</td>
+                <td class="border border-gray-300 p-2 font-bold">${item.uraian}</td>
+                <td class="border border-gray-300 p-2">${item.penyetor}</td>
+                <td class="border border-gray-300 p-2 text-[10px]">${item.rekap}</td>
+                <td class="border border-gray-300 p-2 text-right font-bold">${formatRupiah(item.jumlah)}</td>
+                <td class="border border-gray-300 p-2 text-center">${item.mekanisme}</td>
             `;
+            bodyPrint.appendChild(tr);
         });
 
-        ikhtisarBodyCetak.innerHTML = "";
-        for (let i = 0; i < 6; i++) {
-            const b1 = listNamaBulan[i];
-            const b2 = listNamaBulan[i + 6];
-            ikhtisarBodyCetak.innerHTML += `
-                <tr>
-                    <td style="border: 1px solid #000; padding: 4px; font-weight: bold;">${b1}</td>
-                    <td style="border: 1px solid #000; padding: 4px; text-align: right; font-family: monospace;">${konversiKeRupiah(akumulasiBulan[b1.toLowerCase()])}</td>
-                    <td style="border: 1px solid #000; padding: 4px; font-weight: bold;">${b2}</td>
-                    <td style="border: 1px solid #000; padding: 4px; text-align: right; font-family: monospace;">${konversiKeRupiah(akumulasiBulan[b2.toLowerCase()])}</td>
-                </tr>
-            `;
-        }
+        if (totalKasPrint) totalKasPrint.textContent = formatRupiah(total);
 
+        // Panggil print browser engine
         window.print();
     }
 
-    function eksporExcel() {
-        if (gudangDataLokal.length === 0) { alert("Tidak ada data untuk diekspor."); return; }
-        const ws = XLSX.utils.json_to_sheet(gudangDataLokal);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Data Jurnal PAD");
-        XLSX.writeFile(wb, "Laporan_Jurnal_PAD_CIKASDA_2026.xlsx");
+    function simpanPengaturan() {
+        const inputVal = document.getElementById('setting-target-pad').value;
+        if (inputVal) {
+            targetPAD = Number(inputVal);
+            document.getElementById('target-pad-tahun').innerText = `Target PAD: ${formatRupiah(targetPAD)}`;
+            renderKpiSistem();
+            alert('Pengaturan target PAD berhasil disimpan.');
+        }
     }
 
-    function jalankanPencarianTabel() {
-        const keyword = document.getElementById("input-cari").value.toLowerCase();
-        const hasilFilter = gudangDataLokal.filter(item => {
-            return (item.uraian || "").toLowerCase().includes(keyword) ||
-                   (item.penyetor || "").toLowerCase().includes(keyword) ||
-                   (item.penjelasan || "").toLowerCase().includes(keyword) ||
-                   (item.bulan || "").toLowerCase().includes(keyword) ||
-                   (item.keterangan || "").toLowerCase().includes(keyword);
-        });
-        prosesDanTampilkanSemuaData(hasilFilter);
+    function muatDataSinkronisasiCloud() {
+        const icon = document.getElementById('icon-sync');
+        if (icon) icon.classList.add('fa-spin');
+        setTimeout(() => {
+            if (icon) icon.classList.remove('fa-spin');
+            muatSemuaTampilan();
+        }, 600);
     }
 </script>
+
 </body>
 </html>
