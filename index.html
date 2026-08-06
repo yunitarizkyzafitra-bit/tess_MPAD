@@ -779,7 +779,7 @@
         <table style="width: 100%; border-bottom: 3px double #000; padding-bottom: 8px; margin-bottom: 15px;">
             <tr>
                 <td style="width: 15%; text-align: center; vertical-align: middle;">
-                    <img src="logo_sulteng.png" alt="Logo Sulteng" style="width: 70px; height: auto;" onerror="this.style.display='none'">
+                    <img src="73773_2.jpg" alt="Logo Sulteng" style="width: 70px; height: auto;" onerror="this.style.display='none'">
                 </td>
                 <td style="width: 85%; text-align: center; vertical-align: middle; padding-right: 12%;">
                     <h3 style="margin: 0; font-size: 12pt; font-weight: bold; text-transform: uppercase;">PEMERINTAH PROVINSI SULAWESI TENGAH</h3>
@@ -1018,10 +1018,10 @@
 
     function renderPreviewTtdKadis() {
         document.getElementById("preview-ttd-kadis").innerHTML = `
-            <p class="font-bold text-cikasda-navy">${biodataKadis.jabatan}</p>
-            <p class="mt-6 font-bold underline text-cikasda-navy">${biodataKadis.nama}</p>
-            <p class="text-gray-500">${biodataKadis.pangkat}</p>
-            <p class="font-mono text-gray-500">NIP. ${biodataKadis.nip}</p>
+            <p class="font-bold text-cikasda-navy">${escapeHTML(biodataKadis.jabatan)}</p>
+            <p class="mt-6 font-bold underline text-cikasda-navy">${escapeHTML(biodataKadis.nama)}</p>
+            <p class="text-gray-500">${escapeHTML(biodataKadis.pangkat)}</p>
+            <p class="font-mono text-gray-500">NIP. ${escapeHTML(biodataKadis.nip)}</p>
         `;
     }
 
@@ -1523,7 +1523,7 @@
                 <td class="p-3.5 font-bold">${escapeHTML(item.uraian || '-')}</td>
                 <td class="p-3.5">${escapeHTML(item.penyetor || '-')}</td>
                 <td class="p-3.5 text-gray-500 text-[11px]">${escapeHTML(item.penjelasan || '-')}</td>
-                <td class="p-3.5 text-right font-mono-num font-bold text-cikasda-navy">${konversiKeRupiah(item.jumlah)}</td>
+                <td class="p-3.5 text-right font-mono-num font-bold">${konversiKeRupiah(item.jumlah)}</td>
                 <td class="p-3.5 text-center">
                     <span class="px-2.5 py-1 rounded-full text-[9px] font-bold uppercase ${
                         (item.keterangan || '').toLowerCase().includes('hutang') ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'
@@ -1533,70 +1533,79 @@
         `).join("");
     }
 
-    function renderIkhtisarBulanan(rekapBulanan) {
-        const container = document.getElementById("container-bulanan");
-        if (!container) return;
-        container.innerHTML = Object.keys(rekapBulanan).map(b => `
-            <div class="py-2.5 flex justify-between items-center">
-                <span class="text-gray-600 font-bold">${b}</span>
-                <span class="font-mono-num font-bold text-cikasda-navy">${konversiKeRupiah(rekapBulanan[b])}</span>
+    function jalankanPencarianTabel() {
+        const q = document.getElementById("input-cari").value.toLowerCase();
+        const hasil = gudangDataLokal.filter(item => 
+            (item.penyetor || "").toLowerCase().includes(q) ||
+            (item.uraian || "").toLowerCase().includes(q) ||
+            (item.penjelasan || "").toLowerCase().includes(q) ||
+            (item.bulan || "").toLowerCase().includes(q)
+        );
+        renderTabelJurnal(hasil);
+    }
+
+    function renderIkhtisarBulanan(rekap) {
+        const el = document.getElementById("container-bulanan");
+        if (!el) return;
+        el.innerHTML = listNamaBulan.map(b => `
+            <div class="py-2 flex justify-between items-center">
+                <span class="text-gray-600">${b}</span>
+                <span class="font-mono-num font-bold text-cikasda-navy">${konversiKeRupiah(rekap[b])}</span>
             </div>
         `).join("");
     }
 
-    function renderRankingPenyetor(rekapPenyetor) {
-        const container = document.getElementById("container-ranking");
-        const tbodyLengkap = document.getElementById("tabel-ranking-lengkap");
+    function renderRankingPenyetor(rekap) {
+        const el = document.getElementById("container-ranking");
+        const elLengkap = document.getElementById("tabel-ranking-lengkap");
         
-        const sorted = Object.keys(rekapPenyetor)
-            .map(k => ({ nama: k, total: rekapPenyetor[k] }))
-            .sort((a, b) => b.total - a.total);
+        const sorted = Object.entries(rekap).sort((a,b) => b[1] - a[1]);
 
-        if (container) {
-            container.innerHTML = sorted.slice(0, 5).map((item, idx) => `
+        if (el) {
+            el.innerHTML = sorted.slice(0, 5).map(([nama, total], i) => `
                 <div class="py-2.5 flex justify-between items-center">
-                    <div class="flex items-center gap-2">
-                        <span class="w-5 h-5 rounded-full ${idx === 0 ? 'bg-amber-400 text-cikasda-navy' : 'bg-gray-200 text-gray-600'} text-[10px] font-bold flex items-center justify-center">${idx + 1}</span>
-                        <span class="font-bold text-cikasda-navy truncate max-w-[130px]">${escapeHTML(item.nama)}</span>
+                    <div class="flex items-center gap-2.5 min-w-0">
+                        <span class="w-5 h-5 rounded-full ${i===0?'bg-amber-400 text-white':i===1?'bg-gray-300 text-gray-700':'bg-amber-700/20 text-amber-800'} text-[10px] font-black flex items-center justify-center shrink-0">${i+1}</span>
+                        <span class="truncate text-cikasda-navy font-bold">${escapeHTML(nama)}</span>
                     </div>
-                    <span class="font-mono-num font-bold text-cikasda-blue">${konversiKeRupiah(item.total)}</span>
+                    <span class="font-mono-num font-bold text-cikasda-blue shrink-0 ml-2">${konversiKeRupiah(total)}</span>
                 </div>
             `).join("");
         }
 
-        if (tbodyLengkap) {
-            tbodyLengkap.innerHTML = sorted.map((item, idx) => `
-                <tr class="hover:bg-gray-50">
-                    <td class="p-3 text-center font-bold text-gray-400">${idx + 1}</td>
-                    <td class="p-3 font-bold text-cikasda-navy">${escapeHTML(item.nama)}</td>
-                    <td class="p-3 text-center font-mono-num">-</td>
-                    <td class="p-3 text-right font-mono-num font-bold text-cikasda-navy">${konversiKeRupiah(item.total)}</td>
-                </tr>
-            `).join("");
+        if (elLengkap) {
+            elLengkap.innerHTML = sorted.map(([nama, total], i) => {
+                const frekuensi = gudangDataLokal.filter(d => (d.penyetor || '').trim() === nama).length;
+                return `
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-3 text-center font-bold text-gray-400">${i+1}</td>
+                        <td class="p-3 font-bold text-cikasda-navy">${escapeHTML(nama)}</td>
+                        <td class="p-3 text-center font-mono-num">${frekuensi}x</td>
+                        <td class="p-3 text-right font-mono-num font-bold text-cikasda-blue">${konversiKeRupiah(total)}</td>
+                    </tr>
+                `;
+            }).join("");
         }
     }
 
-    /* CHART JS CHARTS (ROBOTO INTEGRATED) */
-    function renderGrafikPAD(rekapBulanan) {
+    function renderGrafikPAD(rekap) {
         const ctx = document.getElementById("canvasGrafikPAD");
-        if (!ctx) return;
-        if (instanceGrafikPAD) instanceGrafikPAD.destroy();
+        if(!ctx) return;
+        if(instanceGrafikPAD) instanceGrafikPAD.destroy();
 
-        Chart.defaults.font.family = 'Roboto';
         instanceGrafikPAD = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: listNamaBulan,
                 datasets: [{
-                    label: 'Realisasi PAD (Rp)',
-                    data: listNamaBulan.map(b => rekapBulanan[b] || 0),
-                    borderColor: '#0b192c',
-                    backgroundColor: 'rgba(11, 25, 44, 0.05)',
+                    label: 'Penerimaan PAD (Rp)',
+                    data: listNamaBulan.map(b => rekap[b]),
+                    borderColor: '#00adb5',
+                    backgroundColor: 'rgba(0, 173, 181, 0.1)',
+                    borderWidth: 3,
                     fill: true,
                     tension: 0.35,
-                    borderWidth: 3,
-                    pointBackgroundColor: '#d4af37',
-                    pointRadius: 4
+                    pointBackgroundColor: '#0b192c'
                 }]
             },
             options: {
@@ -1604,139 +1613,146 @@
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
-                    y: { ticks: { font: { family: 'Roboto' }, callback: v => 'Rp ' + (v/1000000).toFixed(1) + 'M' } },
-                    x: { ticks: { font: { family: 'Roboto' } } }
+                    y: { ticks: { callback: v => 'Rp ' + (v/1000000) + 'M', font: { size: 9 } } },
+                    x: { ticks: { font: { size: 9 } } }
                 }
             }
         });
     }
 
-    function renderGrafikRealisasiTarget(rekapBulanan) {
+    function renderGrafikRealisasiTarget(rekap) {
         const ctx = document.getElementById("canvasRealisasiTarget");
-        if (!ctx) return;
-        if (instanceGrafikRealisasiTarget) instanceGrafikRealisasiTarget.destroy();
+        if(!ctx) return;
+        if(instanceGrafikRealisasiTarget) instanceGrafikRealisasiTarget.destroy();
 
-        const targetBulan = targetPADTahun / 12;
+        const targetBulanan = targetPADTahun / 12;
+
         instanceGrafikRealisasiTarget = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: listNamaBulan,
                 datasets: [
-                    { label: 'Realisasi', data: listNamaBulan.map(b => rekapBulanan[b] || 0), backgroundColor: '#0b192c', borderRadius: 6 },
-                    { label: 'Target Proporsional', data: Array(12).fill(targetBulan), type: 'line', borderColor: '#d4af37', borderWidth: 2, borderDash: [5, 5], pointRadius: 0 }
+                    {
+                        label: 'Realisasi Kas',
+                        data: listNamaBulan.map(b => rekap[b]),
+                        backgroundColor: '#1e3e62'
+                    },
+                    {
+                        label: 'Target Proporsional',
+                        data: Array(12).fill(targetBulanan),
+                        type: 'line',
+                        borderColor: '#d4af37',
+                        borderDash: [5, 5],
+                        fill: false
+                    }
                 ]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { position: 'top' } },
-                scales: { y: { ticks: { callback: v => 'Rp ' + (v/1000000).toFixed(1) + 'M' } } }
+                scales: { y: { ticks: { callback: v => (v/1000000) + ' Jt' } } }
             }
         });
     }
 
-    function renderGrafikMekanisme(rekapMekanisme) {
+    function renderGrafikMekanisme(rekapMek) {
         const ctx = document.getElementById("canvasMekanisme");
-        if (!ctx) return;
-        if (instanceGrafikMekanisme) instanceGrafikMekanisme.destroy();
+        if(!ctx) return;
+        if(instanceGrafikMekanisme) instanceGrafikMekanisme.destroy();
 
         instanceGrafikMekanisme = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: Object.keys(rekapMekanisme),
+                labels: Object.keys(rekapMek),
                 datasets: [{
-                    data: Object.values(rekapMekanisme),
-                    backgroundColor: ['#0b192c', '#d4af37', '#10b981', '#ef4444'],
-                    borderWidth: 0
+                    data: Object.values(rekapMek),
+                    backgroundColor: ['#10b981', '#1e3e62', '#00adb5', '#ef4444']
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { position: 'bottom' } }
+                plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } }
             }
         });
     }
 
     function updateNotifikasi(data) {
-        const listNotif = document.getElementById("list-notif");
         const badge = document.getElementById("badge-notif");
-        if (!listNotif) return;
+        const list = document.getElementById("list-notif");
+        if(!list) return;
 
-        const terbanyak = data.slice(-5).reverse();
-        if (terbanyak.length > 0) {
-            badge.innerText = terbanyak.length;
-            badge.classList.remove("hidden");
-            badge.classList.add("flex");
+        badge.innerText = data.length;
+        badge.classList.remove("hidden");
+        badge.classList.add("flex");
 
-            listNotif.innerHTML = terbanyak.map(item => `
-                <div class="p-3 hover:bg-gray-50">
-                    <p class="font-bold text-cikasda-navy">${escapeHTML(item.penyetor || 'Anonim')}</p>
-                    <p class="text-[10px] text-gray-500 mt-0.5">${escapeHTML(item.uraian || '-')} &middot; <strong class="text-cikasda-blue font-mono-num">${konversiKeRupiah(item.jumlah)}</strong></p>
-                </div>
-            `).join("");
-        }
+        list.innerHTML = data.slice(-5).reverse().map(item => `
+            <div class="p-3 hover:bg-gray-50">
+                <p class="font-bold text-cikasda-navy">${escapeHTML(item.penyetor || 'Anonim')}</p>
+                <p class="text-[10px] text-gray-500">${escapeHTML(item.uraian || '-')} &middot; <strong class="text-emerald-600">${konversiKeRupiah(item.jumlah)}</strong></p>
+            </div>
+        `).join("");
     }
 
-    function jalankanPencarianTabel() {
-        const query = document.getElementById("input-cari").value.toLowerCase();
-        const filtered = gudangDataLokal.filter(i => 
-            (i.penyetor || '').toLowerCase().includes(query) ||
-            (i.uraian || '').toLowerCase().includes(query) ||
-            (i.penjelasan || '').toLowerCase().includes(query) ||
-            (i.bulan || '').toLowerCase().includes(query)
-        );
-        renderTabelJurnal(filtered);
-    }
-
-    function eksporExcel() {
-        if (gudangDataLokal.length === 0) { alert("Tidak ada data untuk diekspor."); return; }
-        const ws = XLSX.utils.json_to_sheet(gudangDataLokal);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Log Jurnal PAD");
-        XLSX.writeFile(wb, "Laporan_PAD_CIKASDA_2026.xlsx");
-    }
-
+    /* CETAK & EKSPOR */
     function cetakLaporanResmiPDF() {
-        const bodyCetak = document.getElementById("cetak-tabel-body");
-        const ikhtisarBody = document.getElementById("cetak-ikhtisar-body");
-        
+        mintaPin(cetakLaporanResmiPDFAsli);
+    }
+
+    function cetakLaporanResmiPDFAsli() {
         document.getElementById("cetak-tgl-sekarang").innerText = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
         document.getElementById("cetak-kadis-nama").innerText = biodataKadis.nama;
         document.getElementById("cetak-kadis-jabatan").innerText = biodataKadis.jabatan;
         document.getElementById("cetak-kadis-pangkat").innerText = biodataKadis.pangkat;
         document.getElementById("cetak-kadis-nip").innerText = "NIP. " + biodataKadis.nip;
 
-        let rekapBulanan = {};
-        listNamaBulan.forEach(b => rekapBulanan[b] = 0);
-        
-        gudangDataLokal.forEach(item => {
-            const bulan = (item.bulan || "").trim();
-            if (rekapBulanan.hasOwnProperty(bulan)) { rekapBulanan[bulan] += Number(item.jumlah) || 0; }
+        let rekapBulan = {};
+        listNamaBulan.forEach(b => rekapBulan[b] = 0);
+        gudangDataLokal.forEach(d => {
+            const b = (d.bulan || '').trim();
+            if(rekapBulan.hasOwnProperty(b)) rekapBulan[b] += Number(d.jumlah) || 0;
         });
 
-        ikhtisarBody.innerHTML = `
-            <tr>
-                <td style="border: 1px solid #000; padding: 4px;">Januari - Juni</td>
-                <td style="border: 1px solid #000; padding: 4px; text-align: right; font-weight: bold;">${konversiKeRupiah(listNamaBulan.slice(0,6).reduce((a,b)=>a+rekapBulanan[b],0))}</td>
-                <td style="border: 1px solid #000; padding: 4px;">Juli - Desember</td>
-                <td style="border: 1px solid #000; padding: 4px; text-align: right; font-weight: bold;">${konversiKeRupiah(listNamaBulan.slice(6,12).reduce((a,b)=>a+rekapBulanan[b],0))}</td>
-            </tr>
-        `;
+        let bodyIkhtisar = "";
+        for(let i=0; i<6; i++) {
+            const b1 = listNamaBulan[i];
+            const b2 = listNamaBulan[i+6];
+            bodyIkhtisar += `
+                <tr>
+                    <td style="border:1px solid #000; padding:4px;">${b1}</td>
+                    <td style="border:1px solid #000; padding:4px; text-align:right;">${konversiKeRupiah(rekapBulan[b1])}</td>
+                    <td style="border:1px solid #000; padding:4px;">${b2}</td>
+                    <td style="border:1px solid #000; padding:4px; text-align:right;">${konversiKeRupiah(rekapBulan[b2])}</td>
+                </tr>
+            `;
+        }
+        document.getElementById("cetak-ikhtisar-body").innerHTML = bodyIkhtisar;
 
-        bodyCetak.innerHTML = gudangDataLokal.map((item, i) => `
+        document.getElementById("cetak-tabel-body").innerHTML = gudangDataLokal.map((d, i) => `
             <tr>
-                <td style="border: 1px solid #000; padding: 4px; text-align: center;">${i + 1}</td>
-                <td style="border: 1px solid #000; padding: 4px;">${escapeHTML(item.bulan || '-')}</td>
-                <td style="border: 1px solid #000; padding: 4px; text-align: center;">${escapeHTML(item.tanggal || '-')}</td>
-                <td style="border: 1px solid #000; padding: 4px;">${escapeHTML(item.uraian || '-')}</td>
-                <td style="border: 1px solid #000; padding: 4px;">${escapeHTML(item.penyetor || '-')}</td>
-                <td style="border: 1px solid #000; padding: 4px; text-align: right; font-weight: bold;">${konversiKeRupiah(item.jumlah)}</td>
-                <td style="border: 1px solid #000; padding: 4px; text-align: center;">${escapeHTML(item.keterangan || '-')}</td>
+                <td style="border:1px solid #000; padding:4px; text-align:center;">${i+1}</td>
+                <td style="border:1px solid #000; padding:4px; text-align:center;">${escapeHTML(d.bulan || '-')}</td>
+                <td style="border:1px solid #000; padding:4px; text-align:center;">${escapeHTML(d.tanggal || '-')}</td>
+                <td style="border:1px solid #000; padding:4px;">${escapeHTML(d.uraian || '-')}</td>
+                <td style="border:1px solid #000; padding:4px;">${escapeHTML(d.penyetor || '-')}</td>
+                <td style="border:1px solid #000; padding:4px; text-align:right;">${konversiKeRupiah(d.jumlah)}</td>
+                <td style="border:1px solid #000; padding:4px; text-align:center;">${escapeHTML(d.keterangan || 'Lunas')}</td>
             </tr>
         `).join("");
 
         window.print();
+    }
+
+    function eksporExcel() {
+        mintaPin(eksporExcelAsli);
+    }
+
+    function eksporExcelAsli() {
+        if(gudangDataLokal.length === 0) { alert("Tidak ada data untuk diekspor!"); return; }
+        const ws = XLSX.utils.json_to_sheet(gudangDataLokal);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Jurnal Kas PAD");
+        XLSX.writeFile(wb, `Laporan_PAD_CIKASDA_${new Date().toISOString().slice(0,10)}.xlsx`);
     }
 </script>
 </body>
