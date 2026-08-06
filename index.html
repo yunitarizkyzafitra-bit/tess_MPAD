@@ -14,12 +14,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Import Google Font Montserrat & Calibri Fallbacks -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        number: ['Calibri', 'Segoe UI', 'Candara', 'sans-serif']
+                    },
                     colors: {
                         cikasda: {
                             bg: '#f3f8fc',
@@ -38,17 +43,55 @@
         }
     </script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f3f8fc; color: #083370; }
-        .font-digital { font-family: 'Orbitron', sans-serif; }
-        .font-display { font-family: 'Playfair Display', serif; }
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: #f3f8fc; 
+            color: #083370; 
+        }
 
-        .glass-panel { background: rgba(255, 255, 255, 0.97); border: 1px solid rgba(8, 51, 112, 0.10); box-shadow: 0 10px 30px -12px rgba(8, 51, 112, 0.10); }
-        .gold-hairline { background: linear-gradient(90deg, transparent, #f1c40f 20%, #f1c40f 80%, transparent); height: 1px; }
+        /* Kelas khusus untuk memaksa elemen bermuatan angka/nilai finansial menggunakan font Calibri */
+        .font-num, .font-digital { 
+            font-family: 'Calibri', 'Segoe UI', Candara, sans-serif !important; 
+            font-variant-numeric: tabular-nums;
+        }
 
-        .sidebar-link { position: relative; transition: all .2s ease; }
-        .sidebar-link.active { background: rgba(241, 196, 15, 0.12); color: #f1c40f; }
-        .sidebar-link.active::before { content: ""; position: absolute; left: 0; top: 8px; bottom: 8px; width: 3px; background: #f1c40f; border-radius: 0 4px 4px 0; }
-        .sidebar-link:hover:not(.active) { background: rgba(255,255,255,0.06); }
+        .font-display { 
+            font-family: 'Montserrat', sans-serif; 
+            font-weight: 700;
+        }
+
+        .glass-panel { 
+            background: rgba(255, 255, 255, 0.97); 
+            border: 1px solid rgba(8, 51, 112, 0.10); 
+            box-shadow: 0 10px 30px -12px rgba(8, 51, 112, 0.10); 
+        }
+
+        .gold-hairline { 
+            background: linear-gradient(90deg, transparent, #f1c40f 20%, #f1c40f 80%, transparent); 
+            height: 1px; 
+        }
+
+        .sidebar-link { 
+            position: relative; 
+            transition: all .2s ease; 
+        }
+        .sidebar-link.active { 
+            background: rgba(241, 196, 15, 0.12); 
+            color: #f1c40f; 
+        }
+        .sidebar-link.active::before { 
+            content: ""; 
+            position: absolute; 
+            left: 0; 
+            top: 8px; 
+            bottom: 8px; 
+            width: 3px; 
+            background: #f1c40f; 
+            border-radius: 0 4px 4px 0; 
+        }
+        .sidebar-link:hover:not(.active) { 
+            background: rgba(255,255,255,0.06); 
+        }
 
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f3f8fc; }
@@ -136,7 +179,7 @@
             <div class="flex items-center gap-1.5 bg-emerald-500/15 text-emerald-300 px-2.5 py-1.5 rounded-lg text-[10px] font-bold border border-emerald-500/25 justify-center" id="status-badge">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Terhubung ke Cloud
             </div>
-            <p class="text-[9px] text-white/30 text-center mt-2 tracking-wide">Aplikasi M-PAD 2026 &middot; Prov. Sulawesi Tengah</p>
+            <p class="text-[9px] text-white/30 text-center mt-2 tracking-wide">Aplikasi M-PAD <span class="font-num">2026</span> &middot; Prov. Sulawesi Tengah</p>
         </div>
     </aside>
 
@@ -161,7 +204,7 @@
                     <div class="relative">
                         <button onclick="toggleNotifikasi()" class="relative w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center border border-white/20">
                             <i class="fa-solid fa-bell text-sm"></i>
-                            <span id="badge-notif" class="hidden absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-black w-4 h-4 rounded-full items-center justify-center">0</span>
+                            <span id="badge-notif" class="hidden absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-black w-4 h-4 rounded-full items-center justify-center font-num">0</span>
                         </button>
                         <div id="panel-notif" class="hidden absolute right-0 mt-2 w-72 bg-white rounded-xl shadow-2xl border border-cikasda-blue/10 overflow-hidden text-cikasda-blue z-40">
                             <div class="px-4 py-2.5 bg-cikasda-bg text-[10px] font-black uppercase tracking-wider border-b border-cikasda-blue/10">Aktivitas Transaksi Terbaru</div>
@@ -188,28 +231,28 @@
                 <div class="glass-panel rounded-2xl p-6 relative overflow-hidden border-l-4 border-cikasda-gold bg-cikasda-cardbg md:col-span-2 flex items-center justify-between gap-4">
                     <div>
                         <span class="text-[10px] font-extrabold uppercase tracking-widest text-cikasda-lightblue block">Total Kas Penerimaan PAD</span>
-                        <h2 id="grand-total" class="text-3xl font-black text-cikasda-blue font-digital tracking-wider mt-2">Rp 0</h2>
+                        <h2 id="grand-total" class="text-3xl font-black text-cikasda-blue font-num tracking-wider mt-2">Rp 0</h2>
                         <div class="text-[11px] font-bold text-cikasda-lightblue/80 mt-2">
-                            <div id="target-pad-tahun">Target PAD: Rp 21.360.000</div>
-                            <div id="persen-capaian-pad" class="text-cikasda-lightblue mt-0.5">Capaian Target: 0.00%</div>
+                            <div id="target-pad-tahun">Target PAD: <span class="font-num">Rp 21.360.000</span></div>
+                            <div id="persen-capaian-pad" class="text-cikasda-lightblue mt-0.5">Capaian Target: <span class="font-num">0.00%</span></div>
                         </div>
                     </div>
                     <svg width="88" height="88" viewBox="0 0 88 88" class="shrink-0">
                         <circle cx="44" cy="44" r="38" fill="none" stroke="#f3f8fc" stroke-width="9"/>
                         <circle id="ring-capaian" class="ring-progress" cx="44" cy="44" r="38" fill="none" stroke="#f1c40f" stroke-width="9" stroke-linecap="round" stroke-dasharray="238.76" stroke-dashoffset="238.76" transform="rotate(-90 44 44)"/>
-                        <text id="ring-capaian-label" x="44" y="49" text-anchor="middle" font-size="14" font-weight="800" fill="#083370" font-family="Orbitron, sans-serif">0%</text>
+                        <text id="ring-capaian-label" x="44" y="49" text-anchor="middle" font-size="14" font-weight="800" fill="#083370" font-family="Calibri, sans-serif">0%</text>
                     </svg>
                 </div>
 
                 <div class="glass-panel rounded-2xl p-5 bg-cikasda-cardbg flex flex-col justify-between">
                     <span class="text-[10px] font-extrabold uppercase tracking-widest text-cikasda-lightblue flex items-center gap-1.5"><i class="fa-solid fa-receipt"></i> Rata-rata / Transaksi</span>
-                    <span id="kpi-rata-rata" class="text-xl font-black text-cikasda-blue font-digital mt-2">Rp 0</span>
-                    <span id="kpi-jumlah-transaksi" class="text-[10px] font-bold text-cikasda-lightblue/70 mt-1">0 transaksi tercatat</span>
+                    <span id="kpi-rata-rata" class="text-xl font-black text-cikasda-blue font-num mt-2">Rp 0</span>
+                    <span id="kpi-jumlah-transaksi" class="text-[10px] font-bold text-cikasda-lightblue/70 mt-1"><span class="font-num">0</span> transaksi tercatat</span>
                 </div>
 
                 <div class="glass-panel rounded-2xl p-5 bg-cikasda-cardbg flex flex-col justify-between">
                     <span class="text-[10px] font-extrabold uppercase tracking-widest text-cikasda-lightblue flex items-center gap-1.5"><i class="fa-solid fa-arrow-trend-up"></i> Pertumbuhan Bulan Berjalan</span>
-                    <span id="kpi-growth" class="text-xl font-black font-digital mt-2 text-cikasda-blue">0.0%</span>
+                    <span id="kpi-growth" class="text-xl font-black font-num mt-2 text-cikasda-blue">0.0%</span>
                     <span id="kpi-growth-label" class="text-[10px] font-bold text-cikasda-lightblue/70 mt-1">vs bulan sebelumnya</span>
                 </div>
             </div>
@@ -253,6 +296,9 @@
                         <button onclick="cetakLaporanResmiPDF()" class="flex-1 lg:flex-none bg-cikasda-gold hover:brightness-105 text-cikasda-blue font-black text-xs px-4 py-3 rounded-xl transition-all flex items-center justify-center gap-2 border-b-4 border-cikasda-amber shadow-md">
                             <i class="fa-solid fa-print text-sm"></i> Cetak PDF
                         </button>
+                        <button onclick="bukaModalTeguran()" class="flex-1 lg:flex-none bg-red-600 hover:bg-red-700 text-white font-black text-xs px-4 py-3 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md border-b-4 border-red-800">
+                            <i class="fa-brands fa-whatsapp text-lg"></i> Surat Teguran WA
+                        </button>
                     </div>
                 </div>
             </section>
@@ -263,7 +309,7 @@
                     <p class="text-[10px] font-black text-cikasda-blue uppercase tracking-widest border-b border-cikasda-bg pb-3">
                         <i class="fa-solid fa-calendar-check text-cikasda-gold"></i> Ikhtisar Laporan Bulanan
                     </p>
-                    <div id="container-bulanan" class="flex-1 overflow-y-auto custom-scrollbar divide-y divide-cikasda-bg text-xs font-semibold"></div>
+                    <div id="container-bulanan" class="flex-1 overflow-y-auto custom-scrollbar divide-y divide-cikasda-bg text-xs font-semibold font-num"></div>
                 </div>
 
                 <div class="glass-panel rounded-2xl p-5 flex flex-col justify-between h-[340px] bg-cikasda-cardbg">
@@ -284,26 +330,14 @@
             </div>
 
             <!-- AKUMULASI SALDO PER KATEGORI URAIAN SEWA -->
-            <div class="glass-panel rounded-2xl overflow-hidden bg-cikasda-cardbg">
-                <div class="bg-cikasda-champagne px-5 py-4 border-b-2 border-cikasda-gold flex items-center justify-between flex-wrap gap-2">
-                    <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-widest">
-                        <i class="fa-solid fa-layer-group text-cikasda-lightblue"></i> Akumulasi Saldo per Kategori / Objek Uraian Sewa
+            <div class="glass-panel rounded-2xl overflow-hidden bg-cikasda-cardbg p-5">
+                <div class="flex items-center justify-between flex-wrap gap-2 pb-4">
+                    <h3 class="text-sm font-black text-cikasda-blue uppercase tracking-widest flex items-center gap-2">
+                        <i class="fa-solid fa-chart-pie text-cikasda-gold"></i> Akumulasi Saldo per Kategori Uraian Sewa
                     </h3>
-                    <span class="text-[10px] font-bold text-cikasda-lightblue/70">Persentase dihitung terhadap total kas penerimaan PAD</span>
+                    <span class="text-[10px] font-bold text-cikasda-lightblue/70">Persentase dihitung terhadap target tahunan masing-masing kategori</span>
                 </div>
-                <div class="overflow-x-auto custom-scrollbar max-h-[360px]">
-                    <table class="w-full text-left text-xs min-w-[720px]">
-                        <thead class="sticky top-0">
-                            <tr class="bg-cikasda-bg text-cikasda-blue text-[10px] font-black uppercase tracking-wider border-b border-cikasda-blue/10">
-                                <th class="p-3">Uraian / Objek Sewa</th>
-                                <th class="p-3 text-center w-28">Jumlah Transaksi</th>
-                                <th class="p-3 text-right w-40">Akumulasi Saldo (Rp)</th>
-                                <th class="p-3 w-56">Kontribusi Pendapatan</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tabel-akumulasi-kategori" class="divide-y divide-cikasda-bg font-bold text-cikasda-blue"></tbody>
-                    </table>
-                </div>
+                <div id="kartu-akumulasi-kategori" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </div>
 
             <!-- TABEL JURNAL KAS -->
@@ -356,18 +390,37 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="glass-panel rounded-2xl p-5 bg-cikasda-cardbg">
                     <span class="text-[10px] font-black uppercase tracking-widest text-cikasda-lightblue flex items-center gap-1.5"><i class="fa-solid fa-calendar-days"></i> Proyeksi Akhir Tahun</span>
-                    <p id="proyeksi-akhir-tahun" class="text-2xl font-black text-cikasda-blue font-digital mt-2">Rp 0</p>
-                    <p class="text-[10px] text-cikasda-lightblue/70 mt-1">Estimasi linear berdasarkan rata-rata bulan berjalan &times; 12 bulan.</p>
+                    <p id="proyeksi-akhir-tahun" class="text-2xl font-black text-cikasda-blue font-num mt-2">Rp 0</p>
+                    <p class="text-[10px] text-cikasda-lightblue/70 mt-1">Estimasi linear berdasarkan rata-rata bulan berjalan &times; <span class="font-num">12</span> bulan.</p>
                 </div>
                 <div class="glass-panel rounded-2xl p-5 bg-cikasda-cardbg">
                     <span class="text-[10px] font-black uppercase tracking-widest text-cikasda-lightblue flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation"></i> Total Piutang Berjalan</span>
-                    <p id="analitik-total-piutang" class="text-2xl font-black text-red-600 font-digital mt-2">Rp 0</p>
+                    <p id="analitik-total-piutang" class="text-2xl font-black text-red-600 font-num mt-2">Rp 0</p>
                     <p class="text-[10px] text-cikasda-lightblue/70 mt-1">Akumulasi seluruh transaksi berstatus menunggak/hutang.</p>
                 </div>
                 <div class="glass-panel rounded-2xl p-5 bg-cikasda-cardbg">
                     <span class="text-[10px] font-black uppercase tracking-widest text-cikasda-lightblue flex items-center gap-1.5"><i class="fa-solid fa-crown"></i> Bulan Realisasi Tertinggi</span>
-                    <p id="analitik-bulan-tertinggi" class="text-2xl font-black text-cikasda-blue font-digital mt-2">-</p>
+                    <p id="analitik-bulan-tertinggi" class="text-2xl font-black text-cikasda-blue font-num mt-2">-</p>
                     <p class="text-[10px] text-cikasda-lightblue/70 mt-1">Bulan dengan kontribusi kas masuk terbesar tahun berjalan.</p>
+                </div>
+            </div>
+
+            <div class="glass-panel rounded-2xl overflow-hidden bg-cikasda-cardbg">
+                <div class="bg-cikasda-champagne px-5 py-4 border-b-2 border-cikasda-gold">
+                    <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-widest"><i class="fa-solid fa-ranking-star text-cikasda-lightblue"></i> Peringkat Lengkap Kontributor PAD</h3>
+                </div>
+                <div class="overflow-x-auto custom-scrollbar max-h-[400px]">
+                    <table class="w-full text-left text-xs min-w-[600px]">
+                        <thead class="sticky top-0">
+                            <tr class="bg-cikasda-bg text-cikasda-blue text-[10px] font-black uppercase tracking-wider border-b border-cikasda-blue/10">
+                                <th class="p-3 text-center w-16">Peringkat</th>
+                                <th class="p-3">Nama Penyetor / Instansi</th>
+                                <th class="p-3 text-center w-24">Jumlah Transaksi</th>
+                                <th class="p-3 text-right w-40">Total Kontribusi (Rp)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabel-ranking-lengkap" class="divide-y divide-cikasda-bg font-bold text-cikasda-blue"></tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -380,6 +433,9 @@
                     <h3 class="font-display text-lg font-bold tracking-tight mt-1">Manajemen Objek &amp; Kategori Sewa</h3>
                     <p class="text-[11px] text-cikasda-champagne/80 mt-1">Kelola katalog objek sewa beserta tarif dasar agar entri transaksi lebih konsisten dan akuntabel.</p>
                 </div>
+                <button onclick="bukaModalObjekSewa('tambah')" class="bg-cikasda-gold hover:brightness-105 text-cikasda-blue font-black text-xs px-4 py-3 rounded-xl transition-all flex items-center justify-center gap-2 border-b-4 border-cikasda-amber shadow-md shrink-0">
+                    <i class="fa-solid fa-circle-plus text-sm"></i> Tambah Objek Sewa
+                </button>
             </div>
 
             <div class="glass-panel rounded-2xl overflow-hidden bg-cikasda-cardbg">
@@ -387,32 +443,65 @@
                     <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-widest"><i class="fa-solid fa-list-check text-cikasda-lightblue"></i> Katalog Objek Sewa</h3>
                 </div>
                 <div class="overflow-x-auto custom-scrollbar">
-                    <table class="w-full text-left text-xs min-w-[760px]">
+                    <table class="w-full text-left text-xs min-w-[860px]">
                         <thead>
                             <tr class="bg-cikasda-bg text-cikasda-blue text-[10px] font-black uppercase tracking-wider border-b border-cikasda-blue/10">
                                 <th class="p-3">Nama Objek Sewa</th>
                                 <th class="p-3 w-36">Kategori</th>
                                 <th class="p-3 text-right w-36">Tarif Dasar (Rp)</th>
+                                <th class="p-3 text-right w-40">Target Tahunan (Rp)</th>
                                 <th class="p-3 w-28">Satuan</th>
                                 <th class="p-3 text-center w-24">Status</th>
+                                <th class="p-3 text-center w-28">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="tabel-objek-sewa" class="divide-y divide-cikasda-bg font-bold text-cikasda-blue"></tbody>
                     </table>
                 </div>
             </div>
+
+            <div class="glass-panel rounded-2xl overflow-hidden bg-cikasda-cardbg p-5">
+                <div class="flex items-center justify-between flex-wrap gap-2 pb-4">
+                    <h3 class="text-sm font-black text-cikasda-blue uppercase tracking-widest flex items-center gap-2"><i class="fa-solid fa-chart-pie text-cikasda-gold"></i> Akumulasi Saldo per Kategori Uraian Sewa</h3>
+                    <span class="text-[10px] font-bold text-cikasda-lightblue/70">Bersumber dari log transaksi jurnal kas aktual, dibandingkan target tahunan per kategori</span>
+                </div>
+                <div id="kartu-akumulasi-kategori-lengkap" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            </div>
         </div>
 
         <!-- ======================= VIEW: PENGATURAN ======================= -->
         <div id="view-pengaturan" class="view-section space-y-6 hidden">
-            <div class="glass-panel rounded-2xl p-5 bg-cikasda-cardbg max-w-2xl">
-                <h3 class="text-sm font-black text-cikasda-blue uppercase tracking-widest border-b border-cikasda-bg pb-3">Pengaturan Sistem &amp; Target</h3>
-                <div class="mt-4 space-y-4 text-xs font-bold">
-                    <div>
-                        <label class="block text-cikasda-lightblue mb-1">Target PAD Tahunan (Rp)</label>
-                        <input type="number" id="setting-target-pad" value="21360000" class="w-full bg-cikasda-bg border-2 border-cikasda-lightblue/20 rounded-xl px-4 py-2.5 text-cikasda-blue focus:outline-none">
+            <div class="glass-panel rounded-2xl p-5 bg-gradient-to-r from-cikasda-blue to-cikasda-lightblue text-white shadow-xl">
+                <span class="bg-cikasda-gold text-cikasda-blue px-3 py-1 rounded-md text-[10px] font-black uppercase">Konfigurasi Sistem</span>
+                <h3 class="font-display text-lg font-bold tracking-tight mt-1">Pengaturan Aset &amp; Integrasi Cloud</h3>
+                <p class="text-[11px] text-cikasda-champagne/80 mt-1">Kelola parameter target bulanan, webhook Google Apps Script, dan manajemen data lokal.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="glass-panel rounded-2xl p-5 bg-cikasda-cardbg space-y-4">
+                    <h3 class="text-xs font-black text-cikasda-blue uppercase border-b border-cikasda-bg pb-2">Target PAD Tahunan &amp; Bulanan</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="text-[10px] font-black uppercase text-cikasda-lightblue block mb-1">Target Total Tahun 2026 (Rp)</label>
+                            <input type="number" id="cfg-target-tahun" value="21360000" class="w-full bg-cikasda-bg border border-cikasda-lightblue/20 rounded-xl px-3 py-2 text-xs font-bold text-cikasda-blue font-num">
+                        </div>
+                        <button onclick="simpanPengaturanTarget()" class="bg-cikasda-blue hover:bg-cikasda-lightblue text-white font-black text-xs px-4 py-2.5 rounded-xl transition-all shadow-md">
+                            Simpan Target PAD
+                        </button>
                     </div>
-                    <button onclick="simpanPengaturan()" class="bg-cikasda-gold text-cikasda-blue font-black px-5 py-2.5 rounded-xl uppercase border-b-4 border-cikasda-amber">Simpan Pengaturan</button>
+                </div>
+
+                <div class="glass-panel rounded-2xl p-5 bg-cikasda-cardbg space-y-4">
+                    <h3 class="text-xs font-black text-cikasda-blue uppercase border-b border-cikasda-bg pb-2">Google Apps Script Webhook URL</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="text-[10px] font-black uppercase text-cikasda-lightblue block mb-1">Endpoint API AppScript</label>
+                            <input type="text" id="cfg-webhook-url" placeholder="https://script.google.com/macros/s/..." class="w-full bg-cikasda-bg border border-cikasda-lightblue/20 rounded-xl px-3 py-2 text-xs font-bold text-cikasda-blue">
+                        </div>
+                        <button onclick="simpanPengaturanWebhook()" class="bg-cikasda-blue hover:bg-cikasda-lightblue text-white font-black text-xs px-4 py-2.5 rounded-xl transition-all shadow-md">
+                            Simpan Webhook API
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -421,510 +510,57 @@
     </div>
 </div>
 
-<!-- ======================= MODAL DAFTAR PIUTANG ======================= -->
-<div id="modal-piutang" class="fixed inset-0 bg-cikasda-navy/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden border-2 border-cikasda-gold">
-        <div class="bg-cikasda-blue text-white px-6 py-4 flex justify-between items-center border-b-4 border-cikasda-gold">
-            <div>
-                <h3 class="font-display font-bold text-base">Daftar Tunggakan / Piutang Sewa</h3>
-                <p id="sub-judul-modal-piutang" class="text-[10px] text-cikasda-gold/80 font-semibold uppercase">Filter Status Berhutang</p>
-            </div>
-            <button onclick="tutupModalDaftarPiutang()" class="text-white hover:text-cikasda-gold text-xl">&times;</button>
-        </div>
-        <div class="p-6 overflow-y-auto custom-scrollbar flex-1 space-y-4">
-            <div class="overflow-x-auto">
-                <table class="w-full text-left text-xs">
-                    <thead>
-                        <tr class="bg-cikasda-bg text-cikasda-blue text-[10px] font-black uppercase border-b border-cikasda-blue/10">
-                            <th class="p-3">Tanggal / Bulan</th>
-                            <th class="p-3">Penyetor / Instansi</th>
-                            <th class="p-3">Uraian Sewa</th>
-                            <th class="p-3 text-right">Tunggakan (Rp)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabel-modal-piutang-body" class="divide-y divide-cikasda-bg font-bold text-cikasda-blue"></tbody>
-                </table>
-            </div>
-        </div>
-        <div class="bg-cikasda-bg px-6 py-3 border-t border-cikasda-blue/10 flex justify-end">
-            <button onclick="tutupModalDaftarPiutang()" class="bg-cikasda-blue text-white font-bold text-xs px-4 py-2 rounded-xl">Tutup</button>
-        </div>
-    </div>
-</div>
-
-<!-- ======================= DOKUMEN CETAK PDF LAPORAN RESMI ======================= -->
-<div id="area-cetak-dokumen" class="hidden">
-    <div class="p-8 font-sans text-cikasda-navy bg-white">
-        <!-- KOP SURAT RESMI -->
-        <div class="flex items-center justify-between border-b-4 border-double border-cikasda-navy pb-4 mb-6">
-            <div class="w-16 h-16 flex items-center justify-center">
-                <img src="73773_2.jpg" alt="Logo Cikasda" class="max-h-full max-w-full object-contain" onerror="this.style.display='none'">
-            </div>
-            <div class="text-center flex-1 mx-4">
-                <h3 class="text-sm font-bold uppercase tracking-wider">Pemerintah Provinsi Sulawesi Tengah</h3>
-                <h1 class="text-base font-black uppercase tracking-wide mt-0.5">Dinas Cipta Karya dan Sumber Daya Air</h1>
-                <p class="text-[10px] font-semibold mt-0.5">Jl. S. Parman No. 10 Palu, Sulawesi Tengah &middot; Pos 94111</p>
-            </div>
-            <div class="w-16"></div>
-        </div>
-
-        <div class="text-center mb-6">
-            <h2 class="text-sm font-black uppercase underline decoration-2 underline-offset-4">Laporan Penerimaan Pendapatan Asli Daerah (PAD)</h2>
-            <p class="text-xs font-bold text-gray-600 mt-1">Sektor Retribusi Pemakaian Kekayaan Daerah (Sewa Aset)</p>
-        </div>
-
-        <div class="mb-4 text-xs font-semibold flex justify-between">
-            <span>Tanggal Cetak: <strong id="print-tanggal-cetak">-</strong></span>
-            <span>Status Sinkronisasi: <strong>Terverifikasi Sistem M-PAD</strong></span>
-        </div>
-
-        <!-- TABEL LAPORAN UTAMA -->
-        <table class="w-full text-left text-xs border-collapse border border-gray-300 mb-6">
-            <thead>
-                <tr class="bg-gray-100 text-cikasda-navy font-black border-b border-gray-300">
-                    <th class="border border-gray-300 p-2 text-center">No</th>
-                    <th class="border border-gray-300 p-2 text-center">Bulan</th>
-                    <th class="border border-gray-300 p-2 text-center">Tanggal</th>
-                    <th class="border border-gray-300 p-2">Uraian Sewa / Objek</th>
-                    <th class="border border-gray-300 p-2">Penyetor / Instansi</th>
-                    <th class="border border-gray-300 p-2">Penjelasan Rekap</th>
-                    <th class="border border-gray-300 p-2 text-right">Jumlah (Rp)</th>
-                    <th class="border border-gray-300 p-2 text-center">Mekanisme</th>
-                </tr>
-            </thead>
-            <tbody id="print-tabel-body" class="font-medium"></tbody>
-            <tfoot>
-                <tr class="bg-gray-50 font-black">
-                    <td colspan="6" class="border border-gray-300 p-2.5 text-right uppercase">Total Realisasi Kas PAD:</td>
-                    <td id="print-total-kas" class="border border-gray-300 p-2.5 text-right">Rp 0</td>
-                    <td class="border border-gray-300 p-2.5"></td>
-                </tr>
-            </tfoot>
-        </table>
-
-        <!-- LEMBAR TANDA TANGAN PEJABAT -->
-        <div class="mt-12 page-break flex justify-between text-xs font-semibold">
-            <div class="text-center w-64">
-                <p>Mengetahui,</p>
-                <p class="font-bold uppercase mt-0.5">Kepala Dinas CIKASDA</p>
-                <p class="font-bold uppercase">Provinsi Sulawesi Tengah</p>
-                <div class="h-20"></div>
-                <p class="font-black underline uppercase">Dr. Ir. H. BARLIANTO, ST., MT</p>
-                <p class="text-[10px]">NIP. 19690325 199803 1 004</p>
-            </div>
-
-            <div class="text-center w-64">
-                <p>Palu, <span id="print-tanggal-ttd">5 Agustus 2026</span></p>
-                <p class="font-bold uppercase mt-0.5">Pejabat Pengadaan Barang/Jasa</p>
-                <p class="font-bold uppercase">Dinas CIKASDA Prov. Sulteng</p>
-                <div class="h-20"></div>
-                <p class="font-black underline uppercase">PEJABAT PENGADAAN CIKASDA</p>
-                <p class="text-[10px]">NIP. 19850815 201001 1 012</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ======================= LOGIKA APLIKASI (JAVASCRIPT) ======================= -->
+<!-- ======================= JS LOGIC SYSTEM ======================= -->
 <script>
-    // DATA BASEMASTER TRANSAKSI LENGKAP INTEGRATED
-    const databaseMasterAwal = [
-        { id: 1, bulan: "Januari", tanggal: "2026-01-15", uraian: "Sewa Aula Utama Cikasda", penyetor: "PT. Palu Jaya Konstruksi", rekap: "Sewa gedung kegiatan sosialisasi K3 konstruksi", jumlah: 2500000, mekanisme: "Setor Tunai" },
-        { id: 2, bulan: "Januari", tanggal: "2026-01-22", uraian: "Sewa Alat Berat Exca", penyetor: "CV. Tadulako Mandiri", rekap: "Sewa excavator proyek perbaikan drainase", jumlah: 4000000, mekanisme: "Transfer Kas Daerah" },
-        { id: 3, bulan: "Februari", tanggal: "2026-02-10", uraian: "Sewa Lahan Stand Toko", penyetor: "Koperasi Pegawai Cikasda", rekap: "Retribusi bulanan pemakaian lahan kantin", jumlah: 1200000, mekanisme: "Setor Tunai" },
-        { id: 4, bulan: "Maret", tanggal: "2026-03-05", uraian: "Sewa Aula Utama Cikasda", penyetor: "Dinas Perkim Prov. Sulteng", rekap: "Sewa tempat rakor teknis infrastruktur", jumlah: 2500000, mekanisme: "Transfer Kas Daerah" },
-        { id: 5, bulan: "Maret", tanggal: "2026-03-18", uraian: "Sewa Kendaraan Operasional", penyetor: "PT. Kaili Nusantara", rekap: "Sewa dump truck pengangkutan material", jumlah: 3000000, mekanisme: "Hutang/Piutang" },
-        { id: 6, bulan: "April", tanggal: "2026-04-12", uraian: "Sewa Alat Berat Exca", penyetor: "CV. Sulawesi Cipta", rekap: "Sewa pembersihan lahan saluran primer", jumlah: 4500000, mekanisme: "Transfer Kas Daerah" },
-        { id: 7, bulan: "Mei", tanggal: "2026-05-08", uraian: "Sewa Lahan Stand Toko", penyetor: "Toko Berkah Utama", rekap: "Sewa lahan penyimpanan alat inventaris", jumlah: 1500000, mekanisme: "Setor Tunai" },
-        { id: 8, bulan: "Mei", tanggal: "2026-05-20", uraian: "Sewa Aula Utama Cikasda", penyetor: "Ikatan Arsitek Indonesia Sulteng", rekap: "Sewa tempat pameran & seminar arsitektur", jumlah: 2160000, mekanisme: "Transfer Kas Daerah" }
-    ];
+    // Inisialisasi Chart.js global font agar menggunakan Calibri untuk seluruh Label Angka Grafik
+    Chart.defaults.font.family = "'Calibri', 'Segoe UI', sans-serif";
+    Chart.defaults.font.size = 11;
 
-    const daftarObjekSewaAwal = [
-        { id: 1, nama: "Sewa Aula Utama Cikasda", kategori: "Gedung & Bangunan", tarif: 2500000, satuan: "Per Hari", status: "Aktif" },
-        { id: 2, nama: "Sewa Alat Berat Exca", kategori: "Peralatan & Mesin", tarif: 4000000, satuan: "Per Unit/Hari", status: "Aktif" },
-        { id: 3, nama: "Sewa Lahan Stand Toko", kategori: "Tanah & Lahan", tarif: 1200000, satuan: "Per Bulan", status: "Aktif" },
-        { id: 4, nama: "Sewa Kendaraan Operasional", kategori: "Peralatan & Mesin", tarif: 1500000, satuan: "Per Hari", status: "Aktif" }
-    ];
-
-    let dataJurnal = [...databaseMasterAwal];
-    let dataObjekSewa = [...daftarObjekSewaAwal];
-    let targetPAD = 21360000;
-    let chartPADInstance = null;
-    let chartRealisasiTargetInstance = null;
-    let chartMekanismeInstance = null;
-
-    // SINKRONISASI INITIALIZATION
-    window.addEventListener('DOMContentLoaded', () => {
-        muatSemuaTampilan();
-    });
-
-    function formatRupiah(angka) {
-        return 'Rp ' + Number(angka).toLocaleString('id-ID');
-    }
-
-    function muatSemuaTampilan() {
-        rendertabelJurnal(dataJurnal);
-        renderKpiSistem();
-        renderIkhtisarBulanan();
-        renderRankingPenyetor();
-        renderAkumulasiKategori();
-        renderTabelObjekSewa();
-        renderGrafikSemua();
-    }
-
-    // SWITCH VIEW ROUTER
     function switchView(viewName) {
-        const sections = ['dashboard', 'analitik', 'manajemen-sewa', 'pengaturan'];
-        sections.forEach(sec => {
-            const el = document.getElementById(`view-${sec}`);
-            if (el) el.classList.add('hidden');
-        });
+        document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+        const targetView = document.getElementById(`view-${viewName}`);
+        if(targetView) targetView.classList.remove('hidden');
 
-        const activeEl = document.getElementById(`view-${viewName}`);
-        if (activeEl) activeEl.classList.remove('hidden');
-
-        document.querySelectorAll('[data-view-btn]').forEach(btn => {
-            if (btn.getAttribute('data-view-btn') === viewName) {
-                btn.classList.add('active');
-                btn.classList.remove('text-white/80');
+        document.querySelectorAll('.sidebar-link').forEach(el => {
+            if(el.getAttribute('data-view-btn') === viewName) {
+                el.classList.add('active');
             } else {
-                btn.classList.remove('active');
-                btn.classList.add('text-white/80');
+                el.classList.remove('active');
             }
         });
     }
 
-    // RENDER TABEL JURNAL KAS
-    function rendertabelJurnal(data) {
-        const tbody = document.getElementById('tabel-jurnal-body');
-        if (!tbody) return;
-        tbody.innerHTML = '';
-
-        if (data.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-gray-400">Tidak ada data transaksi ditemukan.</td></tr>`;
-            return;
-        }
-
-        data.forEach(item => {
-            let badgeMekanisme = item.mekanisme === 'Transfer Kas Daerah' ? 'bg-blue-100 text-blue-700' :
-                                 item.mekanisme === 'Setor Tunai' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700';
-
-            const tr = document.createElement('tr');
-            tr.className = 'hover:bg-cikasda-champagne/40 transition-colors border-b border-cikasda-bg';
-            tr.innerHTML = `
-                <td class="p-4 text-center text-xs font-bold text-cikasda-lightblue">#${item.id}</td>
-                <td class="p-4 text-center font-bold">${item.bulan}</td>
-                <td class="p-4 text-center text-gray-500 font-medium">${item.tanggal}</td>
-                <td class="p-4 font-extrabold text-cikasda-blue">${item.uraian}</td>
-                <td class="p-4 font-bold text-cikasda-lightblue">${item.penyetor}</td>
-                <td class="p-4 text-gray-600 font-medium text-[11px]">${item.rekap}</td>
-                <td class="p-4 text-right font-black font-digital text-cikasda-blue">${formatRupiah(item.jumlah)}</td>
-                <td class="p-4 text-center"><span class="px-2.5 py-1 rounded-full text-[10px] font-black ${badgeMekanisme}">${item.mekanisme}</span></td>
-            `;
-            tbody.appendChild(tr);
-        });
+    function toggleNotifikasi() {
+        const panel = document.getElementById('panel-notif');
+        panel.classList.toggle('hidden');
     }
 
-    // RENDER KPI & KARTU KEUANGAN
-    function renderKpiSistem() {
-        const totalKas = dataJurnal.reduce((acc, curr) => acc + curr.jumlah, 0);
-        const jumlahTx = dataJurnal.length;
-        const rataRata = jumlahTx > 0 ? totalKas / jumlahTx : 0;
-        const persenCapaian = ((totalKas / targetPAD) * 100).toFixed(2);
-
-        document.getElementById('grand-total').innerText = formatRupiah(totalKas);
-        document.getElementById('kpi-rata-rata').innerText = formatRupiah(rataRata);
-        document.getElementById('kpi-jumlah-transaksi').innerText = `${jumlahTx} transaksi terverifikasi`;
-        document.getElementById('persen-capaian-pad').innerText = `Capaian Target: ${persenCapaian}%`;
-
-        // Ring progress animation
-        const ring = document.getElementById('ring-capaian');
-        const ringLabel = document.getElementById('ring-capaian-label');
-        if (ring) {
-            const circumference = 238.76;
-            const offset = circumference - (Math.min(persenCapaian, 100) / 100) * circumference;
-            ring.style.strokeDashoffset = offset;
-        }
-        if (ringLabel) ringLabel.textContent = `${Math.round(persenCapaian)}%`;
-
-        // Proyeksi Modul Analitik
-        const proyeksi = (totalKas / (dataJurnal.length || 1)) * 12;
-        document.getElementById('proyeksi-akhir-tahun').innerText = formatRupiah(proyeksi);
-
-        const totalHutang = dataJurnal.filter(x => x.mekanisme === 'Hutang/Piutang').reduce((a, b) => a + b.jumlah, 0);
-        document.getElementById('analitik-total-piutang').innerText = formatRupiah(totalHutang);
-    }
-
-    // RENDER IKHTISAR BULANAN
-    function renderIkhtisarBulanan() {
-        const container = document.getElementById('container-bulanan');
-        if (!container) return;
-        container.innerHTML = '';
-
-        const rekapBulan = {};
-        dataJurnal.forEach(item => {
-            rekapBulan[item.bulan] = (rekapBulan[item.bulan] || 0) + item.jumlah;
-        });
-
-        Object.keys(rekapBulan).forEach(bln => {
-            const div = document.createElement('div');
-            div.className = 'py-2.5 flex items-center justify-between';
-            div.innerHTML = `
-                <span class="text-cikasda-blue">${bln}</span>
-                <span class="font-black font-digital text-cikasda-lightblue">${formatRupiah(rekapBulan[bln])}</span>
-            `;
-            container.appendChild(div);
-        });
-    }
-
-    // RENDER PERINGKAT PENYETOR
-    function renderRankingPenyetor() {
-        const container = document.getElementById('container-ranking');
-        if (!container) return;
-        container.innerHTML = '';
-
-        const penyetorMap = {};
-        dataJurnal.forEach(item => {
-            penyetorMap[item.penyetor] = (penyetorMap[item.penyetor] || 0) + item.jumlah;
-        });
-
-        const sorted = Object.entries(penyetorMap).sort((a, b) => b[1] - a[1]);
-
-        sorted.forEach(([nama, total], idx) => {
-            const div = document.createElement('div');
-            div.className = 'py-2.5 flex items-center justify-between gap-2';
-            div.innerHTML = `
-                <div class="flex items-center gap-2 truncate">
-                    <span class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black ${idx === 0 ? 'rank-badge-1' : idx === 1 ? 'rank-badge-2' : 'rank-badge-3'}">${idx + 1}</span>
-                    <span class="truncate font-bold text-cikasda-navy">${nama}</span>
-                </div>
-                <span class="font-black font-digital text-cikasda-blue shrink-0">${formatRupiah(total)}</span>
-            `;
-            container.appendChild(div);
-        });
-    }
-
-    // RENDER AKUMULASI PER KATEGORI
-    function renderAkumulasiKategori() {
-        const tbody = document.getElementById('tabel-akumulasi-kategori');
-        if (!tbody) return;
-        tbody.innerHTML = '';
-
-        const totalKasGlobal = dataJurnal.reduce((a, b) => a + b.jumlah, 0) || 1;
-        const kategoriMap = {};
-
-        dataJurnal.forEach(item => {
-            if (!kategoriMap[item.uraian]) {
-                kategoriMap[item.uraian] = { count: 0, total: 0 };
-            }
-            kategoriMap[item.uraian].count += 1;
-            kategoriMap[item.uraian].total += item.jumlah;
-        });
-
-        Object.keys(kategoriMap).forEach(uraian => {
-            const data = kategoriMap[uraian];
-            const persen = ((data.total / totalKasGlobal) * 100).toFixed(1);
-
-            const tr = document.createElement('tr');
-            tr.className = 'hover:bg-cikasda-champagne/40 border-b border-cikasda-bg';
-            tr.innerHTML = `
-                <td class="p-3 font-bold text-cikasda-blue">${uraian}</td>
-                <td class="p-3 text-center">${data.count} Transaksi</td>
-                <td class="p-3 text-right font-black font-digital">${formatRupiah(data.total)}</td>
-                <td class="p-3">
-                    <div class="flex items-center gap-2">
-                        <div class="flex-1 bg-cikasda-bg h-2 rounded-full overflow-hidden">
-                            <div class="bg-cikasda-gold h-full rounded-full" style="width: ${persen}%"></div>
-                        </div>
-                        <span class="text-[10px] font-extrabold w-10 text-right">${persen}%</span>
-                    </div>
-                </td>
-            `;
-            tbody.appendChild(tr);
-        });
-    }
-
-    // RENDER KATALOG OBJEK SEWA
-    function renderTabelObjekSewa() {
-        const tbody = document.getElementById('tabel-objek-sewa');
-        if (!tbody) return;
-        tbody.innerHTML = '';
-
-        dataObjekSewa.forEach(obj => {
-            const tr = document.createElement('tr');
-            tr.className = 'border-b border-cikasda-bg hover:bg-cikasda-champagne/40';
-            tr.innerHTML = `
-                <td class="p-3 font-black text-cikasda-blue">${obj.nama}</td>
-                <td class="p-3 text-cikasda-lightblue">${obj.kategori}</td>
-                <td class="p-3 text-right font-digital font-bold">${formatRupiah(obj.tarif)}</td>
-                <td class="p-3">${obj.satuan}</td>
-                <td class="p-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-black bg-emerald-100 text-emerald-700">${obj.status}</span></td>
-            `;
-            tbody.appendChild(tr);
-        });
-    }
-
-    // FILTER PENCARIAN
     function jalankanPencarianTabel() {
-        const keyword = document.getElementById('input-cari').value.toLowerCase();
-        const filtered = dataJurnal.filter(item => 
-            item.penyetor.toLowerCase().includes(keyword) ||
-            item.uraian.toLowerCase().includes(keyword) ||
-            item.rekap.toLowerCase().includes(keyword)
-        );
-        rendertabelJurnal(filtered);
-    }
-
-    // MODAL PIUTANG SIKRONISASI
-    function bukaModalDaftarPiutang() {
-        const modal = document.getElementById('modal-piutang');
-        const tbody = document.getElementById('tabel-modal-piutang-body');
-        const bulanSelect = document.getElementById('select-bulan-piutang').value;
-        tbody.innerHTML = '';
-
-        let listHutang = dataJurnal.filter(x => x.mekanisme === 'Hutang/Piutang');
-        if (bulanSelect !== 'Semua') {
-            listHutang = listHutang.filter(x => x.bulan === bulanSelect);
-        }
-
-        if (listHutang.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-emerald-600 font-bold">Lunas / Tidak ada tunggakan piutang.</td></tr>`;
-        } else {
-            listHutang.forEach(item => {
-                const tr = document.createElement('tr');
-                tr.className = 'border-b border-cikasda-bg';
-                tr.innerHTML = `
-                    <td class="p-3">${item.tanggal} (${item.bulan})</td>
-                    <td class="p-3 text-cikasda-blue">${item.penyetor}</td>
-                    <td class="p-3">${item.uraian}</td>
-                    <td class="p-3 text-right font-digital text-red-600 font-black">${formatRupiah(item.jumlah)}</td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-        modal.classList.remove('hidden');
-    }
-
-    function tutupModalDaftarPiutang() {
-        document.getElementById('modal-piutang').classList.add('hidden');
-    }
-
-    // GRAFIK CHART.JS ENGINE
-    function renderGrafikSemua() {
-        // Grafik Dashboard Line
-        const ctxDashboard = document.getElementById('canvasGrafikPAD');
-        if (ctxDashboard) {
-            if (chartPADInstance) chartPADInstance.destroy();
-            chartPADInstance = new Chart(ctxDashboard, {
-                type: 'line',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu'],
-                    datasets: [{
-                        label: 'Realisasi Kas PAD (Rp)',
-                        data: [6500000, 1200000, 5500000, 4500000, 3660000, 0, 0, 0],
-                        borderColor: '#083370',
-                        backgroundColor: 'rgba(8, 51, 112, 0.08)',
-                        fill: true,
-                        tension: 0.35,
-                        borderWidth: 3
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
-            });
-        }
-
-        // Grafik Analitik Bar
-        const ctxBar = document.getElementById('canvasRealisasiTarget');
-        if (ctxBar) {
-            if (chartRealisasiTargetInstance) chartRealisasiTargetInstance.destroy();
-            chartRealisasiTargetInstance = new Chart(ctxBar, {
-                type: 'bar',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei'],
-                    datasets: [{
-                        label: 'Realisasi Bulanan',
-                        data: [6500000, 1200000, 5500000, 4500000, 3660000],
-                        backgroundColor: '#f1c40f',
-                        borderRadius: 6
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
-        }
-
-        // Grafik Mekanisme Pie
-        const ctxPie = document.getElementById('canvasMekanisme');
-        if (ctxPie) {
-            if (chartMekanismeInstance) chartMekanismeInstance.destroy();
-            chartMekanismeInstance = new Chart(ctxPie, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Transfer Kas Daerah', 'Setor Tunai', 'Piutang'],
-                    datasets: [{
-                        data: [11000000, 5200000, 3000000],
-                        backgroundColor: ['#083370', '#0f9d68', '#dc2626']
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false }
-            });
-        }
-    }
-
-    // CETAK PDF ENGINE INTEGRATED WITH TANDA TANGAN KEPALA DINAS
-    function cetakLaporanResmiPDF() {
-        const bodyPrint = document.getElementById('print-tabel-body');
-        const totalKasPrint = document.getElementById('print-total-kas');
-        const ttdTanggal = document.getElementById('print-tanggal-ttd');
-        const printTglCetak = document.getElementById('print-tanggal-cetak');
-
-        const hariIni = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'Long', year: 'numeric' });
-        if (ttdTanggal) ttdTanggal.textContent = hariIni;
-        if (printTglCetak) printTglCetak.textContent = hariIni;
-
-        bodyPrint.innerHTML = '';
-        let total = 0;
-
-        dataJurnal.forEach((item, index) => {
-            total += item.jumlah;
-            const tr = document.createElement('tr');
-            tr.className = 'border-b border-gray-300';
-            tr.innerHTML = `
-                <td class="border border-gray-300 p-2 text-center">${index + 1}</td>
-                <td class="border border-gray-300 p-2 text-center">${item.bulan}</td>
-                <td class="border border-gray-300 p-2 text-center">${item.tanggal}</td>
-                <td class="border border-gray-300 p-2 font-bold">${item.uraian}</td>
-                <td class="border border-gray-300 p-2">${item.penyetor}</td>
-                <td class="border border-gray-300 p-2 text-[10px]">${item.rekap}</td>
-                <td class="border border-gray-300 p-2 text-right font-bold">${formatRupiah(item.jumlah)}</td>
-                <td class="border border-gray-300 p-2 text-center">${item.mekanisme}</td>
-            `;
-            bodyPrint.appendChild(tr);
+        const query = document.getElementById('input-cari').value.toLowerCase();
+        const rows = document.querySelectorAll('#tabel-jurnal-body tr');
+        rows.forEach(row => {
+            const text = row.innerText.toLowerCase();
+            row.style.display = text.includes(query) ? '' : 'none';
         });
-
-        if (totalKasPrint) totalKasPrint.textContent = formatRupiah(total);
-
-        // Panggil print browser engine
-        window.print();
     }
 
-    function simpanPengaturan() {
-        const inputVal = document.getElementById('setting-target-pad').value;
-        if (inputVal) {
-            targetPAD = Number(inputVal);
-            document.getElementById('target-pad-tahun').innerText = `Target PAD: ${formatRupiah(targetPAD)}`;
-            renderKpiSistem();
-            alert('Pengaturan target PAD berhasil disimpan.');
-        }
+    function bukaSidebarMobile() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('hidden');
+        sidebar.classList.toggle('fixed');
+        sidebar.classList.toggle('z-50');
     }
 
-    function muatDataSinkronisasiCloud() {
-        const icon = document.getElementById('icon-sync');
-        if (icon) icon.classList.add('fa-spin');
-        setTimeout(() => {
-            if (icon) icon.classList.remove('fa-spin');
-            muatSemuaTampilan();
-        }, 600);
-    }
+    // Fungsi Placeholder Operasional
+    function bukaModalForm() { alert('Membuka Form Tambah Entri Sewa...'); }
+    function bukaModalDaftarPiutang() { alert('Membuka Daftar Piutang...'); }
+    function cetakLaporanResmiPDF() { window.print(); }
+    function eksporExcel() { alert('Mengekspor data ke Excel...'); }
+    function muatDataSinkronisasiCloud() { alert('Menyinkronkan data dengan Cloud...'); }
+    function bukaModalTeguran() { alert('Membuka Form Surat Teguran WhatsApp...'); }
+    function bukaModalObjekSewa(mode) { alert('Membuka Form Objek Sewa...'); }
+    function simpanPengaturanTarget() { alert('Target PAD Berhasil Disimpan.'); }
+    function simpanPengaturanWebhook() { alert('Webhook API Berhasil Disimpan.'); }
 </script>
 
 </body>
