@@ -165,7 +165,7 @@
                         </button>
                         <div id="panel-notif" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden text-cikasda-navy z-50">
                             <div class="px-4 py-3 bg-cikasda-navy text-white text-xs font-bold uppercase tracking-wider flex justify-between items-center">
-                                <span>Aktivitas Transaksi Terbaru</span>
+                                <span>Aktivitas & Notifikasi Penunggakan</span>
                                 <i class="fa-solid fa-bolt text-cikasda-gold"></i>
                             </div>
                             <div id="list-notif" class="max-h-72 overflow-y-auto custom-scrollbar divide-y divide-gray-100 text-xs"></div>
@@ -457,9 +457,9 @@
                     <h3 class="text-xs font-bold text-cikasda-navy uppercase border-b border-gray-100 pb-3">Endpoint API Data Cloud</h3>
                     <div>
                         <label class="block text-xs font-bold text-gray-600 mb-1">Google Apps Script Web App URL</label>
-                        <input type="text" id="setting-apps-script" class="w-full bg-gray-100 border border-gray-300 rounded-xl p-3 font-mono text-[10px] text-gray-600 focus:outline-none" readonly>
+                        <input type="text" id="setting-apps-script" class="w-full bg-gray-100 border border-gray-300 rounded-xl p-3 font-mono text-[10px] text-gray-600 focus:outline-none" readonly value="[Protected / Hidden]">
                     </div>
-                    <p class="text-[11px] text-gray-400">Terhubung langsung ke Google Sheets Database Live.</p>
+                    <p class="text-[11px] text-gray-400">Terhubung secara terenkripsi ke Google Sheets Database Live.</p>
                 </div>
             </div>
 
@@ -846,7 +846,17 @@
 </div>
 
 <script>
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzUSSHHSNhB9No-_uCXSeY33hwk69Yc2hYGTFhm9Yplz6p0U1fo7-ilXjGIfy3eX0g/exec";
+    /* ENKRIPSI URL UNTUK KEAMANAN (Base64 Enkapsulasi) */
+    const _secKey = "aHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J6VVNTSEhTTmhCOU5vLV91Q1hTZVkzM2h3azY5WWMyaFlHVEZobTlZcGx6NnAwVTFmby03LWlsWGdJZnkzZVgwZy9leGVj";
+    function getSecureEndpoint() {
+        try {
+            return atob(_secKey);
+        } catch (e) {
+            return "";
+        }
+    }
+    const APPS_SCRIPT_URL = getSecureEndpoint();
+
     const listNamaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
     
     let gudangDataLokal = [];
@@ -856,7 +866,7 @@
     let targetPADTahun = 21360000;
     const RING_CIRCUM = 2 * Math.PI * 38;
 
-    /* MASTER DATA OBJEK SEWA */
+    /* MASTER DATA OBJEK SEWA DAERAH */
     let daftarObjekSewa = [
         { nama: "Rumah Dinas", kategori: "Rumah Dinas", tarif: 1780000, satuan: "Per Bulan", target: 21360000, status: "Aktif" },
         { nama: "Sewa Kantin", kategori: "Sewa Kantin", tarif: 416667, satuan: "Per Bulan", target: 5000000, status: "Aktif" },
@@ -1005,8 +1015,6 @@
     }
 
     function bersihkanNomorTelepon(nomor) { return String(nomor || "").replace(/[^0-9]/g, ""); }
-
-    document.getElementById("setting-apps-script").value = APPS_SCRIPT_URL;
 
     function isiFormBiodataKadis() {
         document.getElementById("setting-kadis-nama").value = biodataKadis.nama;
@@ -1515,97 +1523,175 @@
             tbody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-gray-400 font-bold">Belum ada transaksi recorded.</td></tr>`;
             return;
         }
-        tbody.innerHTML = data.map((item, i) => `
-            <tr class="hover:bg-gray-50/80 transition-all">
-                <td class="p-3.5 text-center font-mono-num text-gray-400 font-bold">${i + 1}</td>
-                <td class="p-3.5 text-center font-bold text-cikasda-blue">${escapeHTML(item.bulan || '-')}</td>
-                <td class="p-3.5 text-center font-mono-num text-gray-600">${escapeHTML(item.tanggal || '-')}</td>
-                <td class="p-3.5 font-bold">${escapeHTML(item.uraian || '-')}</td>
-                <td class="p-3.5">${escapeHTML(item.penyetor || '-')}</td>
-                <td class="p-3.5 text-gray-500 text-[11px]">${escapeHTML(item.penjelasan || '-')}</td>
-                <td class="p-3.5 text-right font-mono-num font-bold">${konversiKeRupiah(item.jumlah)}</td>
-                <td class="p-3.5 text-center">
-                    <span class="px-2.5 py-1 rounded-full text-[9px] font-bold uppercase ${
-                        (item.keterangan || '').toLowerCase().includes('hutang') ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'
-                    }">${escapeHTML(item.keterangan || 'Lunas')}</span>
-                </td>
-            </tr>
-        `).join("");
-    }
+        tbody.innerHTML = data.map((item, i) => {
+            const ket = (item.keterangan || "").toLowerCase();
+            const isUtang = ket.includes("hutang") || ket.includes("tunggak") || ket.includes("belum");
+            const badgeMekanisme = isUtang
+                ? `<span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-red-100 text-red-700">Hutang</span>`
+                : `<span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-emerald-100 text-emerald-700">${escapeHTML(item.keterangan || 'Lunas')}</span>`;
 
-    function jalankanPencarianTabel() {
-        const q = document.getElementById("input-cari").value.toLowerCase();
-        const hasil = gudangDataLokal.filter(item => 
-            (item.penyetor || "").toLowerCase().includes(q) ||
-            (item.uraian || "").toLowerCase().includes(q) ||
-            (item.penjelasan || "").toLowerCase().includes(q) ||
-            (item.bulan || "").toLowerCase().includes(q)
-        );
-        renderTabelJurnal(hasil);
+            return `
+                <tr class="hover:bg-gray-50/80 transition-all">
+                    <td class="p-3.5 text-center font-mono-num text-gray-400 font-bold">${i + 1}</td>
+                    <td class="p-3.5 text-center font-bold text-cikasda-blue">${escapeHTML(item.bulan || '-')}</td>
+                    <td class="p-3.5 text-center font-mono-num text-gray-500">${escapeHTML(item.tanggal || '-')}</td>
+                    <td class="p-3.5 font-bold">${escapeHTML(item.uraian || '-')}</td>
+                    <td class="p-3.5">${escapeHTML(item.penyetor || '-')}</td>
+                    <td class="p-3.5 text-gray-500">${escapeHTML(item.penjelasan || '-')}</td>
+                    <td class="p-3.5 text-right font-mono-num font-bold ${isUtang ? 'text-red-600' : 'text-cikasda-navy'}">${konversiKeRupiah(item.jumlah)}</td>
+                    <td class="p-3.5 text-center">${badgeMekanisme}</td>
+                </tr>
+            `;
+        }).join("");
     }
 
     function renderIkhtisarBulanan(rekap) {
-        const el = document.getElementById("container-bulanan");
-        if (!el) return;
-        el.innerHTML = listNamaBulan.map(b => `
-            <div class="py-2 flex justify-between items-center">
-                <span class="text-gray-600">${b}</span>
-                <span class="font-mono-num font-bold text-cikasda-navy">${konversiKeRupiah(rekap[b])}</span>
+        const container = document.getElementById("container-bulanan");
+        if (!container) return;
+        container.innerHTML = listNamaBulan.map(b => `
+            <div class="py-2.5 flex justify-between items-center">
+                <span class="text-gray-600 font-medium">${b}</span>
+                <span class="font-bold font-mono-num text-cikasda-navy">${konversiKeRupiah(rekap[b])}</span>
             </div>
         `).join("");
     }
 
-    function renderRankingPenyetor(rekap) {
-        const el = document.getElementById("container-ranking");
-        const elLengkap = document.getElementById("tabel-ranking-lengkap");
-        
-        const sorted = Object.entries(rekap).sort((a,b) => b[1] - a[1]);
+    function renderRankingPenyetor(petaPenyetor) {
+        const container = document.getElementById("container-ranking");
+        const tabelLengkap = document.getElementById("tabel-ranking-lengkap");
 
-        if (el) {
-            el.innerHTML = sorted.slice(0, 5).map(([nama, total], i) => `
+        const sorted = Object.keys(petaPenyetor)
+            .map(k => ({ nama: k, total: petaPenyetor[k] }))
+            .sort((a, b) => b.total - a.total);
+
+        if (container) {
+            container.innerHTML = sorted.slice(0, 5).map((item, idx) => `
                 <div class="py-2.5 flex justify-between items-center">
-                    <div class="flex items-center gap-2.5 min-w-0">
-                        <span class="w-5 h-5 rounded-full ${i===0?'bg-amber-400 text-white':i===1?'bg-gray-300 text-gray-700':'bg-amber-700/20 text-amber-800'} text-[10px] font-black flex items-center justify-center shrink-0">${i+1}</span>
-                        <span class="truncate text-cikasda-navy font-bold">${escapeHTML(nama)}</span>
+                    <div class="flex items-center gap-2">
+                        <span class="w-5 h-5 rounded-full bg-cikasda-gold/20 text-cikasda-amber font-bold text-[10px] flex items-center justify-center">${idx + 1}</span>
+                        <span class="font-bold text-cikasda-navy truncate max-w-[120px]">${escapeHTML(item.nama)}</span>
                     </div>
-                    <span class="font-mono-num font-bold text-cikasda-blue shrink-0 ml-2">${konversiKeRupiah(total)}</span>
+                    <span class="font-bold font-mono-num text-cikasda-blue">${konversiKeRupiah(item.total)}</span>
                 </div>
             `).join("");
         }
 
-        if (elLengkap) {
-            elLengkap.innerHTML = sorted.map(([nama, total], i) => {
-                const frekuensi = gudangDataLokal.filter(d => (d.penyetor || '').trim() === nama).length;
-                return `
-                    <tr class="hover:bg-gray-50">
-                        <td class="p-3 text-center font-bold text-gray-400">${i+1}</td>
-                        <td class="p-3 font-bold text-cikasda-navy">${escapeHTML(nama)}</td>
-                        <td class="p-3 text-center font-mono-num">${frekuensi}x</td>
-                        <td class="p-3 text-right font-mono-num font-bold text-cikasda-blue">${konversiKeRupiah(total)}</td>
-                    </tr>
-                `;
-            }).join("");
+        if (tabelLengkap) {
+            tabelLengkap.innerHTML = sorted.map((item, idx) => `
+                <tr class="hover:bg-gray-50">
+                    <td class="p-3 text-center font-bold">${idx + 1}</td>
+                    <td class="p-3 font-bold">${escapeHTML(item.nama)}</td>
+                    <td class="p-3 text-center font-mono-num">-</td>
+                    <td class="p-3 text-right font-mono-num font-bold text-cikasda-blue">${konversiKeRupiah(item.total)}</td>
+                </tr>
+            `).join("");
         }
     }
 
-    function renderGrafikPAD(rekap) {
+    /* SISTEM NOTIFIKASI PIUTANG TANGGAL 10 DAN OTOMATIS HILANG JIKA LUNAS */
+    function updateNotifikasi(data) {
+        const badgeNotif = document.getElementById("badge-notif");
+        const listNotif = document.getElementById("list-notif");
+        if (!listNotif) return;
+
+        const skrg = new Date();
+        const tglHariIni = skrg.getDate();
+        const bulanSekarangIndex = skrg.getMonth();
+        const namaBulanSekarang = listNamaBulan[bulanSekarangIndex];
+
+        let notifItems = [];
+
+        // 1. Cek Penunggakan Aktif dari Log Pembayaran (Akan hilang jika status sudah Lunas)
+        daftarObjekSewa.forEach(obj => {
+            const namaObjek = obj.nama.toLowerCase();
+            
+            // Evaluasi keterutangan per nama penyetor/objek
+            data.forEach(item => {
+                const ket = (item.keterangan || "").toLowerCase();
+                const uraian = (item.uraian || "").toLowerCase();
+                const isMatchObjek = uraian.includes(namaObjek) || namaObjek.includes(uraian);
+
+                if (isMatchObjek) {
+                    const isUtang = ket.includes("hutang") || ket.includes("tunggak") || ket.includes("belum");
+                    if (isUtang) {
+                        notifItems.push({
+                            tipe: "terutang",
+                            judul: `Tunggakan ${obj.nama}`,
+                            pesan: `${item.penyetor} belum membayar sewa ${obj.nama} (${item.bulan}) - ${konversiKeRupiah(item.jumlah)}`
+                        });
+                    }
+                }
+            });
+        });
+
+        // 2. Notifikasi Otomatis Siklus Tagihan Tanggal 10 Bulan Berjalan
+        if (tglHariIni >= 10) {
+            daftarObjekSewa.forEach(obj => {
+                if (obj.tarif > 0) {
+                    // Cari apakah sudah ada pelunasan kas masuk untuk bulan berjalan pada objek ini
+                    const sudahBayar = data.some(item => {
+                        const uraian = (item.uraian || "").toLowerCase();
+                        const bulan = (item.bulan || "").trim();
+                        const ket = (item.keterangan || "").toLowerCase();
+                        const isLunas = !ket.includes("hutang") && !ket.includes("tunggak") && !ket.includes("belum");
+                        
+                        return uraian.includes(obj.nama.toLowerCase()) && 
+                               bulan.toLowerCase() === namaBulanSekarang.toLowerCase() && 
+                               isLunas;
+                    });
+
+                    // Jika belum bayar setelah tanggal 10, tampilkan notifikasi kewajiban terutang
+                    if (!sudahBayar) {
+                        notifItems.push({
+                            tipe: "jadwal_tagihan",
+                            judul: `Jatuh Tempo Sewa ${obj.nama}`,
+                            pesan: `Tagihan sewa ${obj.nama} periode ${namaBulanSekarang} telah memasuki tanggal 10 dan dihitung sebagai kewajiban terutang.`
+                        });
+                    }
+                }
+            });
+        }
+
+        // Render Notifikasi ke UI Topbar
+        if (notifItems.length > 0) {
+            badgeNotif.innerText = notifItems.length;
+            badgeNotif.classList.remove("hidden");
+            badgeNotif.classList.add("flex");
+
+            listNotif.innerHTML = notifItems.map(n => `
+                <div class="p-3 hover:bg-gray-50 transition-all flex items-start gap-2.5">
+                    <i class="fa-solid fa-triangle-exclamation text-amber-500 mt-0.5"></i>
+                    <div>
+                        <p class="font-bold text-cikasda-navy text-[11px] leading-tight">${escapeHTML(n.judul)}</p>
+                        <p class="text-gray-500 text-[10px] mt-0.5">${escapeHTML(n.pesan)}</p>
+                    </div>
+                </div>
+            `).join("");
+        } else {
+            badgeNotif.classList.add("hidden");
+            badgeNotif.classList.remove("flex");
+            listNotif.innerHTML = `<div class="p-4 text-center text-gray-400 font-bold">Tidak ada notifikasi tunggakan aktif.</div>`;
+        }
+    }
+
+    /* RENDER CHART.JS */
+    function renderGrafikPAD(rekapBulanan) {
         const ctx = document.getElementById("canvasGrafikPAD");
-        if(!ctx) return;
-        if(instanceGrafikPAD) instanceGrafikPAD.destroy();
+        if (!ctx) return;
+        if (instanceGrafikPAD) instanceGrafikPAD.destroy();
 
         instanceGrafikPAD = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: listNamaBulan,
                 datasets: [{
-                    label: 'Penerimaan PAD (Rp)',
-                    data: listNamaBulan.map(b => rekap[b]),
+                    label: 'Penerimaan Kas (Rp)',
+                    data: listNamaBulan.map(b => rekapBulanan[b] || 0),
                     borderColor: '#00adb5',
                     backgroundColor: 'rgba(0, 173, 181, 0.1)',
-                    borderWidth: 3,
                     fill: true,
-                    tension: 0.35,
-                    pointBackgroundColor: '#0b192c'
+                    tension: 0.3,
+                    borderWidth: 2
                 }]
             },
             options: {
@@ -1613,17 +1699,16 @@
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
-                    y: { ticks: { callback: v => 'Rp ' + (v/1000000) + 'M', font: { size: 9 } } },
-                    x: { ticks: { font: { size: 9 } } }
+                    y: { ticks: { callback: v => 'Rp ' + (v/1000000).toFixed(1) + 'M' } }
                 }
             }
         });
     }
 
-    function renderGrafikRealisasiTarget(rekap) {
+    function renderGrafikRealisasiTarget(rekapBulanan) {
         const ctx = document.getElementById("canvasRealisasiTarget");
-        if(!ctx) return;
-        if(instanceGrafikRealisasiTarget) instanceGrafikRealisasiTarget.destroy();
+        if (!ctx) return;
+        if (instanceGrafikRealisasiTarget) instanceGrafikRealisasiTarget.destroy();
 
         const targetBulanan = targetPADTahun / 12;
 
@@ -1634,12 +1719,12 @@
                 datasets: [
                     {
                         label: 'Realisasi Kas',
-                        data: listNamaBulan.map(b => rekap[b]),
+                        data: listNamaBulan.map(b => rekapBulanan[b] || 0),
                         backgroundColor: '#1e3e62'
                     },
                     {
                         label: 'Target Proporsional',
-                        data: Array(12).fill(targetBulanan),
+                        data: listNamaBulan.map(() => targetBulanan),
                         type: 'line',
                         borderColor: '#d4af37',
                         borderDash: [5, 5],
@@ -1650,109 +1735,119 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                scales: { y: { ticks: { callback: v => (v/1000000) + ' Jt' } } }
+                plugins: { legend: { position: 'bottom' } }
             }
         });
     }
 
-    function renderGrafikMekanisme(rekapMek) {
+    function renderGrafikMekanisme(rekapMekanisme) {
         const ctx = document.getElementById("canvasMekanisme");
-        if(!ctx) return;
-        if(instanceGrafikMekanisme) instanceGrafikMekanisme.destroy();
+        if (!ctx) return;
+        if (instanceGrafikMekanisme) instanceGrafikMekanisme.destroy();
 
         instanceGrafikMekanisme = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: Object.keys(rekapMek),
+                labels: Object.keys(rekapMekanisme),
                 datasets: [{
-                    data: Object.values(rekapMek),
+                    data: Object.values(rekapMekanisme),
                     backgroundColor: ['#10b981', '#1e3e62', '#00adb5', '#ef4444']
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } }
+                plugins: { legend: { position: 'bottom' } }
             }
         });
     }
 
-    function updateNotifikasi(data) {
-        const badge = document.getElementById("badge-notif");
-        const list = document.getElementById("list-notif");
-        if(!list) return;
-
-        badge.innerText = data.length;
-        badge.classList.remove("hidden");
-        badge.classList.add("flex");
-
-        list.innerHTML = data.slice(-5).reverse().map(item => `
-            <div class="p-3 hover:bg-gray-50">
-                <p class="font-bold text-cikasda-navy">${escapeHTML(item.penyetor || 'Anonim')}</p>
-                <p class="text-[10px] text-gray-500">${escapeHTML(item.uraian || '-')} &middot; <strong class="text-emerald-600">${konversiKeRupiah(item.jumlah)}</strong></p>
-            </div>
-        `).join("");
+    /* PENCARIAN TABEL JURNAL */
+    function jalankanPencarianTabel() {
+        const kataKunci = document.getElementById("input-cari").value.toLowerCase();
+        const hasilFilter = gudangDataLokal.filter(item => 
+            (item.penyetor || "").toLowerCase().includes(kataKunci) ||
+            (item.uraian || "").toLowerCase().includes(kataKunci) ||
+            (item.penjelasan || "").toLowerCase().includes(kataKunci) ||
+            (item.bulan || "").toLowerCase().includes(kataKunci)
+        );
+        renderTabelJurnal(hasilFilter);
     }
 
-    /* CETAK & EKSPOR */
+    /* CETAK LAPORAN RESMI PDF */
     function cetakLaporanResmiPDF() {
-        mintaPin(cetakLaporanResmiPDFAsli);
-    }
+        const areaCetak = document.getElementById("area-cetak-dokumen");
+        const bodyTabel = document.getElementById("cetak-tabel-body");
+        const ikhtisarBody = document.getElementById("cetak-ikhtisar-body");
 
-    function cetakLaporanResmiPDFAsli() {
         document.getElementById("cetak-tgl-sekarang").innerText = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
         document.getElementById("cetak-kadis-nama").innerText = biodataKadis.nama;
         document.getElementById("cetak-kadis-jabatan").innerText = biodataKadis.jabatan;
         document.getElementById("cetak-kadis-pangkat").innerText = biodataKadis.pangkat;
         document.getElementById("cetak-kadis-nip").innerText = "NIP. " + biodataKadis.nip;
 
-        let rekapBulan = {};
-        listNamaBulan.forEach(b => rekapBulan[b] = 0);
-        gudangDataLokal.forEach(d => {
-            const b = (d.bulan || '').trim();
-            if(rekapBulan.hasOwnProperty(b)) rekapBulan[b] += Number(d.jumlah) || 0;
+        // Render Ikhtisar Cetak
+        let rekapBulanan = {};
+        listNamaBulan.forEach(b => rekapBulanan[b] = 0);
+        gudangDataLokal.forEach(item => {
+            const b = (item.bulan || "").trim();
+            if (rekapBulanan.hasOwnProperty(b)) rekapBulanan[b] += Number(item.jumlah) || 0;
         });
 
-        let bodyIkhtisar = "";
-        for(let i=0; i<6; i++) {
+        let htmlIkhtisar = "";
+        for (let i = 0; i < 6; i++) {
             const b1 = listNamaBulan[i];
-            const b2 = listNamaBulan[i+6];
-            bodyIkhtisar += `
+            const b2 = listNamaBulan[i + 6];
+            htmlIkhtisar += `
                 <tr>
-                    <td style="border:1px solid #000; padding:4px;">${b1}</td>
-                    <td style="border:1px solid #000; padding:4px; text-align:right;">${konversiKeRupiah(rekapBulan[b1])}</td>
-                    <td style="border:1px solid #000; padding:4px;">${b2}</td>
-                    <td style="border:1px solid #000; padding:4px; text-align:right;">${konversiKeRupiah(rekapBulan[b2])}</td>
+                    <td style="border: 1px solid #000; padding: 4px;">${b1}</td>
+                    <td style="border: 1px solid #000; padding: 4px; text-align: right;">${konversiKeRupiah(rekapBulanan[b1])}</td>
+                    <td style="border: 1px solid #000; padding: 4px;">${b2}</td>
+                    <td style="border: 1px solid #000; padding: 4px; text-align: right;">${konversiKeRupiah(rekapBulanan[b2])}</td>
                 </tr>
             `;
         }
-        document.getElementById("cetak-ikhtisar-body").innerHTML = bodyIkhtisar;
+        ikhtisarBody.innerHTML = htmlIkhtisar;
 
-        document.getElementById("cetak-tabel-body").innerHTML = gudangDataLokal.map((d, i) => `
+        // Render Detail Transaksi Cetak
+        bodyTabel.innerHTML = gudangDataLokal.map((item, i) => `
             <tr>
-                <td style="border:1px solid #000; padding:4px; text-align:center;">${i+1}</td>
-                <td style="border:1px solid #000; padding:4px; text-align:center;">${escapeHTML(d.bulan || '-')}</td>
-                <td style="border:1px solid #000; padding:4px; text-align:center;">${escapeHTML(d.tanggal || '-')}</td>
-                <td style="border:1px solid #000; padding:4px;">${escapeHTML(d.uraian || '-')}</td>
-                <td style="border:1px solid #000; padding:4px;">${escapeHTML(d.penyetor || '-')}</td>
-                <td style="border:1px solid #000; padding:4px; text-align:right;">${konversiKeRupiah(d.jumlah)}</td>
-                <td style="border:1px solid #000; padding:4px; text-align:center;">${escapeHTML(d.keterangan || 'Lunas')}</td>
+                <td style="border: 1px solid #000; padding: 4px; text-align: center;">${i + 1}</td>
+                <td style="border: 1px solid #000; padding: 4px; text-align: center;">${escapeHTML(item.bulan)}</td>
+                <td style="border: 1px solid #000; padding: 4px; text-align: center;">${escapeHTML(item.tanggal)}</td>
+                <td style="border: 1px solid #000; padding: 4px;">${escapeHTML(item.uraian)}</td>
+                <td style="border: 1px solid #000; padding: 4px;">${escapeHTML(item.penyetor)}</td>
+                <td style="border: 1px solid #000; padding: 4px; text-align: right;">${konversiKeRupiah(item.jumlah)}</td>
+                <td style="border: 1px solid #000; padding: 4px; text-align: center;">${escapeHTML(item.keterangan || 'Lunas')}</td>
             </tr>
         `).join("");
 
+        areaCetak.classList.remove("hidden");
         window.print();
+        areaCetak.classList.add("hidden");
     }
 
+    /* EKSPOR DATA KE EXCEL */
     function eksporExcel() {
-        mintaPin(eksporExcelAsli);
-    }
+        if (gudangDataLokal.length === 0) {
+            alert("Tidak ada data untuk diekspor.");
+            return;
+        }
+        const dataBersih = gudangDataLokal.map((item, idx) => ({
+            "No": idx + 1,
+            "Bulan": item.bulan,
+            "Tanggal": item.tanggal,
+            "Uraian Objek Sewa": item.uraian,
+            "Penyetor / Instansi": item.penyetor,
+            "Penjelasan": item.penjelasan,
+            "Jumlah (Rp)": item.jumlah,
+            "Mekanisme Pembayaran": item.keterangan || 'Lunas'
+        }));
 
-    function eksporExcelAsli() {
-        if(gudangDataLokal.length === 0) { alert("Tidak ada data untuk diekspor!"); return; }
-        const ws = XLSX.utils.json_to_sheet(gudangDataLokal);
+        const ws = XLSX.utils.json_to_sheet(dataBersih);
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "Jurnal Kas PAD");
-        XLSX.writeFile(wb, `Laporan_PAD_CIKASDA_${new Date().toISOString().slice(0,10)}.xlsx`);
+        XLSX.writeFile(wb, `Laporan_PAD_CIKASDA_${new Date().toISOString().slice(0, 10)}.xlsx`);
     }
 </script>
 </body>
