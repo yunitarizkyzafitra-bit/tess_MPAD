@@ -355,7 +355,7 @@
         </div>
     </div>
 
-    <!-- Modal Jadwal Olahraga & Rekap Klub Terdaftar -->
+    <!-- Modal Jadwal Olahraga & Rekap Klub Terdaftar (Hanya Menampilkan Data & Tombol Tambah ke Form Utama) -->
     <div id="modalJadwalOlahraga" class="fixed inset-0 bg-cikasda-blue/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
         <div class="w-full max-w-5xl rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 flex flex-col max-h-[90vh] bg-cikasda-cardbg border-2 border-cikasda-blue/10">
             <div class="bg-indigo-900 text-white p-4 flex items-center justify-between border-b-4 border-cikasda-yellow">
@@ -370,10 +370,10 @@
                 <div class="p-4 bg-indigo-50 rounded-xl border border-indigo-200 flex flex-col md:flex-row items-center justify-between gap-3">
                     <div>
                         <h4 class="font-black text-indigo-900 uppercase text-xs">Daftar Klub Berdasarkan Hari Pilihan (Senin - Minggu)</h4>
-                        <p class="text-[11px] text-indigo-950 mt-0.5">Data di bawah ini ditarik secara otomatis dari input sewa yang dilakukan oleh masing-masing klub / penyewa.</p>
+                        <p class="text-[11px] text-indigo-950 mt-0.5">Data di bawah ini ditarik secara otomatis dari form entri sewa utama.</p>
                     </div>
-                    <button onclick="bukaModalForm()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-black px-4 py-2.5 rounded-xl text-[11px] shadow shrink-0">
-                        <i class="fa-solid fa-plus mr-1"></i> Input Sewa Baru
+                    <button onclick="tutupModalJadwalOlahraga(); bukaModalForm();" class="bg-indigo-600 hover:bg-indigo-700 text-white font-black px-4 py-2.5 rounded-xl text-[11px] shadow shrink-0">
+                        <i class="fa-solid fa-plus mr-1"></i> Input Sewa Baru (Terpusat)
                     </button>
                 </div>
 
@@ -452,7 +452,7 @@
         </div>
     </div>
 
-    <!-- Modal Form Transaksi & Penjadwalan Hari (Senin-Minggu) -->
+    <!-- Modal Form Transaksi & Penjadwalan Hari (Terpusat Menjadi Satu Form) -->
     <div id="modalFormTransaksi" class="fixed inset-0 bg-cikasda-blue/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
         <div class="w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 flex flex-col max-h-[90vh] bg-cikasda-cardbg border-2 border-cikasda-blue/10">
             <div class="bg-cikasda-blue text-white p-4 flex items-center justify-between border-b-4 border-cikasda-yellow">
@@ -477,9 +477,9 @@
                     </select>
                 </div>
 
-                <!-- Bagian Khusus Lapangan Tenis & Badminton (Hari Senin-Minggu & Sesi) -->
+                <!-- Bagian Khusus Lapangan Tenis & Badminton (Digabung Langsung ke Form Ini) -->
                 <div id="wrapper-khusus-olahraga" class="p-3.5 bg-indigo-50/70 rounded-xl border border-indigo-200 space-y-3 hidden">
-                    <span class="text-[10px] font-black uppercase text-indigo-900 block"><i class="fa-solid fa-medal text-indigo-600 mr-1"></i> Penjadwalan Hari & Klub Olahraga</span>
+                    <span class="text-[10px] font-black uppercase text-indigo-900 block"><i class="fa-solid fa-medal text-indigo-600 mr-1"></i> Penjadwalan Hari & Klub Olahraga (Form Terpusat)</span>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
@@ -1034,7 +1034,7 @@
             });
 
             if (dataOlahraga.length === 0) {
-                tBodyKlub.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-gray-500 font-medium">Belum ada data klub terdaftar untuk lapangan tenis & badminton. Silakan tambahkan melalui entri sewa.</td></tr>`;
+                tBodyKlub.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-gray-500 font-medium">Belum ada data klub terdaftar untuk lapangan tenis & badminton. Silakan tambahkan melalui form entri sewa utama.</td></tr>`;
                 return;
             }
 
