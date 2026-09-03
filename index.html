@@ -357,11 +357,11 @@
 
     <!-- Modal Jadwal Olahraga & Rekap Klub Terdaftar -->
     <div id="modalJadwalOlahraga" class="fixed inset-0 bg-cikasda-blue/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
-        <div class="w-full max-w-6xl rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 flex flex-col max-h-[90vh] bg-cikasda-cardbg border-2 border-cikasda-blue/10">
+        <div class="w-full max-w-5xl rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 flex flex-col max-h-[90vh] bg-cikasda-cardbg border-2 border-cikasda-blue/10">
             <div class="bg-indigo-900 text-white p-4 flex items-center justify-between border-b-4 border-cikasda-yellow">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-calendar-days text-cikasda-yellow"></i>
-                    <h3 class="font-black text-xs uppercase tracking-widest">Modul Rekapitulasi Klub & Status Jadwal Sewa Lapangan (Senin s.d. Minggu)</h3>
+                    <h3 class="font-black text-xs uppercase tracking-widest">Modul Rekapitulasi Klub & Jadwal Sewa Lapangan (Senin s.d. Minggu)</h3>
                 </div>
                 <button type="button" onclick="tutupModalJadwalOlahraga()" class="text-white/80 hover:text-white text-lg focus:outline-none"><i class="fa-solid fa-xmark"></i></button>
             </div>
@@ -369,37 +369,16 @@
             <div class="p-6 space-y-5 overflow-y-auto custom-scrollbar flex-1 text-xs text-cikasda-blue">
                 <div class="p-4 bg-indigo-50 rounded-xl border border-indigo-200 flex flex-col md:flex-row items-center justify-between gap-3">
                     <div>
-                        <h4 class="font-black text-indigo-900 uppercase text-xs">Status Jadwal & Klub Berdasarkan Hari & Sesi</h4>
-                        <p class="text-[11px] text-indigo-950 mt-0.5">Status jadwal di bawah ini menarik inputan sewa dari form secara otomatis.</p>
+                        <h4 class="font-black text-indigo-900 uppercase text-xs">Daftar Klub Berdasarkan Hari Pilihan (Senin - Minggu)</h4>
+                        <p class="text-[11px] text-indigo-950 mt-0.5">Data di bawah ini ditarik secara otomatis dari input sewa yang dilakukan oleh masing-masing klub / penyewa.</p>
                     </div>
                     <button onclick="bukaModalForm()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-black px-4 py-2.5 rounded-xl text-[11px] shadow shrink-0">
                         <i class="fa-solid fa-plus mr-1"></i> Input Sewa Baru
                     </button>
                 </div>
 
-                <!-- Status Matriks Jadwal Sewa Lapangan Terintegrasi -->
                 <div class="space-y-2">
-                    <h5 class="font-black uppercase text-cikasda-blue"><i class="fa-solid fa-table-cells text-indigo-600 mr-1"></i> Status Matriks Jadwal Sewa Lapangan (Senin - Minggu)</h5>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-center text-xs border border-gray-200 rounded-xl overflow-hidden">
-                            <thead class="bg-indigo-900 text-white font-bold text-[10px] uppercase">
-                                <tr>
-                                    <th class="p-3 text-left">Hari / Sesi</th>
-                                    <th class="p-3">Sesi 1<br><span class="text-[9px] font-normal">07.30 - 10.30</span></th>
-                                    <th class="p-3">Sesi 2<br><span class="text-[9px] font-normal">11.00 - 14.00</span></th>
-                                    <th class="p-3">Sesi 3<br><span class="text-[9px] font-normal">15.00 - 18.00</span></th>
-                                    <th class="p-3">Sesi 4<br><span class="text-[9px] font-normal">19.00 - 22.00</span></th>
-                                </tr>
-                            </thead>
-                            <tbody id="matriks-jadwal-body" class="divide-y divide-gray-200 font-semibold bg-white text-cikasda-blue">
-                                <!-- Diisi otomatis via JS berdasarkan sinkronisasi form input -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="space-y-2 pt-3">
-                    <h5 class="font-black uppercase text-cikasda-blue"><i class="fa-solid fa-list-check text-indigo-600 mr-1"></i> Tabel Rekapitulasi Klub & Durasi Terdaftar</h5>
+                    <h5 class="font-black uppercase text-cikasda-blue"><i class="fa-solid fa-list-check text-indigo-600 mr-1"></i> Tabel Rekapitulasi Klub & Jadwal Terdaftar</h5>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left text-xs border border-gray-200 rounded-xl overflow-hidden">
                             <thead class="bg-indigo-900 text-white font-bold text-[10px] uppercase">
@@ -408,7 +387,7 @@
                                     <th class="p-3">Nama Klub / Penyewa</th>
                                     <th class="p-3 text-center">Hari Pilihan</th>
                                     <th class="p-3 text-center">Sesi Waktu</th>
-                                    <th class="p-3 text-center">Durasi / Jangka Waktu</th>
+                                    <th class="p-3 text-center">Durasi</th>
                                     <th class="p-3 text-right">Besaran Sewa (Rp)</th>
                                 </tr>
                             </thead>
@@ -500,7 +479,7 @@
 
                 <!-- Bagian Khusus Lapangan Tenis & Badminton (Hari Senin-Minggu & Sesi) -->
                 <div id="wrapper-khusus-olahraga" class="p-3.5 bg-indigo-50/70 rounded-xl border border-indigo-200 space-y-3 hidden">
-                    <span class="text-[10px] font-black uppercase text-indigo-900 block"><i class="fa-solid fa-medal text-indigo-600 mr-1"></i> Penjadwalan Hari, Sesi & Jangka Waktu Sewa</span>
+                    <span class="text-[10px] font-black uppercase text-indigo-900 block"><i class="fa-solid fa-medal text-indigo-600 mr-1"></i> Penjadwalan Hari & Klub Olahraga</span>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
@@ -525,7 +504,7 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                            <label class="block font-bold mb-1 text-indigo-900">Pilih Sesi Sewa</label>
+                            <label class="block font-bold mb-1 text-indigo-900">Pilih Sesi Waktu</label>
                             <select id="f-sesi-waktu" class="w-full bg-white border border-indigo-200 rounded-lg p-2 font-bold text-indigo-950 focus:outline-none">
                                 <option value="Sesi 1 (07.30 - 10.30 WITA)">Sesi 1: 07.30 - 10.30 WITA</option>
                                 <option value="Sesi 2 (11.00 - 14.00 WITA)">Sesi 2: 11.00 - 14.00 WITA</option>
@@ -534,7 +513,7 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block font-bold mb-1 text-indigo-900">Jangka Waktu Sewa / Durasi</label>
+                            <label class="block font-bold mb-1 text-indigo-900">Durasi Sewa / Bulan</label>
                             <select id="f-durasi-bulan" class="w-full bg-white border border-indigo-200 rounded-lg p-2 font-bold text-indigo-950 focus:outline-none">
                                 <option value="1 Bulan">1 Bulan</option>
                                 <option value="3 Bulan (Triwulanan)">3 Bulan (Triwulanan)</option>
@@ -717,7 +696,6 @@
                 m.classList.remove("opacity-0", "pointer-events-none");
                 if (m.firstElementChild) m.firstElementChild.classList.remove("scale-95");
                 renderTabelRingkasanKlubOlahraga();
-                renderMatriksJadwalSewa();
             }
         }
         function tutupModalJadwalOlahraga() {
@@ -970,7 +948,6 @@
                         ${item.nama_klub || ''}
                         ${item.hari_pilihan || ''}
                         ${item.sesi_waktu || ''}
-                        ${item.durasi_bulan || ''}
                         ${item.penjelasan || ''} 
                         ${item.jumlah || ''} 
                         ${item.keterangan || ''}
@@ -1016,11 +993,11 @@
 
                 let infoPenjelasan = sanitasiInput(item.penjelasan || '-');
                 if (item.sesi_waktu) {
-                    infoPenjelasan = `<span class="text-indigo-900 font-bold">[Hari: ${sanitasiInput(item.hari_pilihan || 'Senin')} | ${sanitasiInput(item.sesi_waktu)} | Durasi: ${sanitasiInput(item.durasi_bulan || '1 Bulan')}]</span><br>` + infoPenjelasan;
+                    infoPenjelasan = `<span class="text-indigo-900 font-bold">[Hari: ${sanitasiInput(item.hari_pilihan || 'Senin')} | ${sanitasiInput(item.sesi_waktu)} | ${sanitasiInput(item.durasi_bulan || '1 Bulan')}]</span><br>` + infoPenjelasan;
                 }
 
                 tBody.innerHTML += `
-                    <tr class="hover:bg-cikasda-bg/60 transition-colors border-b border-cikasda-bg font-bold">
+                    <tr class="hover:bg-cikasda-bg/65 transition-colors border-b border-cikasda-bg font-bold">
                         <td class="p-4 text-center font-mono font-black text-cikasda-blue">${index + 1}</td>
                         <td class="p-4 text-center font-black uppercase text-[10px]">${sanitasiInput(item.bulan || '-')}</td>
                         <td class="p-4 text-center text-cikasda-lightblue font-mono">${sanitasiInput(item.tanggal || '-')}</td>
@@ -1071,73 +1048,6 @@
                         <td class="p-3 text-center font-mono">${sanitasiInput(item.durasi_bulan || '1 Bulan')}</td>
                         <td class="p-3 text-right font-mono font-black text-emerald-700">${konversiKeRupiah(Number(item.jumlah) || 0)}</td>
                     </tr>`;
-            });
-        }
-
-        // Fungsi Sinkronisasi Status Jadwal Sewa Lapangan Berdasarkan Form Input
-        function renderMatriksJadwalSewa() {
-            const matriksBody = document.getElementById("matriks-jadwal-body");
-            if (!matriksBody) return;
-            matriksBody.innerHTML = "";
-
-            const daftarHari = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"];
-            const daftarSesi = ["Sesi 1", "Sesi 2", "Sesi 3", "Sesi 4"];
-
-            // Petakan data dari gudangDataLokal (mengambil inputan form sewa)
-            const mapJadwal = {};
-            gudangDataLokal.forEach(item => {
-                const u = (item.uraian || "").toLowerCase();
-                if (u.includes("tenis") || u.includes("badminton")) {
-                    const hari = item.hari_pilihan || "Senin";
-                    const sesi = item.sesi_waktu || "Sesi 1";
-                    const klub = item.nama_klub || item.penyetor || "Klub Terdaftar";
-                    const objek = item.uraian;
-                    const durasi = item.durasi_bulan || "1 Bulan";
-
-                    // Handle jika hari dipilih "Setiap Hari" atau "Akhir Pekan"
-                    let targetHariArr = [hari];
-                    if (hari.includes("Setiap Hari")) {
-                        targetHariArr = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"];
-                    } else if (hari.includes("Akhir Pekan")) {
-                        targetHariArr = ["Sabtu", "Minggu"];
-                    }
-
-                    targetHariArr.forEach(h => {
-                        daftarSesi.forEach(s => {
-                            if (sesi.includes(s)) {
-                                const key = `${h}_${s}`;
-                                mapJadwal[key] = { klub, objek, durasi };
-                            }
-                        });
-                    });
-                }
-            });
-
-            daftarHari.forEach(hari => {
-                let rowHtml = `<tr class="hover:bg-gray-50 transition-colors"><td class="p-3 font-extrabold text-left bg-indigo-50/50">${hari}</td>`;
-                daftarSesi.forEach(sesi => {
-                    const key = `${hari}_${sesi}`;
-                    if (mapJadwal[key]) {
-                        const dataTerisi = mapJadwal[key];
-                        rowHtml += `
-                            <td class="p-2.5">
-                                <div class="bg-emerald-100 border border-emerald-300 text-emerald-900 rounded-lg p-2 shadow-xs">
-                                    <span class="font-black block text-[11px]">${sanitasiInput(dataTerisi.klub)}</span>
-                                    <span class="text-[9px] text-emerald-700 block font-semibold">${sanitasiInput(dataTerisi.objek)}</span>
-                                    <span class="text-[8px] bg-white text-emerald-800 px-1.5 py-0.5 rounded mt-1 inline-block font-mono">Durasi: ${sanitasiInput(dataTerisi.durasi)}</span>
-                                </div>
-                            </td>`;
-                    } else {
-                        rowHtml += `
-                            <td class="p-2.5">
-                                <div class="bg-gray-50 border border-dashed border-gray-200 text-gray-400 rounded-lg p-2">
-                                    <span class="italic text-[10px]">Tersedia</span>
-                                </div>
-                            </td>`;
-                    }
-                });
-                rowHtml += `</tr>`;
-                matriksBody.innerHTML += rowHtml;
             });
         }
 
@@ -1291,14 +1201,14 @@
                 item.tanggal || "-",
                 item.uraian || "-",
                 item.nama_klub ? `${item.penyetor}\n(${item.nama_klub})` : (item.penyetor || "-"),
-                item.sesi_waktu ? `${item.hari_pilihan || 'Senin'}, ${item.sesi_waktu}\n(Durasi: ${item.durasi_bulan})` : (item.penjelasan || "-"),
+                item.sesi_waktu ? `${item.hari_pilihan || 'Senin'}, ${item.sesi_waktu}\n(${item.durasi_bulan})` : (item.penjelasan || "-"),
                 konversiKeRupiah(Number(item.jumlah) || 0),
                 item.keterangan || "-"
             ]);
 
             doc.autoTable({
                 startY: currentY,
-                head: [['No', 'Bulan', 'Tanggal', 'Uraian Sewa', 'Penyetor / Klub', 'Hari & Sesi / Jangka Waktu', 'Jumlah (Rp)', 'Mekanisme']],
+                head: [['No', 'Bulan', 'Tanggal', 'Uraian Sewa', 'Penyetor / Klub', 'Hari & Sesi / Ket', 'Jumlah (Rp)', 'Mekanisme']],
                 body: tableRows,
                 theme: 'grid',
                 headStyles: { fillColor: [8, 51, 112] },
