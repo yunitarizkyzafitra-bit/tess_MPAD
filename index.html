@@ -61,7 +61,7 @@
                     <div class="flex items-center gap-2">
                         <span class="bg-cikasda-yellow text-cikasda-blue text-[10px] font-black uppercase px-2.5 py-0.5 rounded shadow-sm tracking-wider">Perda Sulteng No. 7 Tahun 2023</span>
                         <div id="status-badge" class="flex items-center gap-1.5 bg-emerald-500/20 text-emerald-200 px-2.5 py-0.5 rounded text-[10px] font-bold border border-emerald-500/30">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Menghubungkan...
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Spreadsheet Terhubung
                         </div>
                     </div>
                     <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight mt-1.5">Dinas Cipta Karya dan Sumber Daya Air</h1>
@@ -76,7 +76,7 @@
                     <i class="fa-solid fa-scale-balanced text-sm"></i> Hukum & Perda 2023
                 </button>
                 <button onclick="bukaModalJadwalOlahraga()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-black text-xs px-4 py-3.5 rounded-xl shadow-md transition-all flex items-center gap-2 uppercase border-b-4 border-indigo-900 active:scale-95">
-                    <i class="fa-solid fa-calendar-days text-sm"></i> Rekap Klub & Jadwal
+                    <i class="fa-solid fa-calendar-days text-sm"></i> Rekap Klub & Jadwal (Cloud)
                 </button>
                 <button onclick="bukaModalAnalisisEkonomi()" class="bg-cikasda-yellow hover:bg-cikasda-lightyellow text-cikasda-blue font-black text-xs px-4 py-3.5 rounded-xl shadow-md transition-all flex items-center gap-2 uppercase border-b-4 border-cikasda-amber active:scale-95">
                     <i class="fa-solid fa-chart-pie text-sm"></i> Laporan Analisis
@@ -84,7 +84,7 @@
                 <button onclick="bukaModalForm()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs px-5 py-3.5 rounded-xl shadow-md transition-all flex items-center gap-2 uppercase border-b-4 border-emerald-700 active:scale-95">
                     <i class="fa-solid fa-circle-plus text-sm"></i> Tambah Entri Sewa
                 </button>
-                <button onclick="muatDataSinkronisasiCloud()" class="bg-white/10 hover:bg-white/20 text-white font-bold text-xs px-4 py-3.5 rounded-xl transition-all flex items-center gap-2 border border-white/20 backdrop-blur-sm shadow-sm">
+                <button onclick="muatDataSpreadsheet()" class="bg-white/10 hover:bg-white/20 text-white font-bold text-xs px-4 py-3.5 rounded-xl transition-all flex items-center gap-2 border border-white/20 backdrop-blur-sm shadow-sm">
                     <i id="icon-sync" class="fa-solid fa-arrow-rotate-right"></i> Sinkronkan
                 </button>
             </div>
@@ -153,7 +153,6 @@
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                 
-                <!-- Rumah Dinas -->
                 <div class="p-4 bg-cikasda-bg rounded-xl border border-cikasda-blue/10 space-y-1">
                     <div class="flex justify-between items-start">
                         <span class="text-[10px] font-bold text-cikasda-lightblue uppercase block">Rumah Dinas</span>
@@ -166,7 +165,6 @@
                     <span id="persen-rumah" class="text-[10px] font-bold text-cikasda-lightblue block text-right mt-0.5">0.00% Realisasi</span>
                 </div>
 
-                <!-- Lapangan Tenis -->
                 <div class="p-4 bg-cikasda-bg rounded-xl border border-cikasda-blue/10 space-y-1">
                     <div class="flex justify-between items-start">
                         <span class="text-[10px] font-bold text-cikasda-lightblue uppercase block">Lapangan Tenis</span>
@@ -179,7 +177,6 @@
                     <span id="persen-tenis" class="text-[10px] font-bold text-cikasda-lightblue block text-right mt-0.5">0.00% Realisasi</span>
                 </div>
 
-                <!-- Badminton -->
                 <div class="p-4 bg-cikasda-bg rounded-xl border border-cikasda-blue/10 space-y-1">
                     <div class="flex justify-between items-start">
                         <span class="text-[10px] font-bold text-cikasda-lightblue uppercase block">Badminton</span>
@@ -192,7 +189,6 @@
                     <span id="persen-badminton" class="text-[10px] font-bold text-cikasda-lightblue block text-right mt-0.5">0.00% Realisasi</span>
                 </div>
 
-                <!-- Sewa Kantin -->
                 <div class="p-4 bg-cikasda-bg rounded-xl border border-cikasda-blue/10 space-y-1">
                     <div class="flex justify-between items-start">
                         <span class="text-[10px] font-bold text-cikasda-lightblue uppercase block">Sewa Kantin</span>
@@ -205,7 +201,6 @@
                     <span id="persen-kantin" class="text-[10px] font-bold text-cikasda-lightblue block text-right mt-0.5">0.00% Realisasi</span>
                 </div>
 
-                <!-- Sewa Lain-Lain -->
                 <div class="p-4 bg-cikasda-bg rounded-xl border border-cikasda-blue/10 space-y-1">
                     <div class="flex justify-between items-start">
                         <span class="text-[10px] font-bold text-cikasda-lightblue uppercase block">Sewa Lain-Lain</span>
@@ -234,7 +229,6 @@
                     <canvas id="canvasRankingKategori"></canvas>
                 </div>
                 <div id="container-ranking-list" class="space-y-2 text-xs font-bold text-cikasda-blue">
-                    <!-- Dinamis terisi dari JS -->
                 </div>
             </div>
         </div>
@@ -250,7 +244,7 @@
         <div class="glass-panel rounded-2xl overflow-hidden bg-cikasda-cardbg">
             <div class="bg-cikasda-lightyellow px-5 py-4 border-b-2 border-cikasda-yellow flex flex-wrap items-center justify-between gap-3">
                 <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-widest flex items-center gap-2">
-                    <i class="fa-solid fa-table-list text-cikasda-lightblue"></i> Lembar Log Transaksi Jurnal Kas
+                    <i class="fa-solid fa-table-list text-cikasda-lightblue"></i> Lembar Log Transaksi Jurnal Kas (Google Spreadsheet Code.gs)
                 </h3>
                 <div class="flex items-center gap-2">
                     <button onclick="eksporKeExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] px-3 py-2 rounded-lg shadow transition flex items-center gap-1.5 uppercase">
@@ -355,13 +349,13 @@
         </div>
     </div>
 
-    <!-- Modal Jadwal Olahraga & Rekap Klub Terdaftar -->
+    <!-- Modal Jadwal Olahraga & Rekap Klub Terdaftar (Cloud Sync) -->
     <div id="modalJadwalOlahraga" class="fixed inset-0 bg-cikasda-blue/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
         <div class="w-full max-w-5xl rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 flex flex-col max-h-[90vh] bg-cikasda-cardbg border-2 border-cikasda-blue/10">
             <div class="bg-indigo-900 text-white p-4 flex items-center justify-between border-b-4 border-cikasda-yellow">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-calendar-days text-cikasda-yellow"></i>
-                    <h3 class="font-black text-xs uppercase tracking-widest">Modul Rekapitulasi Klub & Jadwal Sewa Lapangan (Senin s.d. Minggu)</h3>
+                    <h3 class="font-black text-xs uppercase tracking-widest">Modul Rekapitulasi Klub & Jadwal Sewa Lapangan (Tersinkronisasi Cloud Apps Script)</h3>
                 </div>
                 <button type="button" onclick="tutupModalJadwalOlahraga()" class="text-white/80 hover:text-white text-lg focus:outline-none"><i class="fa-solid fa-xmark"></i></button>
             </div>
@@ -370,15 +364,20 @@
                 <div class="p-4 bg-indigo-50 rounded-xl border border-indigo-200 flex flex-col md:flex-row items-center justify-between gap-3">
                     <div>
                         <h4 class="font-black text-indigo-900 uppercase text-xs">Daftar Klub Berdasarkan Hari Pilihan (Senin - Minggu)</h4>
-                        <p class="text-[11px] text-indigo-950 mt-0.5">Data di bawah ini ditarik secara otomatis dari input sewa yang dilakukan oleh masing-masing klub / penyewa.</p>
+                        <p class="text-[11px] text-indigo-950 mt-0.5">Data di bawah ini disinkronkan langsung dari server cloud.</p>
                     </div>
-                    <button onclick="bukaModalForm()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-black px-4 py-2.5 rounded-xl text-[11px] shadow shrink-0">
-                        <i class="fa-solid fa-plus mr-1"></i> Input Sewa Baru
-                    </button>
+                    <div class="flex items-center gap-2">
+                        <button onclick="muatDataKlubCloud()" class="bg-white text-indigo-900 border border-indigo-300 hover:bg-indigo-100 font-bold px-3 py-2.5 rounded-xl text-[11px] shadow">
+                            <i id="icon-sync-klub" class="fa-solid fa-arrow-rotate-right mr-1"></i> Refresh Cloud
+                        </button>
+                        <button onclick="bukaModalForm()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-black px-4 py-2.5 rounded-xl text-[11px] shadow shrink-0">
+                            <i class="fa-solid fa-plus mr-1"></i> Input Sewa Baru
+                        </button>
+                    </div>
                 </div>
 
                 <div class="space-y-2">
-                    <h5 class="font-black uppercase text-cikasda-blue"><i class="fa-solid fa-list-check text-indigo-600 mr-1"></i> Tabel Rekapitulasi Klub & Jadwal Terdaftar</h5>
+                    <h5 class="font-black uppercase text-cikasda-blue"><i class="fa-solid fa-list-check text-indigo-600 mr-1"></i> Tabel Rekapitulasi Klub & Jadwal Terdaftar di Cloud</h5>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left text-xs border border-gray-200 rounded-xl overflow-hidden">
                             <thead class="bg-indigo-900 text-white font-bold text-[10px] uppercase">
@@ -392,7 +391,7 @@
                                 </tr>
                             </thead>
                             <tbody id="tabel-ringkasan-klub" class="divide-y divide-gray-200 font-semibold bg-white">
-                                <!-- Diisi otomatis via JS dari input sewa -->
+                                <!-- Diisi otomatis via data cloud khusus klub -->
                             </tbody>
                         </table>
                     </div>
@@ -463,7 +462,7 @@
                 <button type="button" onclick="tutupModalForm()" class="text-white/80 hover:text-white text-lg focus:outline-none"><i class="fa-solid fa-xmark"></i></button>
             </div>
             
-            <form id="elemenFormInput" onsubmit="prosesKirimDataKeCloud(event)" class="p-5 space-y-4 overflow-y-auto custom-scrollbar flex-1 text-xs text-cikasda-blue">
+            <form id="elemenFormInput" onsubmit="prosesKirimDataTransaksi(event)" class="p-5 space-y-4 overflow-y-auto custom-scrollbar flex-1 text-xs text-cikasda-blue">
                 <input type="hidden" id="f-id-transaksi" value="">
 
                 <div>
@@ -477,9 +476,9 @@
                     </select>
                 </div>
 
-                <!-- Bagian Khusus Lapangan Tenis & Badminton (Hari Senin-Minggu & Sesi) -->
+                <!-- Bagian Khusus Lapangan Tenis & Badminton (Hari Senin-Minggu & Sesi - Tersinkronisasi Cloud) -->
                 <div id="wrapper-khusus-olahraga" class="p-3.5 bg-indigo-50/70 rounded-xl border border-indigo-200 space-y-3 hidden">
-                    <span class="text-[10px] font-black uppercase text-indigo-900 block"><i class="fa-solid fa-medal text-indigo-600 mr-1"></i> Penjadwalan Hari & Klub Olahraga</span>
+                    <span class="text-[10px] font-black uppercase text-indigo-900 block"><i class="fa-solid fa-medal text-indigo-600 mr-1"></i> Penjadwalan Hari & Klub Olahraga (Sinkronisasi Cloud)</span>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
@@ -577,7 +576,7 @@
                 <div class="pt-2 flex items-center justify-end gap-2">
                     <button type="button" onclick="tutupModalForm()" class="px-4 py-2.5 rounded-xl border border-cikasda-yellow bg-cikasda-lightyellow font-bold text-cikasda-blue focus:outline-none">Batal</button>
                     <button type="submit" id="tombolSubmitForm" class="px-5 py-2.5 rounded-xl bg-cikasda-blue hover:bg-cikasda-lightblue text-white font-black flex items-center gap-2 shadow-md focus:outline-none">
-                        <i class="fa-solid fa-paper-plane text-cikasda-yellow"></i> Simpan Data Cloud Aman
+                        <i class="fa-solid fa-paper-plane text-cikasda-yellow"></i> Simpan Jurnal & Sync Cloud
                     </button>
                 </div>
             </form>
@@ -635,6 +634,7 @@
         const TARGET_PAD_UTAMA = 21360000;
 
         let gudangDataLokal = [];
+        let gudangDataKlubCloud = [];
         let instanceGrafikPAD = null;
         let instanceGrafikRanking = null;
         let cacheAkumulasiBulanGlobal = {};
@@ -695,7 +695,7 @@
             if (m) {
                 m.classList.remove("opacity-0", "pointer-events-none");
                 if (m.firstElementChild) m.firstElementChild.classList.remove("scale-95");
-                renderTabelRingkasanKlubOlahraga();
+                muatDataKlubCloud();
             }
         }
         function tutupModalJadwalOlahraga() {
@@ -711,7 +711,7 @@
             if (m.firstElementChild) m.firstElementChild.classList.remove("scale-95");
             
             if (idData !== null) {
-                if (judulModal) judulModal.innerText = "Edit Entri Sewa Jurnal Kas (Secure)";
+                if (judulModal) judulModal.innerText = "Edit Entri Sewa Jurnal Kas";
                 const dataDipilih = gudangDataLokal.find(item => String(item.id_transaksi) === String(idData));
                 if (dataDipilih) {
                     document.getElementById("f-id-transaksi").value = dataDipilih.id_transaksi || "";
@@ -729,7 +729,7 @@
                     document.getElementById("f-keterangan").value = dataDipilih.keterangan || "Non Tunai";
                 }
             } else {
-                if (judulModal) judulModal.innerText = "Input Kas Penerimaan Baru (Secure)";
+                if (judulModal) judulModal.innerText = "Input Kas Penerimaan Baru";
                 const formObj = document.getElementById("elemenFormInput");
                 if (formObj) formObj.reset();
                 document.getElementById("f-id-transaksi").value = "";
@@ -891,7 +891,8 @@
             });
         }
 
-        async function muatDataSinkronisasiCloud() {
+        // Fungsi Memuat Data Jurnal Kas dari Spreadsheet (Code.gs)
+        async function muatDataSpreadsheet() {
             const ikon = document.getElementById("icon-sync");
             const badge = document.getElementById("status-badge");
             if (ikon) ikon.classList.add("fa-spin");
@@ -901,22 +902,49 @@
                     method: "GET",
                     headers: { "Accept": "application/json" }
                 });
-                if (!hasilFetch.ok) throw new Error("Jaringan aman tapi terhalang server");
+                if (!hasilFetch.ok) throw new Error("Gagal mengambil data dari Google Apps Script");
                 
                 gudangDataLokal = await hasilFetch.json();
                 jalankanPencarianDanFilterOtomatis();
                 
                 if (badge) {
                     badge.className = "flex items-center gap-1.5 bg-emerald-500/20 text-emerald-200 px-2.5 py-0.5 rounded text-[10px] font-bold border border-emerald-500/30";
-                    badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Terhubung Aman (Secure)`;
+                    badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Spreadsheet Terhubung`;
                 }
             } catch (kesalahan) {
-                console.error("Sinkronisasi Gagal:", kesalahan);
+                console.error("Sinkronisasi Spreadsheet Gagal:", kesalahan);
                 if (badge) {
                     badge.className = "flex items-center gap-1.5 bg-amber-500/20 text-amber-200 px-2.5 py-0.5 rounded text-[10px] font-bold border border-amber-500/30";
-                    badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> Kendala Sinkronisasi`;
+                    badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> Kendala Koneksi Spreadsheet`;
                 }
             } finally { if (ikon) ikon.classList.remove("fa-spin"); }
+        }
+
+        // Fungsi Khusus Sinkronisasi Cloud untuk Rekap Klub & Jadwal Saja
+        async function muatDataKlubCloud() {
+            const ikonKlub = document.getElementById("icon-sync-klub");
+            if (ikonKlub) ikonKlub.classList.add("fa-spin");
+
+            try {
+                const hasilFetch = await fetch(`${APPS_SCRIPT_URL}?action=getKlub&_t=${Date.now()}`, {
+                    method: "GET",
+                    headers: { "Accept": "application/json" }
+                });
+                if (!hasilFetch.ok) throw new Error("Gagal mengambil rekap klub cloud");
+                
+                gudangDataKlubCloud = await hasilFetch.json();
+                renderTabelRingkasanKlubOlahraga();
+            } catch (kesalahan) {
+                console.error("Gagal sinkronisasi rekap klub cloud:", kesalahan);
+                // Fallback otomatis menggunakan data lokal jika cloud belum dikonfigurasi endpoint khususnya
+                gudangDataKlubCloud = gudangDataLokal.filter(item => {
+                    const u = (item.uraian || "").toLowerCase();
+                    return u.includes("tenis") || u.includes("badminton");
+                });
+                renderTabelRingkasanKlubOlahraga();
+            } finally {
+                if (ikonKlub) ikonKlub.classList.remove("fa-spin");
+            }
         }
 
         function jalankanPencarianDanFilterOtomatis() {
@@ -1028,17 +1056,17 @@
             if (!tBodyKlub) return;
             tBodyKlub.innerHTML = "";
 
-            const dataOlahraga = gudangDataLokal.filter(item => {
+            const sumberDataKlub = gudangDataKlubCloud.length > 0 ? gudangDataKlubCloud : gudangDataLokal.filter(item => {
                 const u = (item.uraian || "").toLowerCase();
                 return u.includes("tenis") || u.includes("badminton");
             });
 
-            if (dataOlahraga.length === 0) {
-                tBodyKlub.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-gray-500 font-medium">Belum ada data klub terdaftar untuk lapangan tenis & badminton. Silakan tambahkan melalui entri sewa.</td></tr>`;
+            if (sumberDataKlub.length === 0) {
+                tBodyKlub.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-gray-500 font-medium">Belum ada data klub tersinkronisasi untuk lapangan tenis & badminton.</td></tr>`;
                 return;
             }
 
-            dataOlahraga.forEach(item => {
+            sumberDataKlub.forEach(item => {
                 tBodyKlub.innerHTML += `
                     <tr class="hover:bg-gray-50 transition-colors">
                         <td class="p-3 font-bold text-cikasda-blue">${sanitasiInput(item.uraian)}</td>
@@ -1238,7 +1266,7 @@
             doc.save(`Laporan_MPAD_CIKASDA_${bulanCetak}_Perda2023.pdf`);
         }
 
-        async function prosesKirimDataKeCloud(e) {
+        async function prosesKirimDataTransaksi(e) {
             e.preventDefault();
             const pinSandiInput = document.getElementById("f-pin-keamanan").value;
             const tombol = document.getElementById("tombolSubmitForm");
@@ -1250,7 +1278,7 @@
                 return;
             }
 
-            if (tombol) { tombol.disabled = true; tombol.innerText = "Memverifikasi Keamanan Ganda ke Cloud..."; }
+            if (tombol) { tombol.disabled = true; tombol.innerText = "Menyimpan ke Spreadsheet..."; }
 
             let namaKlubVal = "";
             let hariPilihanVal = "";
@@ -1292,22 +1320,24 @@
                 const hasil = await responCloud.json();
                 
                 if (hasil.status === "success") {
-                    alert("🚀 Sukses Aman! " + hasil.message);
+                    alert("🚀 Sukses! " + hasil.message);
                     tutupModalForm();
-                    muatDataSinkronisasiCloud();
+                    muatDataSpreadsheet();
+                    muatDataKlubCloud();
                 } else {
-                    alert("❌ Otorisasi Keamanan Ditolak: " + hasil.message);
+                    alert("❌ Otorisasi Ditolak: " + hasil.message);
                 }
             } catch (err) {
                 console.error(err);
-                alert("⚠️ Terjadi kesalahan koneksi aman ke server cloud.");
+                alert("⚠️ Terjadi kesalahan saat mengirim data ke spreadsheet.");
             } finally {
-                if (tombol) { tombol.disabled = false; tombol.innerHTML = `<i class="fa-solid fa-paper-plane text-cikasda-yellow"></i> Simpan Data Cloud Aman`; }
+                if (tombol) { tombol.disabled = false; tombol.innerHTML = `<i class="fa-solid fa-paper-plane text-cikasda-yellow"></i> Simpan Jurnal & Sync Cloud`; }
             }
         }
 
         window.addEventListener("DOMContentLoaded", () => {
-            muatDataSinkronisasiCloud();
+            muatDataSpreadsheet();
+            muatDataKlubCloud();
         });
     </script>
 </body>
