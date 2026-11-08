@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-Frame-Options" content="DENY">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: https:;">
-    <title>Executive Dashboard M-PAD - Dinas CIKASDA [SECURE & REGULATORY EDITION 2026]</title>
+    <title>Executive Dashboard M-PAD - Dinas CIKASDA [SECURE EDITION 2026]</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -211,7 +211,7 @@
                     <span id="persen-lainlain" class="text-[9px] font-bold text-cikasda-lightblue block text-right">0.00%</span>
                 </div>
 
-                <!-- Penerimaan Denda (MENU BARU) -->
+                <!-- Penerimaan Denda -->
                 <div class="p-3 bg-red-50 rounded-xl border-2 border-red-200 space-y-1">
                     <div class="flex items-center justify-between">
                         <span class="text-[10px] font-black text-red-700 uppercase block truncate">Penerimaan Denda</span>
@@ -232,7 +232,7 @@
         <div class="glass-panel rounded-2xl p-5 bg-cikasda-cardbg space-y-3">
             <div class="flex items-center justify-between border-b border-gray-100 pb-3">
                 <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-wider flex items-center gap-2">
-                    <i class="fa-solid fa-chart-bar text-cikasda-amber"></i> Diagram Urutan Kontribusi & Realisasi Per Kategori (Termasuk Denda)
+                    <i class="fa-solid fa-chart-bar text-cikasda-amber"></i> Diagram Urutan Kontribusi & Realisasi Per Kategori
                 </h3>
                 <span class="text-[10px] bg-cikasda-lightyellow border border-cikasda-yellow text-black font-bold px-2.5 py-0.5 rounded">Ranking Analisis</span>
             </div>
@@ -241,7 +241,7 @@
                     <canvas id="canvasRankingKategori"></canvas>
                 </div>
                 <div id="container-ranking-list" class="space-y-2 text-xs font-bold text-cikasda-blue">
-                    <!-- Dinamis terisi dari JS -->
+                    <!-- Terisi via JS -->
                 </div>
             </div>
         </div>
@@ -362,7 +362,7 @@
         </div>
     </div>
 
-    <!-- Modal Jadwal Olahraga & Rekap Klub Terdaftar -->
+    <!-- Modal Rekapitulasi Klub & Jadwal Sewa Lapangan (Senin s.d. Minggu) -->
     <div id="modalJadwalOlahraga" class="fixed inset-0 bg-cikasda-blue/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
         <div class="w-full max-w-6xl rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 flex flex-col max-h-[90vh] bg-cikasda-cardbg border-2 border-blue-200">
             <div class="bg-indigo-900 text-white p-4 flex items-center justify-between border-b-4 border-cikasda-yellow">
@@ -377,7 +377,7 @@
                 <div class="p-4 bg-indigo-50 rounded-xl border border-indigo-200 flex flex-col md:flex-row items-center justify-between gap-3">
                     <div>
                         <h4 class="font-black text-indigo-900 uppercase text-xs">Daftar Klub Berdasarkan Hari Pilihan (Senin - Minggu) & Indikator Masa Sewa</h4>
-                        <p class="text-[11px] text-indigo-950 mt-0.5">Data di bawah ini dilengkapi lampu indikator masa sewa aktif, akan datang, atau habis.</p>
+                        <p class="text-[11px] text-indigo-950 mt-0.5">Sesi waktu & masa sewa diatur secara otomatis oleh Admin via Form Entri.</p>
                     </div>
                     <button onclick="bukaModalForm()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-black px-4 py-2.5 rounded-xl text-[11px] shadow shrink-0">
                         <i class="fa-solid fa-plus mr-1"></i> Input Sewa Baru
@@ -392,15 +392,15 @@
                                 <tr>
                                     <th class="p-3">Objek Lapangan</th>
                                     <th class="p-3">Nama Klub / Penyewa</th>
-                                    <th class="p-3 text-center">Hari Pilihan</th>
-                                    <th class="p-3 text-center">Sesi Waktu</th>
-                                    <th class="p-3 text-center">Masa Sewa (Mulai s.d. Berakhir)</th>
+                                    <th class="p-3 text-center">Hari Pilihan (Penyewa)</th>
+                                    <th class="p-3 text-center">Sesi Waktu (Admin)</th>
+                                    <th class="p-3 text-center">Masa Sewa (Admin)</th>
                                     <th class="p-3 text-center">Indikator Status</th>
                                     <th class="p-3 text-right">Besaran Sewa (Rp)</th>
                                 </tr>
                             </thead>
                             <tbody id="tabel-ringkasan-klub" class="divide-y divide-gray-200 font-semibold bg-white">
-                                <!-- Diisi otomatis via JS dari input sewa -->
+                                <!-- Diisi otomatis via JS -->
                             </tbody>
                         </table>
                     </div>
@@ -449,7 +449,7 @@
                     </h4>
                     <ul class="list-disc pl-5 space-y-1.5 font-semibold text-justify">
                         <li><strong>Optimalisasi Sektor Unggulan:</strong> Rumah Dinas dan Lapangan Olahraga menunjukkan produktivitas fiskal yang konsisten.</li>
-                        <li><strong>Pengendalian Denda Administrative:</strong> Penerimaan denda secara otomatis terakumulasi dalam log jurnal kas untuk menjaga akuntabilitas audit BPK.</li>
+                        <li><strong>Pengendalian Denda Administratif:</strong> Penerimaan denda secara otomatis terakumulasi dalam log jurnal kas untuk menjaga akuntabilitas audit BPK.</li>
                     </ul>
                 </div>
             </div>
@@ -460,13 +460,13 @@
         </div>
     </div>
 
-    <!-- Modal Form Transaksi & Penjadwalan Hari (Termasuk Menu Penerimaan Denda) -->
+    <!-- Modal Form Transaksi & Penjadwalan ADMIN -->
     <div id="modalFormTransaksi" class="fixed inset-0 bg-cikasda-blue/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
         <div class="w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 flex flex-col max-h-[90vh] bg-cikasda-cardbg border-2 border-blue-200">
             <div class="bg-cikasda-blue text-white p-4 flex items-center justify-between border-b-4 border-cikasda-yellow">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-money-check-dollar text-cikasda-yellow"></i>
-                    <h3 id="modal-title-text" class="font-black text-xs uppercase tracking-widest">Input Kas Penerimaan Baru</h3>
+                    <h3 id="modal-title-text" class="font-black text-xs uppercase tracking-widest">Input Kas Penerimaan Baru / Admin Entri</h3>
                 </div>
                 <button type="button" onclick="tutupModalForm()" class="text-white/80 hover:text-white text-lg focus:outline-none"><i class="fa-solid fa-xmark"></i></button>
             </div>
@@ -486,9 +486,11 @@
                     </select>
                 </div>
 
-                <!-- Bagian Khusus Lapangan Tenis & Badminton -->
+                <!-- Modul Khusus Sewa Olahraga (Hari dipilih Penyewa, Sesi & Periode diisi Admin) -->
                 <div id="wrapper-khusus-olahraga" class="p-3.5 bg-indigo-50/70 rounded-xl border border-indigo-200 space-y-3 hidden">
-                    <span class="text-[10px] font-black uppercase text-indigo-900 block"><i class="fa-solid fa-medal text-indigo-600 mr-1"></i> Penjadwalan Hari, Klub & Indikator Masa Sewa</span>
+                    <span class="text-[10px] font-black uppercase text-indigo-900 block flex items-center gap-1.5">
+                        <i class="fa-solid fa-user-gear text-indigo-600"></i> Pengaturan Penjadwalan & Otoritas Admin
+                    </span>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
@@ -496,7 +498,7 @@
                             <input type="text" id="f-nama-klub" placeholder="Contoh: Cikasda TC / Merpati" class="w-full bg-white border border-indigo-200 rounded-lg p-2 font-bold text-indigo-950 focus:outline-none">
                         </div>
                         <div>
-                            <label class="block font-bold mb-1 text-indigo-900">Pilih Hari (Senin - Minggu)</label>
+                            <label class="block font-bold mb-1 text-indigo-900">Hari Pilihan (Dipilih Penyewa)</label>
                             <select id="f-hari-pilihan" class="w-full bg-white border border-indigo-200 rounded-lg p-2 font-bold text-indigo-950 focus:outline-none">
                                 <option value="Senin">Senin</option>
                                 <option value="Selasa">Selasa</option>
@@ -513,7 +515,7 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                            <label class="block font-bold mb-1 text-indigo-900">Pilih Sesi Waktu</label>
+                            <label class="block font-bold mb-1 text-indigo-900">Sesi Waktu (Diisi Admin)</label>
                             <select id="f-sesi-waktu" class="w-full bg-white border border-indigo-200 rounded-lg p-2 font-bold text-indigo-950 focus:outline-none">
                                 <option value="Sesi 1 (07.30 - 10.30 WITA)">Sesi 1: 07.30 - 10.30 WITA</option>
                                 <option value="Sesi 2 (11.00 - 14.00 WITA)">Sesi 2: 11.00 - 14.00 WITA</option>
@@ -522,7 +524,7 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block font-bold mb-1 text-indigo-900">Durasi Sewa / Bulan</label>
+                            <label class="block font-bold mb-1 text-indigo-900">Durasi Masa Sewa (Diisi Admin)</label>
                             <select id="f-durasi-bulan" class="w-full bg-white border border-indigo-200 rounded-lg p-2 font-bold text-indigo-950 focus:outline-none">
                                 <option value="1 Bulan">1 Bulan</option>
                                 <option value="3 Bulan (Triwulanan)">3 Bulan (Triwulanan)</option>
@@ -534,11 +536,11 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-indigo-200/60">
                         <div>
-                            <label class="block font-bold mb-1 text-indigo-900">Tanggal Mulai Sewa</label>
+                            <label class="block font-bold mb-1 text-indigo-900">Tanggal Mulai Sewa (Admin)</label>
                             <input type="date" id="f-tgl-mulai" class="w-full bg-white border border-indigo-200 rounded-lg p-2 font-bold text-indigo-950 focus:outline-none">
                         </div>
                         <div>
-                            <label class="block font-bold mb-1 text-indigo-900">Tanggal Berakhir Sewa</label>
+                            <label class="block font-bold mb-1 text-indigo-900">Tanggal Berakhir Sewa (Admin)</label>
                             <input type="date" id="f-tgl-akhir" class="w-full bg-white border border-indigo-200 rounded-lg p-2 font-bold text-indigo-950 focus:outline-none">
                         </div>
                     </div>
@@ -653,7 +655,7 @@
             lainlain: 2448000,
             denda: 1000000
         };
-        const TARGET_PAD_UTAMA = 46308000; // Total Target PAD Terakumulasi
+        const TARGET_PAD_UTAMA = 46308000;
 
         let gudangDataLokal = [];
         let instanceGrafikPAD = null;
@@ -749,11 +751,11 @@
             if (m.firstElementChild) m.firstElementChild.classList.remove("scale-95");
             
             if (idData !== null) {
-                if (judulModal) judulModal.innerText = "Edit Entri Kas & Denda (Secure)";
+                if (judulModal) judulModal.innerText = "Edit Entri Kas & Denda (Admin Secure)";
                 const dataDipilih = gudangDataLokal.find(item => String(item.id_transaksi) === String(idData));
                 if (dataDipilih) {
                     document.getElementById("f-id-transaksi").value = dataDipilih.id_transaksi || "";
-                    document.getElementById("f-uraian").value = dataDipilih.uraian || "Sewa Rumah Dinas";
+                    document.getElementById("f-uraian").value = dataDipilih.uraian || "Sewa Lapangan Tenis";
                     periksaPilihanObjekSewa(document.getElementById("f-uraian").value);
                     document.getElementById("f-bulan").value = dataDipilih.bulan || "Januari";
                     document.getElementById("f-tanggal").value = dataDipilih.tanggal || "";
@@ -769,11 +771,11 @@
                     document.getElementById("f-keterangan").value = dataDipilih.keterangan || "Non Tunai";
                 }
             } else {
-                if (judulModal) judulModal.innerText = "Input Kas Penerimaan Baru / Denda";
+                if (judulModal) judulModal.innerText = "Input Kas Penerimaan Baru / Admin Entri";
                 const formObj = document.getElementById("elemenFormInput");
                 if (formObj) formObj.reset();
                 document.getElementById("f-id-transaksi").value = "";
-                periksaPilihanObjekSewa("Sewa Rumah Dinas");
+                periksaPilihanObjekSewa("Sewa Lapangan Tenis");
                 
                 try {
                     const d = new Date();
@@ -941,7 +943,7 @@
                     method: "GET",
                     headers: { "Accept": "application/json" }
                 });
-                if (!hasilFetch.ok) throw new Error("Jaringan aman tapi terhalang server");
+                if (!hasilFetch.ok) throw new Error("Jaringan terhubung tetapi tidak dapat mengakses endpoint server.");
                 
                 gudangDataLokal = await hasilFetch.json();
                 jalankanPencarianDanFilterOtomatis();
@@ -1037,8 +1039,8 @@
                 let infoPenjelasan = sanitasiInput(item.penjelasan || '-');
                 if (item.sesi_waktu) {
                     const statusSewa = evaluasiStatusSewa(item.tgl_mulai, item.tgl_akhir);
-                    infoPenjelasan = `<span class="text-indigo-900 font-bold">[Hari: ${sanitasiInput(item.hari_pilihan || 'Senin')} | ${sanitasiInput(item.sesi_waktu)}]</span><br>` +
-                                     `<span class="text-[10px] font-mono text-gray-700">Periode: ${sanitasiInput(item.tgl_mulai || '-')} s.d. ${sanitasiInput(item.tgl_akhir || '-')}</span><br>` +
+                    infoPenjelasan = `<span class="text-indigo-900 font-bold">[Hari (Penyewa): ${sanitasiInput(item.hari_pilihan || 'Senin')} | ${sanitasiInput(item.sesi_waktu)}]</span><br>` +
+                                     `<span class="text-[10px] font-mono text-gray-700">Periode (Admin): ${sanitasiInput(item.tgl_mulai || '-')} s.d. ${sanitasiInput(item.tgl_akhir || '-')}</span><br>` +
                                      `<span class="inline-flex items-center gap-1 text-[10px] font-bold px-1.5 py-0.5 rounded mt-0.5 ${statusSewa.badge}">${statusSewa.ikon} ${statusSewa.teks}</span><br>` + 
                                      infoPenjelasan;
                 }
@@ -1190,8 +1192,8 @@
                 "Tanggal": item.tanggal || "-",
                 "Uraian Kas / Denda": item.uraian || "-",
                 "Penyetor / Wajib Retribusi": (item.nama_klub ? `${item.penyetor} (${item.nama_klub})` : item.penyetor) || "-",
-                "Hari & Sesi": (item.sesi_waktu ? `${item.hari_pilihan || 'Senin'} - ${item.sesi_waktu} (${item.durasi_bulan})` : "-"),
-                "Masa Sewa": (item.tgl_mulai && item.tgl_akhir ? `${item.tgl_mulai} s.d. ${item.tgl_akhir}` : "-"),
+                "Hari Pilihan (Penyewa)": item.hari_pilihan || "-",
+                "Sesi & Masa Sewa (Admin)": (item.sesi_waktu ? `${item.sesi_waktu} (${item.tgl_mulai || '-'} s.d. ${item.tgl_akhir || '-'})` : "-"),
                 "Penjelasan / Keterangan Denda": item.penjelasan || "-",
                 "Jumlah (Rp)": Number(item.jumlah) || 0,
                 "Mekanisme": item.keterangan || "-"
@@ -1263,7 +1265,7 @@
                 item.tanggal || "-",
                 item.uraian || "-",
                 item.nama_klub ? `${item.penyetor}\n(${item.nama_klub})` : (item.penyetor || "-"),
-                item.sesi_waktu ? `${item.hari_pilihan || 'Senin'}, ${item.sesi_waktu}\n(${item.tgl_mulai || '-'} s.d. ${item.tgl_akhir || '-'})` : (item.penjelasan || "-"),
+                item.sesi_waktu ? `Hari: ${item.hari_pilihan || 'Senin'}\n${item.sesi_waktu}\n(${item.tgl_mulai || '-'} s.d. ${item.tgl_akhir || '-'})` : (item.penjelasan || "-"),
                 konversiKeRupiah(Number(item.jumlah) || 0),
                 item.keterangan || "-"
             ]);
