@@ -23,14 +23,14 @@
                     colors: {
                         cikasda: {
                             bg: '#f8fafc',
-                            blue: '#0000ff',
-                            lightblue: '#2563eb',
-                            yellow: '#ffff00',
-                            amber: '#eab308',
-                            red: '#ff0000',
-                            green: '#00ff00',
-                            emerald: '#16a34a',
-                            lightyellow: '#fefce8',
+                            blue: '#0000ff',        /* Primary Blue */
+                            lightblue: '#2563eb',   /* Slate Blue Accent */
+                            yellow: '#ffff00',      /* Vibrant Yellow */
+                            amber: '#eab308',       /* Gold Yellow Accent */
+                            red: '#ff0000',         /* Red Accent / Denda */
+                            green: '#00ff00',       /* Bright Green Accent */
+                            emerald: '#16a34a',     /* Emerald Green Text */
+                            lightyellow: '#fefce8', /* Soft Yellow Panel */
                             cardbg: '#ffffff'
                         }
                     }
@@ -51,35 +51,35 @@
 
     <header class="relative min-h-[260px] flex items-end overflow-hidden border-b-4 border-cikasda-yellow bg-cikasda-blue shadow-lg">
         <div class="absolute inset-0 z-0">
-            <img src="73773_2.jpg" alt="Gedung Dinas CIKASDA" class="w-full h-full object-cover object-center opacity-30 filter brightness-110 contrast-105">
+            <img src="73773_2.jpg" alt="Gedung Dinas CIKASDA" onerror="this.style.display='none'" class="w-full h-full object-cover object-center opacity-30 filter brightness-110 contrast-105">
             <div class="absolute inset-0 bg-gradient-to-t from-cikasda-blue via-cikasda-blue/80 to-transparent"></div>
         </div>
 
         <div class="relative z-10 w-full max-w-7xl mx-auto px-6 pb-8 pt-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div class="flex items-center gap-5">
                 <div class="bg-white p-1 rounded-2xl shadow-md w-20 h-20 shrink-0 flex items-center justify-center border-2 border-cikasda-yellow overflow-hidden">
-                    <img src="73773_2.jpg" alt="Gedung CIKASDA" class="w-full h-full object-cover rounded-xl">
+                    <img src="73773_2.jpg" alt="Gedung CIKASDA" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Coat_of_arms_of_Central_Sulawesi.svg/1200px-Coat_of_arms_of_Central_Sulawesi.svg.png'" class="w-full h-full object-contain rounded-xl">
                 </div>
                 <div class="text-white">
                     <div class="flex items-center gap-2">
-                        <span class="bg-cikasda-yellow text-black text-[10px] font-black uppercase px-2.5 py-0.5 rounded shadow-sm tracking-wider">Perda Sulteng No. 7 Tahun 2023[cite: 1]</span>
+                        <span class="bg-cikasda-yellow text-black text-[10px] font-black uppercase px-2.5 py-0.5 rounded shadow-sm tracking-wider">Perda Sulteng No. 7 Tahun 2023</span>
                         <div id="status-badge" class="flex items-center gap-1.5 bg-emerald-500/30 text-white px-2.5 py-0.5 rounded text-[10px] font-bold border border-emerald-400">
                             <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span> Menghubungkan...
                         </div>
                     </div>
                     <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight mt-1.5">Dinas Cipta Karya dan Sumber Daya Air</h1>
                     <p class="text-xs text-cikasda-lightyellow/90 font-semibold flex items-center gap-1.5 mt-1">
-                        <i class="fa-solid fa-shield-halved text-cikasda-yellow"></i> Aplikasi M-PAD 2026 • Provinsi Sulawesi Tengah[cite: 1]
+                        <i class="fa-solid fa-shield-halved text-cikasda-yellow"></i> Aplikasi M-PAD 2026 • Provinsi Sulawesi Tengah
                     </p>
                 </div>
             </div>
 
             <div class="flex flex-wrap items-center gap-3">
                 <button onclick="bukaModalRegulasi()" class="bg-blue-600 hover:bg-blue-700 text-white font-black text-xs px-4 py-3.5 rounded-xl shadow-md transition-all flex items-center gap-2 uppercase border-b-4 border-blue-900 active:scale-95">
-                    <i class="fa-solid fa-scale-balanced text-sm"></i> Hukum & Perda 2023[cite: 1]
+                    <i class="fa-solid fa-scale-balanced text-sm"></i> Hukum & Perda 2023
                 </button>
                 <button onclick="bukaModalJadwalOlahraga()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-black text-xs px-4 py-3.5 rounded-xl shadow-md transition-all flex items-center gap-2 uppercase border-b-4 border-indigo-950 active:scale-95">
-                    <i class="fa-solid fa-calendar-days text-sm"></i> Rekap Klub & Jadwal[cite: 1]
+                    <i class="fa-solid fa-calendar-days text-sm"></i> Rekap Klub & Jadwal
                 </button>
                 <button onclick="bukaModalAnalisisEkonomi()" class="bg-cikasda-yellow hover:bg-yellow-300 text-black font-black text-xs px-4 py-3.5 rounded-xl shadow-md transition-all flex items-center gap-2 uppercase border-b-4 border-amber-500 active:scale-95">
                     <i class="fa-solid fa-chart-pie text-sm"></i> Laporan Analisis
@@ -101,7 +101,7 @@
             <div>
                 <label class="block text-[10px] font-black uppercase text-cikasda-blue mb-1"><i class="fa-solid fa-filter text-cikasda-amber"></i> Filter Berdasarkan Bulan</label>
                 <select id="filter-bulan-global" onchange="jalankanPencarianDanFilterOtomatis()" class="w-full bg-cikasda-bg border-2 border-blue-200 rounded-xl px-3 py-2.5 text-xs font-bold text-cikasda-blue focus:outline-none focus:border-cikasda-blue">
-                    <option value="SEMUA">-- Semua Bulan (Tahun 2026) --[cite: 1]</option>
+                    <option value="SEMUA">-- Semua Bulan (Tahun 2026) --</option>
                     <option value="Januari">Januari</option><option value="Februari">Februari</option><option value="Maret">Maret</option>
                     <option value="April">April</option><option value="Mei">Mei</option><option value="Juni">Juni</option>
                     <option value="Juli">Juli</option><option value="Agustus">Agustus</option><option value="September">September</option>
@@ -122,7 +122,7 @@
                     <h2 id="grand-total" class="text-3xl font-black text-cikasda-blue font-mono tracking-wider mt-3">Rp 0</h2>
                     
                     <div style="font-size: 11px; margin-top: 8px;" class="font-bold text-gray-700">
-                        <div class="font-mono">Target PAD: <span class="font-black text-cikasda-blue">Rp 21.360.000 / Tahun</span>[cite: 1]</div>
+                        <div class="font-mono">Target PAD: <span class="font-black text-cikasda-blue">Rp 46.308.000 / Tahun</span></div>
                         <div id="persen-capaian-pad" class="text-emerald-700 mt-1 font-mono font-black text-sm">Capaian Realisasi: 0.00%</div>
                     </div>
                 </div>
@@ -137,9 +137,9 @@
             <div class="md:col-span-2 glass-panel rounded-2xl p-5 flex flex-col justify-between bg-cikasda-cardbg">
                 <div class="flex items-center justify-between border-b border-gray-100 pb-3">
                     <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-wider flex items-center gap-2">
-                        <i class="fa-solid fa-chart-line text-cikasda-lightblue"></i> Grafik Fluktuasi Pendapatan PAD & Denda Sepadan Sungai
+                        <i class="fa-solid fa-chart-line text-cikasda-lightblue"></i> Grafik Fluktuasi Pendapatan PAD & Penerimaan Denda
                     </h3>
-                    <span id="label-info-kurva" class="text-[9px] bg-cikasda-lightyellow border border-cikasda-yellow text-black font-black px-2.5 py-0.5 rounded">Tahun 2026[cite: 1]</span>
+                    <span id="label-info-kurva" class="text-[9px] bg-cikasda-lightyellow border border-cikasda-yellow text-black font-black px-2.5 py-0.5 rounded">Tahun 2026</span>
                 </div>
                 <div class="flex-1 relative w-full mt-3 min-h-[160px]">
                     <canvas id="canvasGrafikPAD"></canvas>
@@ -147,11 +147,11 @@
             </div>
         </div>
 
-        <!-- KARTU KATEGORI OBJEK SEWA & DENDA SEPADAN SUNGAI -->
+        <!-- KARTU KATEGORI OBJEK SEWA & DENDA -->
         <div class="glass-panel rounded-2xl p-5 bg-cikasda-cardbg space-y-3">
             <div class="flex items-center justify-between border-b border-gray-100 pb-3">
                 <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-wider flex items-center gap-2">
-                    <i class="fa-solid fa-layer-group text-cikasda-amber"></i> Akumulasi Pendapatan Berdasarkan Target Objek & Denda Sepadan Sungai (T.A 2026)[cite: 1]
+                    <i class="fa-solid fa-layer-group text-cikasda-amber"></i> Akumulasi Pendapatan Berdasarkan Target Objek & Denda (T.A 2026)
                 </h3>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
@@ -160,7 +160,7 @@
                 <div class="p-3 bg-cikasda-bg rounded-xl border border-blue-100 space-y-1">
                     <span class="text-[10px] font-bold text-cikasda-blue uppercase block truncate">Rumah Dinas</span>
                     <span id="pos-rumah" class="text-sm font-black text-cikasda-blue font-mono block">Rp 0</span>
-                    <span class="text-[9px] text-gray-500 block font-mono">Target: 21,36 Jt[cite: 1]</span>
+                    <span class="text-[9px] text-gray-500 block font-mono">Target: 21,36 Jt</span>
                     <div class="w-full bg-gray-200 rounded-full h-1.5 mt-1">
                         <div id="bar-rumah" class="bg-cikasda-blue h-1.5 rounded-full" style="width: 0%"></div>
                     </div>
@@ -204,18 +204,18 @@
                 <div class="p-3 bg-cikasda-bg rounded-xl border border-blue-100 space-y-1">
                     <span class="text-[10px] font-bold text-cikasda-blue uppercase block truncate">Sewa Lain-Lain</span>
                     <span id="pos-lainlain" class="text-sm font-black text-cikasda-blue font-mono block">Rp 0</span>
-                    <span class="text-[9px] text-gray-500 block font-mono">Target: 2,44 Jt[cite: 1]</span>
+                    <span class="text-[9px] text-gray-500 block font-mono">Target: 2,44 Jt</span>
                     <div class="w-full bg-gray-200 rounded-full h-1.5 mt-1">
                         <div id="bar-lainlain" class="bg-cikasda-blue h-1.5 rounded-full" style="width: 0%"></div>
                     </div>
                     <span id="persen-lainlain" class="text-[9px] font-bold text-cikasda-lightblue block text-right">0.00%</span>
                 </div>
 
-                <!-- Penerimaan Denda (Pembangunan Sepadan Sungai) -->
+                <!-- Penerimaan Denda -->
                 <div class="p-3 bg-red-50 rounded-xl border-2 border-red-200 space-y-1">
                     <div class="flex items-center justify-between">
-                        <span class="text-[10px] font-black text-red-700 uppercase block truncate">Denda Sepadan Sungai</span>
-                        <i class="fa-solid fa-water text-red-600 text-xs" title="Pembayaran Pembangunan di atas Sepadan Sungai"></i>
+                        <span class="text-[10px] font-black text-red-700 uppercase block truncate">Penerimaan Denda</span>
+                        <i class="fa-solid fa-triangle-exclamation text-red-600 text-xs"></i>
                     </div>
                     <span id="pos-denda" class="text-sm font-black text-red-700 font-mono block">Rp 0</span>
                     <span class="text-[9px] text-red-600 block font-mono">Target: 1,00 Jt</span>
@@ -257,7 +257,7 @@
         <div class="glass-panel rounded-2xl overflow-hidden bg-cikasda-cardbg">
             <div class="bg-cikasda-lightyellow px-5 py-4 border-b-2 border-cikasda-yellow flex flex-wrap items-center justify-between gap-3">
                 <h3 class="text-xs font-black text-cikasda-blue uppercase tracking-widest flex items-center gap-2">
-                    <i class="fa-solid fa-table-list text-cikasda-lightblue"></i> Lembar Log Transaksi Jurnal Kas & Denda Sepadan Sungai
+                    <i class="fa-solid fa-table-list text-cikasda-lightblue"></i> Lembar Log Transaksi Jurnal Kas & Denda Retribusi
                 </h3>
                 <div class="flex items-center gap-2">
                     <button onclick="eksporKeExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] px-3 py-2 rounded-lg shadow transition flex items-center gap-1.5 uppercase">
@@ -277,7 +277,7 @@
                             <th class="p-4 text-center w-24">Bulan</th>
                             <th class="p-4 text-center w-36">Tanggal</th>
                             <th class="p-4 w-44">Uraian Kas / Denda</th>
-                            <th class="p-4 w-44">Nama Penyetor / Pelanggar</th>
+                            <th class="p-4 w-44">Nama Penyetor / Wajib Retribusi</th>
                             <th class="p-4 w-48">Jadwal & Keterangan Rinci</th>
                             <th class="p-4 text-right w-32">Jumlah (Rp)</th>
                             <th class="p-4 text-center w-24">Mekanisme</th>
@@ -297,7 +297,7 @@
             <div class="bg-cikasda-blue text-white p-4 flex items-center justify-between border-b-4 border-cikasda-yellow">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-scale-balanced text-cikasda-yellow"></i>
-                    <h3 class="font-black text-xs uppercase tracking-widest">Katalog Regulasi & Perda Sulteng No. 7 Tahun 2023[cite: 1]</h3>
+                    <h3 class="font-black text-xs uppercase tracking-widest">Katalog Regulasi & Perda Sulteng No. 7 Tahun 2023</h3>
                 </div>
                 <button type="button" onclick="tutupModalRegulasi()" class="text-white/80 hover:text-white text-lg focus:outline-none"><i class="fa-solid fa-xmark"></i></button>
             </div>
@@ -305,37 +305,53 @@
             <div class="p-6 space-y-5 overflow-y-auto custom-scrollbar flex-1 text-xs text-gray-800 leading-relaxed">
                 <div class="p-4 bg-blue-50 rounded-xl border border-blue-200 space-y-2">
                     <h4 class="font-black text-blue-900 text-sm uppercase flex items-center gap-2">
-                        <i class="fa-solid fa-book-bookmark text-blue-600"></i> Dasar Hukum Pemanfaatan & Pengawasan Sempadan Sungai
+                        <i class="fa-solid fa-book-bookmark text-blue-600"></i> Dasar Hukum Penarikan Retribusi & Denda Keterlambatan
                     </h4>
                     <p class="text-justify font-semibold text-blue-950">
-                        Pengelolaan Pendapatan Asli Daerah (PAD) serta pengenaan denda/retribusi atas pelanggaran pembangunan di atas sepadan sungai di bawah koordinasi Dinas CIKASDA Provinsi Sulawesi Tengah berpedoman pada Perda Nomor 7 Tahun 2023[cite: 1].
+                        Pengelolaan Pendapatan Asli Daerah (PAD) dan pengenaan sanksi denda keterlambatan pembayaran retribusi jasa usaha di lingkungan Dinas Cipta Karya dan Sumber Daya Air (CIKASDA) Provinsi Sulawesi Tengah berpedoman secara resmi pada regulasi tahun 2023.
                     </p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="p-4 bg-cikasda-bg rounded-xl border border-blue-100 space-y-2">
                         <span class="bg-cikasda-yellow text-black text-[9px] font-black uppercase px-2 py-0.5 rounded">Peraturan Daerah Provinsi</span>
-                        <h5 class="font-black text-cikasda-blue text-xs">Perda Provinsi Sulteng No. 7 Tahun 2023[cite: 1]</h5>
+                        <h5 class="font-black text-cikasda-blue text-xs">Perda Provinsi Sulteng No. 7 Tahun 2023</h5>
                         <p class="text-[11px] text-gray-700 text-justify">
-                            Tentang Pajak Daerah dan Retribusi Daerah, mencakup ketentuan penertiban bangunan dan pengenaan denda administratif pada kawasan sepadan sungai.
+                            Tentang <strong>Pajak Daerah dan Retribusi Daerah</strong>. Landasan utama penetapan tarif retribusi pemakaian kekayaan daerah dan sanksi administratif/denda keterlambatan.
                         </p>
                     </div>
 
                     <div class="p-4 bg-cikasda-bg rounded-xl border border-blue-100 space-y-2">
-                        <span class="bg-cikasda-yellow text-black text-[9px] font-black uppercase px-2 py-0.5 rounded">Pengelolaan Sumber Daya Air</span>
-                        <h5 class="font-black text-cikasda-blue text-xs">PP No. 38 Tahun 2011</h5>
+                        <span class="bg-cikasda-yellow text-black text-[9px] font-black uppercase px-2 py-0.5 rounded">Nasional / Undang-Undang</span>
+                        <h5 class="font-black text-cikasda-blue text-xs">UU No. 1 Tahun 2022 (HKPD)</h5>
                         <p class="text-[11px] text-gray-700 text-justify">
-                            Tentang Sungai, mengatur batasan perlindungan fungsi sepadan sungai dari pendirian bangunan permanen tanpa izin teknis.
+                            Tentang Hubungan Keuangan Antara Pemerintah Pusat dan Pemerintahan Daerah, yang mendasari restrukturisasi jenis retribusi dan sanksi denda daerah.
+                        </p>
+                    </div>
+
+                    <div class="p-4 bg-cikasda-bg rounded-xl border border-blue-100 space-y-2">
+                        <span class="bg-emerald-600 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded">Pengelolaan BMD</span>
+                        <h5 class="font-black text-cikasda-blue text-xs">Permendagri No. 19 Tahun 2016</h5>
+                        <p class="text-[11px] text-gray-700 text-justify">
+                            Pedoman Pengelolaan Barang Milik Daerah, mencakup mekanisme sewa aset dan tata cara penagihan denda pelanggaran klausul sewa.
+                        </p>
+                    </div>
+
+                    <div class="p-4 bg-cikasda-bg rounded-xl border border-blue-100 space-y-2">
+                        <span class="bg-cikasda-blue text-white text-[9px] font-black uppercase px-2 py-0.5 rounded">Peraturan Pemerintah</span>
+                        <h5 class="font-black text-cikasda-blue text-xs">PP No. 35 Tahun 2023</h5>
+                        <p class="text-[11px] text-gray-700 text-justify">
+                            Ketentuan Umum Pajak Daerah dan Retribusi Daerah, memberikan kepastian hukum penetapan tarif retribusi dan penyerapan denda kas daerah.
                         </p>
                     </div>
                 </div>
 
                 <div class="p-4 bg-amber-50 rounded-xl border border-amber-200 space-y-1.5">
                     <h5 class="font-black text-amber-900 uppercase text-xs flex items-center gap-1.5">
-                        <i class="fa-solid fa-triangle-exclamation text-amber-600"></i> Prinsip Penertiban & Akuntabilitas Kasda
+                        <i class="fa-solid fa-triangle-exclamation text-amber-600"></i> Prinsip Kepatuhan & Transparansi Keuangan
                     </h5>
                     <p class="text-justify font-medium text-amber-950">
-                        Penerimaan denda atas pembangunan di atas sepadan sungai wajib disetorkan langsung ke Kas Daerah sebagai bentuk penegakan hukum lingkungan dan pengendalian tata ruang air.
+                        Setiap transaksi retribusi dan penerimaan denda wajib disetor secara mutlak ke Kas Daerah (Kasda) secara transparan dan diverifikasi dengan PIN otorisasi ganda.
                     </p>
                 </div>
             </div>
@@ -346,7 +362,7 @@
         </div>
     </div>
 
-    <!-- Modal Rekapitulasi Klub & Jadwal Sewa Lapangan -->
+    <!-- Modal Rekapitulasi Klub & Jadwal Sewa Lapangan (Senin s.d. Minggu) -->
     <div id="modalJadwalOlahraga" class="fixed inset-0 bg-cikasda-blue/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
         <div class="w-full max-w-6xl rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all duration-300 flex flex-col max-h-[90vh] bg-cikasda-cardbg border-2 border-blue-200">
             <div class="bg-indigo-900 text-white p-4 flex items-center justify-between border-b-4 border-cikasda-yellow">
@@ -360,8 +376,8 @@
             <div class="p-6 space-y-5 overflow-y-auto custom-scrollbar flex-1 text-xs text-gray-800">
                 <div class="p-4 bg-indigo-50 rounded-xl border border-indigo-200 flex flex-col md:flex-row items-center justify-between gap-3">
                     <div>
-                        <h4 class="font-black text-indigo-900 uppercase text-xs">Daftar Klub Berdasarkan Hari Pilihan (Kolom I) & Sesi Waktu/Masa Sewa (Kolom J)</h4>
-                        <p class="text-[11px] text-indigo-950 mt-0.5">Tabel di bawah terintegrasi secara langsung dengan Google Spreadsheet[cite: 1].</p>
+                        <h4 class="font-black text-indigo-900 uppercase text-xs">Daftar Klub Berdasarkan Hari Pilihan (Senin - Minggu) & Indikator Masa Sewa</h4>
+                        <p class="text-[11px] text-indigo-950 mt-0.5">Sesi waktu & masa sewa diatur secara otomatis oleh Admin via Form Entri.</p>
                     </div>
                     <button onclick="bukaModalForm()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-black px-4 py-2.5 rounded-xl text-[11px] shadow shrink-0">
                         <i class="fa-solid fa-plus mr-1"></i> Input Sewa Baru
@@ -376,15 +392,15 @@
                                 <tr>
                                     <th class="p-3">Objek Lapangan</th>
                                     <th class="p-3">Nama Klub / Penyewa</th>
-                                    <th class="p-3 text-center">Hari Pilihan (Kolom I)</th>
-                                    <th class="p-3 text-center">Sesi Waktu (Kolom J - Admin)</th>
-                                    <th class="p-3 text-center">Masa Sewa (Kolom J - Admin)</th>
+                                    <th class="p-3 text-center">Hari Pilihan (Penyewa)</th>
+                                    <th class="p-3 text-center">Sesi Waktu (Admin)</th>
+                                    <th class="p-3 text-center">Masa Sewa (Admin)</th>
                                     <th class="p-3 text-center">Indikator Status</th>
                                     <th class="p-3 text-right">Besaran Sewa (Rp)</th>
                                 </tr>
                             </thead>
                             <tbody id="tabel-ringkasan-klub" class="divide-y divide-gray-200 font-semibold bg-white">
-                                <!-- Kosong otomatis, terisi otomatis saat data diinput admin & tersinkronisasi spreadsheet -->
+                                <!-- Diisi otomatis via JS -->
                             </tbody>
                         </table>
                     </div>
@@ -403,7 +419,7 @@
             <div class="bg-cikasda-blue text-white p-4 flex items-center justify-between border-b-4 border-cikasda-yellow">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-chart-line text-cikasda-yellow"></i>
-                    <h3 class="font-black text-xs uppercase tracking-widest">Laporan Analisis Makro Fiskal & Kinerja PAD T.A 2026[cite: 1]</h3>
+                    <h3 class="font-black text-xs uppercase tracking-widest">Laporan Analisis Makro Fiskal & Kinerja PAD T.A 2026</h3>
                 </div>
                 <button type="button" onclick="tutupModalAnalisisEkonomi()" class="text-white/80 hover:text-white text-lg focus:outline-none"><i class="fa-solid fa-xmark"></i></button>
             </div>
@@ -414,17 +430,27 @@
                         <i class="fa-solid fa-bullseye text-cikasda-amber"></i> I. Ringkasan Eksekutif & Akuntabilitas Pendapatan CIKASDA
                     </h4>
                     <p class="font-semibold text-justify">
-                        Pelaporan Pendapatan Asli Daerah (PAD) Dinas CIKASDA Tahun Anggaran 2026 dikelola dengan target resmi Rp 21.360.000[cite: 1] serta ditunjang penertiban denda bangunan sepadan sungai.
+                        Pelaporan penerimaan Pendapatan Asli Daerah (PAD) dan pengenaan Penerimaan Denda Dinas CIKASDA T.A 2026 disajikan secara transparan dan akuntabel sesuai amanat Perda Sulteng No. 7 Tahun 2023.
                     </p>
                 </div>
 
                 <div class="space-y-2">
                     <h4 class="font-black uppercase text-cikasda-blue flex items-center gap-1.5">
-                        <i class="fa-solid fa-scale-balanced text-cikasda-amber"></i> II. Pengawasan Tata Ruang & Penegakan Denda Sepadan Sungai
+                        <i class="fa-solid fa-scale-balanced text-cikasda-amber"></i> II. Transparansi Likuiditas & Efisiensi Kanal Pembayaran
                     </h4>
                     <p class="text-justify">
-                        Modul denda sepadan sungai mencatat kontribusi penegakan hukum tata air guna menjaga fungsi daerah aliran sungai (DAS) dari pelanggaran konstruksi ilegal.
+                        Integrasi kanal pembayaran Non-Tunai dan Tunai memberikan keterbukaan arus kas secara real-time. Penambahan modul Penerimaan Denda mengoptimalkan kepatuhan wajib retribusi.
                     </p>
+                </div>
+
+                <div class="space-y-2">
+                    <h4 class="font-black uppercase text-cikasda-blue flex items-center gap-1.5">
+                        <i class="fa-solid fa-lightbulb text-cikasda-amber"></i> III. Rekomendasi Strategis & Intensifikasi Aset Berkelanjutan
+                    </h4>
+                    <ul class="list-disc pl-5 space-y-1.5 font-semibold text-justify">
+                        <li><strong>Optimalisasi Sektor Unggulan:</strong> Rumah Dinas dan Lapangan Olahraga menunjukkan produktivitas fiskal yang konsisten.</li>
+                        <li><strong>Pengendalian Denda Administratif:</strong> Penerimaan denda secara otomatis terakumulasi dalam log jurnal kas untuk menjaga akuntabilitas audit BPK.</li>
+                    </ul>
                 </div>
             </div>
 
@@ -451,19 +477,19 @@
                 <div>
                     <label class="block font-bold mb-1 text-cikasda-blue">Uraian / Jenis Objek / Denda</label>
                     <select id="f-uraian" onchange="periksaPilihanObjekSewa(this.value)" class="w-full bg-cikasda-bg border-2 border-blue-200 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue focus:outline-none" required>
-                        <option value="Sewa Rumah Dinas">Rumah Dinas (Target: Rp 21.360.000)[cite: 1]</option>
+                        <option value="Sewa Rumah Dinas">Rumah Dinas (Target: Rp 21.360.000)</option>
                         <option value="Sewa Lapangan Tenis">Lapangan Tenis (Target: Rp 9.000.000)</option>
                         <option value="Sewa Badminton">Badminton (Target: Rp 7.500.000)</option>
                         <option value="Sewa Kantin">Sewa Kantin (Target: Rp 5.000.000)</option>
-                        <option value="Sewa Lain-Lain">Sewa Lain-Lain (Target: Rp 2.448.000)[cite: 1]</option>
-                        <option value="Penerimaan Denda">Penerimaan Denda (Pembangunan di atas Sepadan Sungai)</option>
+                        <option value="Sewa Lain-Lain">Sewa Lain-Lain (Target: Rp 2.448.000)</option>
+                        <option value="Penerimaan Denda">Penerimaan Denda (Sanksi Keterlambatan Retribusi)</option>
                     </select>
                 </div>
 
-                <!-- Modul Khusus Sewa Olahraga (Hari pilihan di Kolom I oleh Penyewa, Sesi/Masa Sewa di Kolom J oleh Admin) -->
+                <!-- Modul Khusus Sewa Olahraga (Hari dipilih Penyewa, Sesi & Periode diisi Admin) -->
                 <div id="wrapper-khusus-olahraga" class="p-3.5 bg-indigo-50/70 rounded-xl border border-indigo-200 space-y-3 hidden">
                     <span class="text-[10px] font-black uppercase text-indigo-900 block flex items-center gap-1.5">
-                        <i class="fa-solid fa-user-gear text-indigo-600"></i> Pengaturan Penjadwalan Terintegrasi (Kolom I & J Spreadsheet)
+                        <i class="fa-solid fa-user-gear text-indigo-600"></i> Pengaturan Penjadwalan & Otoritas Admin
                     </span>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -472,7 +498,7 @@
                             <input type="text" id="f-nama-klub" placeholder="Contoh: Cikasda TC / Merpati" class="w-full bg-white border border-indigo-200 rounded-lg p-2 font-bold text-indigo-950 focus:outline-none">
                         </div>
                         <div>
-                            <label class="block font-bold mb-1 text-indigo-900">Hari Pilihan (Dipilih Penyewa - Kolom I)</label>
+                            <label class="block font-bold mb-1 text-indigo-900">Hari Pilihan (Dipilih Penyewa)</label>
                             <select id="f-hari-pilihan" class="w-full bg-white border border-indigo-200 rounded-lg p-2 font-bold text-indigo-950 focus:outline-none">
                                 <option value="Senin">Senin</option>
                                 <option value="Selasa">Selasa</option>
@@ -489,7 +515,7 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                            <label class="block font-bold mb-1 text-indigo-900">Sesi Waktu (Diisi Admin - Kolom J)</label>
+                            <label class="block font-bold mb-1 text-indigo-900">Sesi Waktu (Diisi Admin)</label>
                             <select id="f-sesi-waktu" class="w-full bg-white border border-indigo-200 rounded-lg p-2 font-bold text-indigo-950 focus:outline-none">
                                 <option value="Sesi 1 (07.30 - 10.30 WITA)">Sesi 1: 07.30 - 10.30 WITA</option>
                                 <option value="Sesi 2 (11.00 - 14.00 WITA)">Sesi 2: 11.00 - 14.00 WITA</option>
@@ -498,7 +524,7 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block font-bold mb-1 text-indigo-900">Durasi Masa Sewa (Diisi Admin - Kolom J)</label>
+                            <label class="block font-bold mb-1 text-indigo-900">Durasi Masa Sewa (Diisi Admin)</label>
                             <select id="f-durasi-bulan" class="w-full bg-white border border-indigo-200 rounded-lg p-2 font-bold text-indigo-950 focus:outline-none">
                                 <option value="1 Bulan">1 Bulan</option>
                                 <option value="3 Bulan (Triwulanan)">3 Bulan (Triwulanan)</option>
@@ -510,11 +536,11 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-indigo-200/60">
                         <div>
-                            <label class="block font-bold mb-1 text-indigo-900">Tanggal Mulai Sewa (Admin - Kolom J)</label>
+                            <label class="block font-bold mb-1 text-indigo-900">Tanggal Mulai Sewa (Admin)</label>
                             <input type="date" id="f-tgl-mulai" class="w-full bg-white border border-indigo-200 rounded-lg p-2 font-bold text-indigo-950 focus:outline-none">
                         </div>
                         <div>
-                            <label class="block font-bold mb-1 text-indigo-900">Tanggal Berakhir Sewa (Admin - Kolom J)</label>
+                            <label class="block font-bold mb-1 text-indigo-900">Tanggal Berakhir Sewa (Admin)</label>
                             <input type="date" id="f-tgl-akhir" class="w-full bg-white border border-indigo-200 rounded-lg p-2 font-bold text-indigo-950 focus:outline-none">
                         </div>
                     </div>
@@ -537,13 +563,13 @@
                 </div>
 
                 <div>
-                    <label class="block font-bold mb-1 text-cikasda-blue">Nama Penyetor / Pelanggar</label>
+                    <label class="block font-bold mb-1 text-cikasda-blue">Nama Penyetor / Wajib Retribusi</label>
                     <input type="text" id="f-penyetor" placeholder="Masukkan nama penyetor perorangan/instansi..." class="w-full bg-cikasda-bg border-2 border-blue-200 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue focus:outline-none" required>
                 </div>
 
                 <div>
                     <label class="block font-bold mb-1 text-cikasda-blue">Penjelasan Rekap / Keterangan Denda</label>
-                    <textarea id="f-penjelasan" rows="2" placeholder="Tulis rincian berita acara, nomor SK, atau detail bangunan di sepadan sungai..." class="w-full bg-cikasda-bg border-2 border-blue-200 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue focus:outline-none"></textarea>
+                    <textarea id="f-penjelasan" rows="2" placeholder="Tulis rincian berita acara, nomor SK, atau alasan denda keterlambatan..." class="w-full bg-cikasda-bg border-2 border-blue-200 rounded-xl p-2.5 font-bold text-cikasda-blue focus:border-cikasda-blue focus:outline-none"></textarea>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
@@ -591,7 +617,7 @@
                 <div>
                     <label class="block font-bold text-cikasda-blue mb-1">Pilih Periode Cetak Laporan:</label>
                     <select id="pilihan-bulan-pdf" class="w-full bg-cikasda-bg border-2 border-blue-200 rounded-xl p-2.5 font-bold text-cikasda-blue">
-                        <option value="SEMUA">Semua Bulan (Full T.A 2026)[cite: 1]</option>
+                        <option value="SEMUA">Semua Bulan (Full T.A 2026)</option>
                         <option value="Januari">Januari</option><option value="Februari">Februari</option><option value="Maret">Maret</option>
                         <option value="April">April</option><option value="Mei">Mei</option><option value="Juni">Juni</option>
                         <option value="Juli">Juli</option><option value="Agustus">Agustus</option><option value="September">September</option>
@@ -616,7 +642,7 @@
 
     <script>
         const _AS_TOKEN_PART1 = "https://script.google.com/macros/s/";
-        const _AS_TOKEN_PART2 = "AKfycbxE2Yg9nvSnU_URa6Vp0SBqALGaRdDW6CG7kOqUXTkXYkTP5BYORbE3RQK9iTcm7o3Krg/exec";
+        const _AS_TOKEN_PART2 = "AKfycbxqCtq-YJXEOMtzc7okL8TXQtEJa3E6k8G4o1CYw2XHps-tuebGhDV_JGyE7uZufQtLMg/exec";
         const APPS_SCRIPT_URL = _AS_TOKEN_PART1 + _AS_TOKEN_PART2;
 
         const listNamaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
@@ -629,7 +655,7 @@
             lainlain: 2448000,
             denda: 1000000
         };
-        const TARGET_PAD_UTAMA = 21360000;[cite: 1]
+        const TARGET_PAD_UTAMA = 46308000;
 
         let gudangDataLokal = [];
         let instanceGrafikPAD = null;
@@ -813,7 +839,7 @@
                 nilaiSumbuY = [petaBulanan[bulanFilterAktif.toLowerCase()] || 0];
                 if(labelInfo) labelInfo.innerText = "Bulan: " + bulanFilterAktif;
             } else {
-                if(labelInfo) labelInfo.innerText = "Tahun 2026 (Full)[cite: 1]";
+                if(labelInfo) labelInfo.innerText = "Tahun 2026 (Full)";
             }
 
             if (instanceGrafikPAD) {
@@ -1013,8 +1039,8 @@
                 let infoPenjelasan = sanitasiInput(item.penjelasan || '-');
                 if (item.sesi_waktu) {
                     const statusSewa = evaluasiStatusSewa(item.tgl_mulai, item.tgl_akhir);
-                    infoPenjelasan = `<span class="text-indigo-900 font-bold">[Hari (Kolom I): ${sanitasiInput(item.hari_pilihan || 'Senin')} | ${sanitasiInput(item.sesi_waktu)}]</span><br>` +
-                                     `<span class="text-[10px] font-mono text-gray-700">Periode (Kolom J - Admin): ${sanitasiInput(item.tgl_mulai || '-')} s.d. ${sanitasiInput(item.tgl_akhir || '-')}</span><br>` +
+                    infoPenjelasan = `<span class="text-indigo-900 font-bold">[Hari (Penyewa): ${sanitasiInput(item.hari_pilihan || 'Senin')} | ${sanitasiInput(item.sesi_waktu)}]</span><br>` +
+                                     `<span class="text-[10px] font-mono text-gray-700">Periode (Admin): ${sanitasiInput(item.tgl_mulai || '-')} s.d. ${sanitasiInput(item.tgl_akhir || '-')}</span><br>` +
                                      `<span class="inline-flex items-center gap-1 text-[10px] font-bold px-1.5 py-0.5 rounded mt-0.5 ${statusSewa.badge}">${statusSewa.ikon} ${statusSewa.teks}</span><br>` + 
                                      infoPenjelasan;
                 }
@@ -1028,7 +1054,7 @@
                         <td class="p-4 text-center font-black uppercase text-[10px]">${sanitasiInput(item.bulan || '-')}</td>
                         <td class="p-4 text-center text-gray-600 font-mono">${sanitasiInput(item.tanggal || '-')}</td>
                         <td class="p-4 text-left text-xs ${styleRowUraian}">
-                            ${isDenda ? '<i class="fa-solid fa-water mr-1 text-red-600" title="Denda Sepadan Sungai"></i>' : ''}
+                            ${isDenda ? '<i class="fa-solid fa-triangle-exclamation mr-1 text-red-600"></i>' : ''}
                             ${sanitasiInput(item.uraian || '-')}
                         </td>
                         <td class="p-4 text-left font-semibold">${infoPenyetor}</td>
@@ -1044,7 +1070,7 @@
             });
 
             if(dataArray.length === 0) {
-                tBody.innerHTML = `<tr><td colspan="9" class="p-8 text-center text-gray-500 font-semibold">Tidak ada log data transaksi atau denda sepadan sungai yang cocok dengan pencarian.</td></tr>`;
+                tBody.innerHTML = `<tr><td colspan="9" class="p-8 text-center text-gray-500 font-semibold">Tidak ada log data transaksi atau denda yang cocok dengan pencarian.</td></tr>`;
             }
 
             gambarUlangGrafikPAD(akumulasiBulanPenuh, bulanFilterAktif);
@@ -1062,9 +1088,8 @@
                 return u.includes("tenis") || u.includes("badminton");
             });
 
-            // Tabel dikosongkan jika belum ada data dari spreadsheet/admin
             if (dataOlahraga.length === 0) {
-                tBodyKlub.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-gray-400 font-semibold italic">Belum ada data rekap klub terdaftar. Data akan terisi otomatis secara terintegrasi dengan spreadsheet setelah Admin mengisinya[cite: 1].</td></tr>`;
+                tBodyKlub.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-gray-500 font-medium">Belum ada data klub terdaftar untuk lapangan tenis & badminton. Silakan tambahkan melalui entri kas.</td></tr>`;
                 return;
             }
 
@@ -1129,7 +1154,7 @@
                 { nama: "Badminton", jumlah: breakdownSewa.badminton },
                 { nama: "Sewa Kantin", jumlah: breakdownSewa.kantin },
                 { nama: "Sewa Lain-Lain", jumlah: breakdownSewa.lainlain },
-                { nama: "Denda Sepadan Sungai", jumlah: breakdownSewa.denda }
+                { nama: "Penerimaan Denda", jumlah: breakdownSewa.denda }
             ];
 
             arrayKategori.sort((a, b) => b.jumlah - a.jumlah);
@@ -1166,17 +1191,17 @@
                 "Bulan": item.bulan || "-",
                 "Tanggal": item.tanggal || "-",
                 "Uraian Kas / Denda": item.uraian || "-",
-                "Penyetor / Pelanggar": (item.nama_klub ? `${item.penyetor} (${item.nama_klub})` : item.penyetor) || "-",
-                "Hari Pilihan (Kolom I)": item.hari_pilihan || "-",
-                "Sesi & Masa Sewa (Kolom J - Admin)": (item.sesi_waktu ? `${item.sesi_waktu} (${item.tgl_mulai || '-'} s.d. ${item.tgl_akhir || '-'})` : "-"),
-                "Penjelasan / Detail Bangunan": item.penjelasan || "-",
+                "Penyetor / Wajib Retribusi": (item.nama_klub ? `${item.penyetor} (${item.nama_klub})` : item.penyetor) || "-",
+                "Hari Pilihan (Penyewa)": item.hari_pilihan || "-",
+                "Sesi & Masa Sewa (Admin)": (item.sesi_waktu ? `${item.sesi_waktu} (${item.tgl_mulai || '-'} s.d. ${item.tgl_akhir || '-'})` : "-"),
+                "Penjelasan / Keterangan Denda": item.penjelasan || "-",
                 "Jumlah (Rp)": Number(item.jumlah) || 0,
                 "Mekanisme": item.keterangan || "-"
             }));
 
             const worksheet = XLSX.utils.json_to_sheet(dataSheet);
             const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, "Log Kas & Denda Sepadan Sungai");
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Log Kas & Denda PAD");
             XLSX.writeFile(workbook, "Laporan_MPAD_CIKASDA_2026_Perda2023.xlsx");
         }
 
@@ -1203,13 +1228,13 @@
             doc.setTextColor(0, 0, 255);
             doc.text("DINAS CIPTA KARYA DAN SUMBER DAYA AIR PROVINSI SULAWESI TENGAH", 14, 15);
             doc.setFontSize(9);
-            doc.text("Berdasarkan Peraturan Daerah Provinsi Sulawesi Tengah Nomor 7 Tahun 2023 tentang Pajak Daerah dan Retribusi Daerah[cite: 1]", 14, 21);
+            doc.text("Berdasarkan Peraturan Daerah Provinsi Sulawesi Tengah Nomor 7 Tahun 2023 tentang Pajak Daerah dan Retribusi Daerah", 14, 21);
             doc.setFontSize(10);
             doc.text(`Executive Dashboard M-PAD 2026 - Periode: ${bulanCetak.toUpperCase()}`, 14, 28);
 
             let currentY = 34;
             doc.setFontSize(11);
-            doc.text("A. Ikhtisar Pendapatan Kas Bulanan & Denda Sepadan Sungai T.A 2026[cite: 1]", 14, currentY);
+            doc.text("A. Ikhtisar Pendapatan Kas Bulanan & Denda T.A 2026", 14, currentY);
             currentY += 4;
 
             let tableBulananRows = [];
@@ -1231,7 +1256,7 @@
 
             currentY = doc.lastAutoTable.finalY + 10;
             doc.setFontSize(11);
-            doc.text(`B. Rincian Log Transaksi Jurnal Kas & Denda Sepadan Sungai (${bulanCetak})`, 14, currentY);
+            doc.text(`B. Rincian Log Transaksi Jurnal Kas & Denda (${bulanCetak})`, 14, currentY);
             currentY += 4;
 
             const tableRows = dataPDF.map((item, index) => [
@@ -1240,14 +1265,14 @@
                 item.tanggal || "-",
                 item.uraian || "-",
                 item.nama_klub ? `${item.penyetor}\n(${item.nama_klub})` : (item.penyetor || "-"),
-                item.sesi_waktu ? `Hari (Kol. I): ${item.hari_pilihan || 'Senin'}\n${item.sesi_waktu}\n(${item.tgl_mulai || '-'} s.d. ${item.tgl_akhir || '-'})` : (item.penjelasan || "-"),
+                item.sesi_waktu ? `Hari: ${item.hari_pilihan || 'Senin'}\n${item.sesi_waktu}\n(${item.tgl_mulai || '-'} s.d. ${item.tgl_akhir || '-'})` : (item.penjelasan || "-"),
                 konversiKeRupiah(Number(item.jumlah) || 0),
                 item.keterangan || "-"
             ]);
 
             doc.autoTable({
                 startY: currentY,
-                head: [['No', 'Bulan', 'Tanggal', 'Uraian Kas / Denda', 'Penyetor / Pelanggar', 'Keterangan / Kol. I & J', 'Jumlah (Rp)', 'Mekanisme']],
+                head: [['No', 'Bulan', 'Tanggal', 'Uraian Kas / Denda', 'Penyetor / Wajib Retribusi', 'Keterangan / Sesi', 'Jumlah (Rp)', 'Mekanisme']],
                 body: tableRows,
                 theme: 'grid',
                 headStyles: { fillColor: [0, 0, 255] },
@@ -1315,8 +1340,8 @@
                 uraian: sanitasiInput(uraianVal),
                 penyetor: sanitasiInput(document.getElementById("f-penyetor").value),
                 nama_klub: namaKlubVal,
-                hari_pilihan: hariPilihanVal, // Disimpan ke Kolom I Spreadsheet
-                sesi_waktu: sesiWaktuVal,       // Disimpan ke Kolom J Spreadsheet
+                hari_pilihan: hariPilihanVal,
+                sesi_waktu: sesiWaktuVal,
                 durasi_bulan: durasiBulanVal,
                 tgl_mulai: tglMulaiVal,
                 tgl_akhir: tglAkhirVal,
@@ -1337,7 +1362,7 @@
                 const hasil = await responCloud.json();
                 
                 if (hasil.status === "success") {
-                    alert("🚀 Sukses Terinput & Tersinkronisasi ke Spreadsheet! " + hasil.message);
+                    alert("🚀 Sukses Terinput Ke Spreadsheet! " + hasil.message);
                     tutupModalForm();
                     muatDataSinkronisasiCloud();
                 } else {
